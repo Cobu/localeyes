@@ -1,0 +1,45 @@
+@mixin rounded($radius: 10px) {
+  border-radius: $radius;
+  -moz-border-radius: $radius;
+  -webkit-border-radius: $radius;
+}
+
+@mixin box_shadow($horiz, $vert, $spread, $radius, $color) {
+  -moz-box-shadow: $horiz $vert $spread $radius $color;
+  -webkit-box-shadow: $horiz $vert $spread $radius $color;
+  box-shadow: $horiz $vert $spread $radius $color;
+}
+
+@mixin box_inset_shadow($horiz, $vert, $spread, $radius, $color) {
+  -moz-box-shadow: inset $horiz $vert $spread $radius $color;
+  -webkit-box-shadow: inset $horiz $vert $spread $radius $color;
+  box-shadow: inset $horiz $vert $spread $radius $color;
+}
+
+@mixin text_inset() {
+  color: transparent;
+  text-shadow: rgba(255,255,255,0.5) 0 0 7px, rgba(75,75,75,0.4) 0 0 0, rgba(50,50,50,0.3) 0 0 0;
+}
+
+.disabled_text {
+  color: gray
+}
+
+.list_bar {
+  border: 2px solid black;
+  /*@include rounded(13px);*/
+  width:75%;
+  margin: 10px auto;
+
+  /*background: #cccccc;*/
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#eeeeee', endColorstr='#cccccc');
+  background: -webkit-gradient(linear, left top, left bottom, from(#eee), to(#ccc));
+  background: -moz-linear-gradient(top,  #eee,  #ccc);
+
+  div {
+    width: 26%;
+    text-align:center;
+    display:inline-block;
+  }
+}
+

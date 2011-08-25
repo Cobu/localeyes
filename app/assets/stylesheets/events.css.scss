@@ -1,0 +1,111 @@
+@import 'mixins';
+
+
+.event_pop_up {
+
+}
+
+form.edit_event, form.new_event {
+  padding-top:10px;
+  padding-left:10px;
+  width:330px;
+  height:375px;
+
+  .event_type_radio {
+    width:70%;
+    margin: 10px auto;
+  }
+
+  .field {
+    margin: 10px 0px;
+
+    label.title {
+      margin-right:3px;
+    }
+
+    textarea {
+      resize: none;
+      width: 94%;
+      height:60px;
+    }
+  }
+
+  span.small {
+    font-size: 10px;
+  }
+
+  .time_field {
+    margin-top: 5px;
+
+    label {
+      display: inline-block;
+      width: 35px;
+    }
+  }
+
+  .recurring {
+    margin-top: 15px;
+
+    .header {
+      text-align: center;
+    }
+
+    .recurrence_radio {
+      width: 75%;
+      margin: 10px auto;
+    }
+  }
+
+  .ends {
+    margin-left:65px;
+  }
+
+  .submit_buttons {
+    text-align: center;
+    margin-top: 30px;
+  }
+
+  .datepicker {
+    width: 75px;
+  }
+}
+
+.affecting {
+  margin-bottom: 10px;
+
+  .text {
+    font-size: 130%;
+    margin:10px 10px;
+  }
+
+  .choices_radio {
+    margin:30px;
+  }
+}
+
+.ui-widget-content{
+  font-size: 10px;
+}
+
+.ui-widget {
+  font-size:10px
+}
+
+/* for coloring the events of different type  */
+.event_type {
+  span, div {
+    background-color: red;
+  }
+}
+
+.special_type {
+  span, div {
+    background-color: blue
+  }
+}
+
+.announcement_type {
+  span, div {
+    background-color: brown
+  }
+}

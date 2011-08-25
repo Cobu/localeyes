@@ -1,0 +1,21 @@
+development:
+  adapter: mysql
+  host: 127.0.0.1
+  username: root
+  password:
+  encoding: utf8
+  database: cal_development
+
+test:
+  adapter: mysql
+  host: 127.0.0.1
+  username: root
+  password:
+  encoding: utf8
+  database: cal_test
+
+production:
+  adapter: sqlite3
+  database: db/production.sqlite3
+  pool: 5
+  timeout: 5000

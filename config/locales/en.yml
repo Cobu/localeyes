@@ -1,0 +1,19 @@
+# Sample localization file for English. Add more files in this directory for other locales.
+# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+
+en:
+  activerecord:
+    models:
+      member: Event
+    attributes:
+      event:
+        start_time: From
+        end_time: To
+        event_type_0: Event
+        event_type_1: Special
+        event_type_2: Announcement
+        recur_value_once: Once
+        recur_value_day: Daily
+        recur_value_week: Weekly
+        recur_value_month: Monthly
+        recur_until_date: End Date

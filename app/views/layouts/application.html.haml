@@ -1,0 +1,15 @@
+%html
+
+%head
+  %title Cal
+  = stylesheet_link_tag    "application"
+  = javascript_include_tag "application"
+  = csrf_meta_tags
+%body{:class=>"#{controller_name}_#{action_name}"}
+  .header
+    .buiz_name
+      MomAndPop Store
+      = link_to 'edit', edit_busines_path(current_business)
+  .calendar_content
+    = yield
+
