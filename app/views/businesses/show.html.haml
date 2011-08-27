@@ -1,0 +1,23 @@
+.header
+  .business_name
+    = current_business.name
+    = link_to 'edit', edit_business_path(current_business)
+
+.calendar_content
+  #event_pop_up
+  #calendar_container
+
+  :javascript
+    $(document).ready( function() {
+      $('#calendar_container').fullCalendar({
+        weekMode : window.CalendarOptions.mode,
+        header: window.CalendarOptions.header,
+        events: window.CalendarOptions.events_url,
+        lazyFetching: false,
+        eventClick: function(event) { return window.eventClickHandler(event) },
+        loading: function(bool) { return window.loadingCalendarHandler(bool) },
+        dayClick: function(date, allDay, jsEvent, view) { return window.calendarDayClickHandler(date, allDay, jsEvent, view) }
+       })
+    })
+
+

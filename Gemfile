@@ -9,18 +9,22 @@ gem 'jquery-rails'
 gem 'haml-rails'
 gem 'coffee-script'
 gem 'uglifier'
+gem 'client_side_validations'
 gem 'ice_cube'
 gem 'schedule_atts'
-gem 'draper'
+gem 'carmen'
+gem 'dynamic_form'
 
 group :development, :test do
   gem "wirble"
   gem "capistrano"
   gem 'capistrano-ext'
   gem 'rb-fsevent', :require => false
-  gem 'machinist'
   gem 'guard-rspec'
   gem 'guard-livereload'
+  gem 'guard-spork'
+  gem 'guard-bundler'
+  gem 'machinist'
 end
 
 group :test do

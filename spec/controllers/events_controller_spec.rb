@@ -9,7 +9,7 @@ describe EventsController do
     end
 
     it "recurring event on one date in series sets an exclusion date for this one date" do
-      @event = Event.make(:daily, :business=>@cafe)
+      @event = Event.make(:daily, :businesses=>@cafe)
 
       put :destroy, :id =>@event.id, :edit_affects_type=>'one',
           :edit_start_time=> (@event.start_time + 1.day), :start_end_date_diff => 0
@@ -21,14 +21,14 @@ describe EventsController do
     end
 
     it "recurring event all in series removes event" do
-      @event = Event.make(:daily, :business=>@cafe)
+      @event = Event.make(:daily, :businesses=>@cafe)
 
       put :destroy, :id =>@event.id, :edit_affects_type=>'all_series'
       Event.where(@event.id).first.should be_nil
     end
 
     it "one time event removes event" do
-      @event = Event.make(:once, :business=>@cafe)
+      @event = Event.make(:once, :businesses=>@cafe)
       put :destroy, :id =>@event.id, :edit_affects_type=>''
       Event.where(@event.id).first.should be_nil
     end
@@ -65,7 +65,7 @@ describe EventsController do
     before(:each) do
       @cafe = Business.make(:nyc_cafe)
       @event = Event.make(:once,
-                          :business=>@cafe,
+                          :businesses=>@cafe,
                           :start_time=>Time.utc(2011, 7, 1, 2, 40, 0),
                           :end_time=>Time.utc(2011, 7, 1, 2, 50, 0)
       )
@@ -103,7 +103,7 @@ describe EventsController do
     before(:each) do
       @cafe = Business.make(:nyc_cafe)
       @event = Event.make(:daily,
-                          :business=>@cafe,
+                          :businesses=>@cafe,
                           :start_time=>Time.utc(2011, 7, 1, 2, 40, 0),
                           :end_time=>Time.utc(2011, 7, 1, 2, 50, 0)
       )

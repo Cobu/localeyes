@@ -1,27 +1,42 @@
 require 'sham'
 
-blueprint_start_time = Time.utc(2011,8,5,7,30)
+Sham.email { |index| "dude#{index}@dude.com" }
 
-Business.blueprint {}
+User.blueprint {
+  email { Sham.email }
+}
+
+BusinessUser.blueprint {
+  email { Sham.email }
+  first_name { "Dude" }
+  last_name { "Smiley" }
+  phone { "5105551212" }
+  password { "moogoo" }
+}
+
+now = Time.now.utc
+blueprint_start_time = Time.utc(2011,now.month,5,7,30)
+
+Business.blueprint {
+  user
+  phone { "5551212" }
+  city { 'New York' }
+  state { 'NY' }
+  time_zone { "Pacific Time (US & Canada)" }
+}
 
 Business.blueprint(:nyc_restaurant) {
   service_type { Business::RESTAURANT }
   name { "Dudes Deli" }
   address { "840 Broadway" }
-  city { 'New York' }
-  state { 'NY' }
   zip_code { 10003 }
-  time_zone { "Pacific Time (US & Canada)" }
 }
 
 Business.blueprint(:nyc_cafe) {
   service_type { Business::CAFE }
   name { "Chads Cafe" }
   address { "841 Broadway" }
-  city { 'New York' }
-  state { 'NY' }
   zip_code { 10003 }
-  time_zone { "Pacific Time (US & Canada)" }
 }
 
 

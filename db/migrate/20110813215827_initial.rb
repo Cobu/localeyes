@@ -1,19 +1,30 @@
 class Initial < ActiveRecord::Migration
   def change
+    create_table "users", :force => true do |t|
+      t.string :type
+      t.string :email, :null => false
+      t.string :password_digest, :null => false
+      t.string :first_name
+      t.string :last_name
+      t.string :phone
+    end
+
     create_table "businesses", :force => true do |t|
+      t.belongs_to :user
       t.string :name, :null=>false
       t.integer :service_type, :null=>false
-      t.string :time_zone, :null=>false, :default => "Eastern Time (US & Canada)"
+      t.string :description
+      t.string :time_zone, :default => "Eastern Time (US & Canada)"
       t.string :address, :null=>false
       t.string :address2
       t.string :city, :null=>false
       t.string :state, :null=>false
       t.string :zip_code, :null=>false
-      t.string :phone
-      t.string :email
+      t.string :phone, :null=>false
+      t.text :hours
       t.string :url
-      t.string :image
-      t.hours
+      t.binary :image
+      t.boolean :active
     end
 
     create_table "events", :force => true do |t|

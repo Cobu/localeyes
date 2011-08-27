@@ -1,9 +1,4 @@
 class EventsController < ApplicationController
-  require 'pp'
-
-  def current_business
-    @current_business ||= Business.first
-  end
 
   def index
     start_date = Time.at(params[:start].to_i).to_date
@@ -17,12 +12,8 @@ class EventsController < ApplicationController
     @event = current_business.events.find(params[:id])
   end
 
-  def calendar
-    render :layout => 'application'
-  end
-
   def new
-    @event = Event.new(:start_time=>params[:start_time],:end_time=>params[:end_time])
+    @event = current_business.events.new(:start_time=>params[:start_time],:end_time=>params[:end_time])
     render :edit, :layout => "events"
   end
 
@@ -32,14 +23,13 @@ class EventsController < ApplicationController
   end
 
   def create
-    e = Event.new(params[:event])
-    e.business = current_business
+    e = current_business.events.new(params[:event])
     e.save
     head :ok
   end
 
   def update
-    @event = Event.find(params[:id])
+    @event = current_business.events.find(params[:id])
 
     case params[:edit_affects_type]
       when 'all_series','' then
@@ -63,7 +53,7 @@ class EventsController < ApplicationController
   end
 
   def destroy
-    @event = Event.find(params[:id])
+    @event = current_business.events.find(params[:id])
 
     case  params[:edit_affects_type]
       when 'all_series', '' then

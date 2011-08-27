@@ -1,5 +1,5 @@
 $(document).ready( ->
-  return unless $('body.events_calendar')[0]
+  return unless $('.calendar_content')[0]
 
   eventDataParams = (start_time,end_time)->
     {
@@ -28,7 +28,7 @@ $(document).ready( ->
     time_now = new Date()
     start_time = date.clearTime().add( { hour: time_now.getHours(), minute: time_now.getMinutes() } )
     end_time = start_time.clone().add( { hour: 1 } )
-    openDialog('events/new', "Create New Event", eventDataParams(start_time, end_time))
+    openDialog('/events/new', "Create New Event", eventDataParams(start_time, end_time))
     return false
 
   window.loadingCalendarHandler = (bool) ->

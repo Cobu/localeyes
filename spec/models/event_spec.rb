@@ -20,7 +20,8 @@ describe Event do
               :start=>Time.utc(2011, 8, 5, 7, 30),
               :end=>Time.utc(2011, 8, 5, 9, 30),
               :allDay=>false,
-              :url=>"/events/#{@e.id}/edit"
+              :url=>"/events/#{@e.id}/edit",
+              :className=> 'event_type'
       }
     end
 
@@ -33,7 +34,8 @@ describe Event do
               :start=>Time.utc(2011, 8, 3, 23, 00),
               :end=>Time.utc(2011, 8, 4, 1, 30),
               :allDay=>false,
-              :url=>"/events/#{@e.id}/edit"
+              :url=>"/events/#{@e.id}/edit",
+              :className=> 'event_type'
       }
     end
   end
@@ -63,7 +65,8 @@ describe Event do
               :start=>Time.utc(2011, 8, 5, 7, 30),
               :end=>Time.utc(2011, 8, 5, 9, 30),
               :allDay=>false,
-              :url=>"/events/#{@e.id}/edit"
+              :url=>"/events/#{@e.id}/edit",
+              :className=> 'event_type'
       }
 
       @e.calendar_detail(@e.start_time+1.day).should == {
@@ -72,7 +75,8 @@ describe Event do
               :start=>Time.utc(2011, 8, 6, 7, 30),
               :end=>Time.utc(2011, 8, 6, 9, 30),
               :allDay=>false,
-              :url=>"/events/#{@e.id}/edit"
+              :url=>"/events/#{@e.id}/edit",
+              :className=> 'event_type'
       }
     end
 

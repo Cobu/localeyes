@@ -12,3 +12,4 @@
 //= require fullcalendar
 //= require events
 //= require calendar
+//= require rails.validations

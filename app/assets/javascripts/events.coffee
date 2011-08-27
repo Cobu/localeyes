@@ -84,5 +84,4 @@ $(document).ready( ->
      $('#event_pop_up').dialog('close')
      $('#calendar_container').fullCalendar('refetchEvents')
   )
-
 )

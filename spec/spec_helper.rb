@@ -1,5 +1,5 @@
 require 'spork'
-require  'pp'
+require 'pp'
 
 Spork.prefork do
 
@@ -16,6 +16,9 @@ Spork.prefork do
   RSpec.configure do |config|
     config.mock_with :rr
     config.use_transactional_fixtures = true
+    config.after(:each) do
+       ApplicationController.session_data = { }
+    end
   end
 
   Capybara.register_driver :selenium_chrome do |app|
@@ -42,7 +45,40 @@ Spork.prefork do
   #    Thread.main.object_id
   #  end
   #end
+
+  class ApplicationController < ActionController::Base
+    @@session_data = nil
+
+    def self.session_data=(hash)
+      @@session_data = hash
+    end
+
+    def self.add_session_data(hash)
+      @@session_data ||= {}
+      @@session_data.merge!(hash)
+    end
+
+    def self.get_session_data
+      @@current_session_data
+    end
+
+    prepend_before_filter :set_session_data
+
+    def set_session_data
+      @@current_session_data = session.dup
+
+      if @@session_data then
+        @@session_data.each do |k, v|
+          session[k] = v
+        end
+        @@session_data = nil
+      end
+
+    end
+
+  end
 end
+
 
 Spork.each_run do
   Dir["#{Rails.root}/app/**/*.rb"].each { |f| load f }

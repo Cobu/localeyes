@@ -2,10 +2,19 @@ require 'spec_helper'
 
 describe "Event Calendar" do
 
+  def sign_in_user user
+    visit login_business_users_path
+    within "form" do
+      fill_in "business_user_email", :with=> user.email
+      fill_in "business_user_password", :with=> user.password
+      click_on "Sign in"
+    end
+  end
+
   before(:each) do
-    Business.destroy_all
-    Event.destroy_all
-    @b = Business.make(:nyc_restaurant)
+    BusinessUser.destroy_all
+    @bu = BusinessUser.make
+    @b = Business.make(:nyc_restaurant, :user=>@bu)
   end
 
   let(:once_event) {Event.make(:once, :start_time=>Time.now, :end_time=>Time.now+1.hour, :business=> @b)}
@@ -19,7 +28,7 @@ describe "Event Calendar" do
       new_start_time = Time.now.utc.change(:hour=>3, :min=>4, :sec=>0)
       new_title = Time.now.to_i.to_s
 
-      visit calendar_path
+      sign_in_user @bu
 
       find(:css, "a.fc-event").click
 
@@ -40,7 +49,7 @@ describe "Event Calendar" do
       e = daily_event
       new_title = Time.now.to_i.to_s
 
-      visit calendar_path
+      sign_in_user @bu
 
       find(:css, "a.fc-event").click
 
@@ -60,9 +69,11 @@ describe "Event Calendar" do
 
   describe "deletes" do
 
-    it "a one time event", :js=>true do
+    it "a one time event", :js=>true, :driver=>:selenium_chrome do
       once_event
-      visit calendar_path
+
+      sign_in_user @bu
+
       find(:css, "a.fc-event").click
 
       within('.edit_event') do
@@ -75,7 +86,7 @@ describe "Event Calendar" do
     it "a daily event, just one day", :js=>true do
       e = daily_event
 
-      visit calendar_path
+      sign_in_user @bu
 
       find(:css, "a.fc-event").click
 
@@ -88,20 +99,20 @@ describe "Event Calendar" do
       end
 
       e.reload
-      e.title.should_not == new_title
-      p e.schedule.exdates
+      e.schedule.exdates.size.should == 1
     end
 
   end
 
   describe "creates" do
 
-    it "a new event", :js=>true do
+    it "a new event", :js=>true, :driver=>:selenium_chrome do
       new_title = Time.now.to_i.to_s
       new_start_time = Time.now.utc.change(:hour=>3, :min=>4, :sec=>0)
       new_end_time = Time.now.utc.change(:hour=>4, :min=>5, :sec=>0)
 
-      visit calendar_path
+      sign_in_user @bu
+
       find(:css, "td.fc-day11").click
 
       within('.new_event') do
@@ -126,6 +137,7 @@ describe "Event Calendar" do
       e.start_time.should == new_start_time
       e.end_time.should == new_end_time
     end
+
   end
 
 end

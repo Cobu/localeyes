@@ -1,0 +1,12 @@
+%h1.inset Business User Sign in
+#content.business_users_login
+  = alert
+  = form_for(@user, :url=> login_submit_business_users_path) do |f|
+    .field
+      = f.label :email
+      = f.text_field :email
+    .field
+      = f.label :password
+      = f.password_field :password
+
+    = f.submit "Sign in", :id=>"log_in", :class=>"button"
