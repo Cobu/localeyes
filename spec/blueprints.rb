@@ -20,23 +20,23 @@ blueprint_start_time = Time.utc(2011,now.month,5,7,30)
 Business.blueprint {
   user
   phone { "5551212" }
+  address { '1 Dude street' }
   city { 'New York' }
   state { 'NY' }
   time_zone { "Pacific Time (US & Canada)" }
+  zip_code { "10003" }
 }
 
 Business.blueprint(:nyc_restaurant) {
   service_type { Business::RESTAURANT }
   name { "Dudes Deli" }
   address { "840 Broadway" }
-  zip_code { 10003 }
 }
 
 Business.blueprint(:nyc_cafe) {
   service_type { Business::CAFE }
   name { "Chads Cafe" }
   address { "841 Broadway" }
-  zip_code { 10003 }
 }
 
 

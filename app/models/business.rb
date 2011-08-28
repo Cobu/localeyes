@@ -2,11 +2,13 @@ class Business < ActiveRecord::Base
   belongs_to :user, :class_name => 'BusinessUser'
   has_many :events, :dependent => :destroy
 
+  validates :phone, :city, :state, :zip_code, :presence => true
+
   # day order is  [sun, mon, tues, wed , thu, fri, sat]
   # hours = [ [ :from=>time, :to=>time, :closed=>true], etc.. for each day starting with sunday ]
   # each hour is a time [ [time,time] ] to_yaml
   serialize :hours, Array
-  attr_accessor :phone_first3, :phone_second3, :phone_last4
+  attr_writer :phone_first3, :phone_second3, :phone_last4
 
   after_initialize :set_default_hours, :if => :new_record?
   before_save :set_phone_number
@@ -30,7 +32,9 @@ class Business < ActiveRecord::Base
   SERVICE_TYPES = [CAFE, RESTAURANT, BAR]
   SERVICE_TYPE_NAMES = ['Cafe', 'Restaurant', 'Bar']
 
-
+  def service_name
+    SERVICE_TYPE_NAMES[service_type]
+  end
 
   TIME_TYPES = ['from', 'to']
   TIME_PATTERNS = ["%I", "%M", "%P"]
@@ -69,4 +73,15 @@ class Business < ActiveRecord::Base
     end
   end
 
+  def phone_first3
+    read_attribute(:phone)[0..2] if read_attribute(:phone)
+  end
+
+  def phone_second3
+    read_attribute(:phone)[3..5] if read_attribute(:phone)
+  end
+
+  def phone_last4
+    read_attribute(:phone)[6..9] if read_attribute(:phone)
+  end
 end

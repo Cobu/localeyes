@@ -1,6 +1,6 @@
 = form_for(@business) do |f|
   .error_messages
-    -#= f.error_messages if @business.errors
+    = f.error_messages if @business.errors
   %div
     .field
       = f.text_field :name, :placeholder => 'Business Name'
@@ -32,11 +32,11 @@
           = Business::SHORT_DAYNAME[day_index]
         - Business::TIME_TYPES.each_with_index do |type,index|
           .hours
-            = f.select "#{dayname}_hours_#{type}_hour", (0..12).zip(('00'..'12')), {}, :name=>"#{dayname}_hours_#{type}[hour]"
+            = f.select "#{dayname}_hours_#{type}_hour", (0..12).zip(('00'..'12')), {}, :name=>"business[#{dayname}_hours_#{type}[hour]]"
           .minutes
-            = f.select "#{dayname}_hours_#{type}_min", ('00'..'60'), {}, :name=>"#{dayname}_hours_#{type}[min]"
+            = f.select "#{dayname}_hours_#{type}_min", ('00'..'60'), {}, :name=>"business[#{dayname}_hours_#{type}[min]]"
           .ampm
-            = f.select "#{dayname}_hours_#{type}_ampm", %w(am pm), {}, :name=>"#{dayname}_hours_#{type}[ampm]"
+            = f.select "#{dayname}_hours_#{type}_ampm", %w(am pm), {}, :name=>"business[#{dayname}_hours_#{type}[ampm]]"
           - if index == 0
             == -
 

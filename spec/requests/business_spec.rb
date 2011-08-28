@@ -1,143 +1,70 @@
 require 'spec_helper'
 
-describe "Event Calendar" do
+describe Business do
 
-  def sign_in_user user
-    visit login_business_users_path
-    within "form" do
-      fill_in "business_user_email", :with=> user.email
-      fill_in "business_user_password", :with=> user.password
-      click_on "Sign in"
-    end
-  end
-
-  before(:each) do
-    BusinessUser.destroy_all
+  before(:all) do
     @bu = BusinessUser.make
-    @b = Business.make(:nyc_restaurant, :user=>@bu)
+  end
+  after(:all) { BusinessUser.destroy_all }
+
+  def register_user(user)
+    ApplicationController.session_data = {:business_user_id=>user.id}
   end
 
-  let(:once_event) {Event.make(:once, :start_time=>Time.now, :end_time=>Time.now+1.hour, :business=> @b)}
-  let(:daily_event) {Event.make(:daily, :start_time=>Time.now, :end_time=>Time.now+1.hour, :business=> @b)}
-
-  describe "edits" do
-
-    it "a one time event", :js=>true do
-      start_time = Time.now.utc.change(:hour=>1, :min=>2, :sec=>0)
-      e = Event.make(:once, :start_time=>start_time, :business=> @b)
-      new_start_time = Time.now.utc.change(:hour=>3, :min=>4, :sec=>0)
-      new_title = Time.now.to_i.to_s
-
-      sign_in_user @bu
-
-      find(:css, "a.fc-event").click
-
-      within('.edit_event') do
-        fill_in 'event_title', :with=> new_title
-        select new_start_time.hour.to_s, :from => 'event_start_time_hour'
-        select new_start_time.strftime("%M"), :from => 'event_start_time_minute'
-        select new_start_time.strftime("%P"), :from => 'event_start_time_am_pm'
-        click_on 'Update'
-      end
-
-      e.reload
-      e.title.should == new_title
-      e.start_time.should == new_start_time
+  it "create succeeds and takes you to calendar page" do
+    register_user(@bu)
+    visit new_business_path
+    b = Business.new Business.plan(:name=>"yo cafe",
+                                   :description=>"fun cafe",
+                                   :service_type=>2, # Bar
+                                   :phone=>"9001112222")
+    within "form" do
+      fill_in 'business_name', :with => b.name
+      fill_in 'business_description', :with => b.description
+      select b.service_name, :from => 'business_service_type'
+      fill_in 'business_address', :with => b.address
+      fill_in 'business_city', :with => b.city
+      select b.state, :from => 'business_state'
+      fill_in 'business_zip_code', :with => b.zip_code
+      fill_in 'business_phone_first3', :with => b.phone_first3
+      fill_in 'business_phone_second3', :with => b.phone_second3
+      fill_in 'business_phone_last4', :with => b.phone_last4
+      select "5", :from => 'business_monday_hours_from_hour'
+      select "15", :from => 'business_monday_hours_from_min'
+      select "pm", :from => 'business_monday_hours_from_ampm'
+      select "2", :from => 'business_saturday_hours_to_hour'
+      select "22", :from => 'business_saturday_hours_to_min'
+      select "am", :from => 'business_saturday_hours_to_ampm'
+      click_on "Create Business"
     end
 
-    it "a daily event", :js=>true do
-      e = daily_event
-      new_title = Time.now.to_i.to_s
+    bnew = Business.first
 
-      sign_in_user @bu
+    bnew.name.should == b.name
+    bnew.description.should == b.description
+    bnew.service_type.should == b.service_type
+    bnew.address.should == b.address
+    bnew.city.should == b.city
+    bnew.state.should == b.state
+    bnew.zip_code.should == b.zip_code
+    bnew.phone.should == b.phone
+    bnew.monday_hours[:from].should == Time.utc(1970, 1, 1, 17, 15)
+    bnew.saturday_hours[:to].should == Time.utc(1970, 1, 1, 2, 22)
 
-      find(:css, "a.fc-event").click
-
-      within('.edit_event') do
-        fill_in 'event_title', :with=> new_title
-        click_on 'Update'
-      end
-
-      within('.choices_radio') do
-        find(:css , "input#edit_affects_all_series").click
-      end
-
-      e.reload
-      e.title.should == new_title
-    end
+    page.current_path.should == business_path(bnew)
   end
 
-  describe "deletes" do
+  it "create fails and keeps you on create page" do
+    register_user(@bu)
+    visit new_business_path
+    b = Business.new(:name=>"yo cafe")
 
-    it "a one time event", :js=>true, :driver=>:selenium_chrome do
-      once_event
-
-      sign_in_user @bu
-
-      find(:css, "a.fc-event").click
-
-      within('.edit_event') do
-        click_on 'Delete'
-      end
-
-      Event.count.should == 0
+    within "form" do
+      fill_in 'business_name', :with => b.name
+      click_on "Create Business"
     end
 
-    it "a daily event, just one day", :js=>true do
-      e = daily_event
-
-      sign_in_user @bu
-
-      find(:css, "a.fc-event").click
-
-      within('.edit_event') do
-        click_on 'Delete'
-      end
-
-      within('.choices_radio') do
-        find(:css , "input#edit_affects_one").click
-      end
-
-      e.reload
-      e.schedule.exdates.size.should == 1
-    end
-
-  end
-
-  describe "creates" do
-
-    it "a new event", :js=>true, :driver=>:selenium_chrome do
-      new_title = Time.now.to_i.to_s
-      new_start_time = Time.now.utc.change(:hour=>3, :min=>4, :sec=>0)
-      new_end_time = Time.now.utc.change(:hour=>4, :min=>5, :sec=>0)
-
-      sign_in_user @bu
-
-      find(:css, "td.fc-day11").click
-
-      within('.new_event') do
-        fill_in 'event_title', :with=> new_title
-
-        fill_in 'event_start_date', :with=> new_start_time.strftime("%m/%d/%Y")
-        select new_start_time.hour.to_s, :from => 'event_start_time_hour'
-        select new_start_time.strftime("%M"), :from => 'event_start_time_minute'
-        select new_start_time.strftime("%P"), :from => 'event_start_time_am_pm'
-
-        fill_in 'event_end_date', :with=> new_end_time.strftime("%m/%d/%Y")
-        select new_end_time.hour.to_s, :from => 'event_end_time_hour'
-        select new_end_time.strftime("%M"), :from => 'event_end_time_minute'
-        select new_end_time.strftime("%P"), :from => 'event_end_time_am_pm'
-
-        click_on 'Create Event'
-      end
-
-      Event.count.should == 1
-      e = Event.first
-      e.title.should == new_title
-      e.start_time.should == new_start_time
-      e.end_time.should == new_end_time
-    end
-
+    page.current_path.should == businesses_path
   end
 
 end

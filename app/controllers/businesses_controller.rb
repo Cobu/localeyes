@@ -5,7 +5,7 @@ class BusinessesController < ApplicationController
   end
 
   def new
-    @business = Business.new
+    @business = current_business_user.businesses.new
   end
 
   def edit
@@ -13,9 +13,13 @@ class BusinessesController < ApplicationController
   end
 
   def create
-    @business = Business.new(params[:businesses])
-    @business.save
-    render :edit
+    @business = current_business_user.businesses.new
+    if  @business.update_attributes(params[:business])
+      session[:business_id]=@business.id
+      redirect_to business_path(@business)
+    else
+      render :new
+    end
   end
 
   def update
