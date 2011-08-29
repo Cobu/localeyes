@@ -1,6 +1,7 @@
 Cal::Application.routes.draw do
   resources :events
   resources :businesses, :except=>[:index]
+  resources :users, :only=>[:index,:show]
   resources :business_users, :except=>[:index,:show] do
     collection do
       get :login

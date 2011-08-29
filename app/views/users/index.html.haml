@@ -1,0 +1,15 @@
+= render :partial => 'map_details'
+
+#content.event_list
+
+  #event_list_container
+    #event_list_inner
+      %ul#event_list{:class => 'event_list'}
+
+  #map_canvas_container
+    #map_canvas{:style => "width:500px; height:350px"}
+
+    = form_tag(search_path, :method=>:get) do
+      Choose your Location
+      = text_field_tag :zip_code, params[:zip_code]
+      = submit_tag "Search", :id=> :find_labs, :class=>'button'

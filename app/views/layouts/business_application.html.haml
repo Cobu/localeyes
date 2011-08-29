@@ -1,0 +1,9 @@
+%html
+%head
+  %title Cobu Business Application
+  = stylesheet_link_tag    "business_application"
+  = javascript_include_tag "business_application"
+  = csrf_meta_tags
+%body{:class=>"#{controller_name}_#{action_name}"}
+  = yield
+

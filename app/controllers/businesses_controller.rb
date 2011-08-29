@@ -1,29 +1,33 @@
 class BusinessesController < ApplicationController
-  layout 'business'
-
-  def show
-  end
+  layout 'business_application'
 
   def new
     @business = current_business_user.businesses.new
+    @business.set_default_hours
   end
 
   def edit
-    @business = Business.find(params[:id])
+    @business = current_business_user.businesses.find(params[:id])
   end
 
   def create
-    @business = current_business_user.businesses.new
-    if  @business.update_attributes(params[:business])
+    @business = current_business_user.businesses.create(params[:business])
+    # have to call 'businesses.new' first to get the hours set up
+    if @business.valid?
       session[:business_id]=@business.id
-      redirect_to business_path(@business)
+      redirect_to business_path(@business), :message=>"Business created"
     else
       render :new
     end
   end
 
   def update
-    @business = Business.find(params[:id])
+    @business = current_business_user.businesses.find(params[:id])
+    if @business.update_attributes(params[:business])
+      redirect_to business_path(@business), :message=>"Business updated"
+    else
+      render :edit
+    end
   end
 
   def destroy

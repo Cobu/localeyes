@@ -1,0 +1,18 @@
+test:
+  host: localhost
+  database: cal_test
+
+development:
+  host: localhost
+  database: cal_development
+
+staging:
+  host: localhost
+  database: cal_staging
+
+production:
+  host: <%= ENV['MONGOID_HOST'] %>
+  port: <%= ENV['MONGOID_PORT'] %>
+  username: <%= ENV['MONGOID_USERNAME'] %>
+  password: <%= ENV['MONGOID_PASSWORD'] %>
+  database: <%= ENV['MONGOID_DATABASE'] %>

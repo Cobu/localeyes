@@ -1,13 +1,18 @@
 require 'sham'
 
-Sham.email { |index| "dude#{index}@dude.com" }
+Sham.bemail { |index| "b#{index}@dude.com" }
+Sham.uemail { |index| "u#{index}@dude.com" }
 
 User.blueprint {
-  email { Sham.email }
+  email { Sham.uemail }
+  password { "moogoo" }
+}
+
+User.blueprint(:nyc) {
 }
 
 BusinessUser.blueprint {
-  email { Sham.email }
+  email { Sham.bemail }
   first_name { "Dude" }
   last_name { "Smiley" }
   phone { "5105551212" }
@@ -19,7 +24,7 @@ blueprint_start_time = Time.utc(2011,now.month,5,7,30)
 
 Business.blueprint {
   user
-  phone { "5551212" }
+  phone { "6505551212" }
   address { '1 Dude street' }
   city { 'New York' }
   state { 'NY' }

@@ -1,4 +1,5 @@
 class BusinessUsersController < ApplicationController
+  layout 'business_application'
 
   def login
     @user = BusinessUser.new
@@ -39,5 +40,4 @@ class BusinessUsersController < ApplicationController
     session[:business_id] = business.id
     redirect_to business_path(business)
   end
-
 end

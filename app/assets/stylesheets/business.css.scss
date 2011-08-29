@@ -1,3 +1,48 @@
+@import 'mixins';
+
+body {
+  font: normal normal normal 13.34px/normal helvetica, arial, freesans, clean, sans-serif;
+}
+
+/*  Buttons */
+span.button, a.button, input.button{
+  color: white;
+  font-size:13px;
+  background-image: -webkit-gradient(
+    linear,
+    left bottom,
+    left top,
+    color-stop(0.34, rgb(10,75,136)),
+    color-stop(0.67, rgb(32,101,166))
+  );
+  background-image: -moz-linear-gradient(
+      center bottom,
+      rgb(32,101,166) 34%,
+      rgb(10,75,136) 67%
+  );
+  @include rounded(10px);
+  padding: 6px 10px;
+  text-align: center;
+  text-decoration:none;
+}
+
+.header {
+  width: 75%;
+  margin: 20px auto;
+  /*background-color:green;*/
+
+  .buiz_name {
+    padding-left:20px
+    /*margin:auto;*/
+  }
+}
+
+
+#calendar_container {
+  width: 700px;
+  margin: auto
+}
+
 form.new_business, form.edit_business{
   padding-top:10px;
   padding-left:10px;

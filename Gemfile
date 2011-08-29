@@ -14,6 +14,9 @@ gem 'ice_cube'
 gem 'schedule_atts'
 gem 'carmen'
 gem 'dynamic_form'
+gem 'mongo'
+gem 'mongoid'
+gem 'bson_ext'
 
 group :development, :test do
   gem "wirble"

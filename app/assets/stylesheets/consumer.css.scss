@@ -1,0 +1,43 @@
+#event_list_container {
+  float: left;
+  width: 450px;
+  height: 650px;
+
+  #lab_list_inner {
+    position: relative;
+  }
+}
+
+
+ul.event_list {
+  list-style: none;
+  padding: 0px;
+  margin: 0px;
+  width: 430px;
+
+  li.lab_info {
+    padding: 5px;
+    border-bottom: 1px dotted #ccc;
+    padding-left: 28px;
+    position: relative;
+
+    &:hover {
+      background-color:#eee;
+    }
+
+    img {
+      width: 17px;
+      position: absolute;
+      top:8px; left: 0;
+    }
+
+    .event_name {
+      font-size:120%;
+      font-weight: bold;
+    }
+
+    .link {
+      margin: 15px 0;
+    }
+  }
+}

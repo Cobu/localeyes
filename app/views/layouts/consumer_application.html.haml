@@ -1,0 +1,8 @@
+%html
+%head
+  %title Event List
+  = stylesheet_link_tag    "consumer_application"
+  = javascript_include_tag "consumer_application"
+  = csrf_meta_tags
+%body{:class=>"#{controller_name}_#{action_name}"}
+  = yield
