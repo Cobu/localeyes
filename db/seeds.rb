@@ -3,9 +3,11 @@ require_relative '../spec/blueprints'
 
 BusinessUser.destroy_all
 User.destroy_all
+ZipCode.connection.execute "TRUNCATE `zip_codes`"
+Colleges.connection.execute "TRUNCATE `colleges`"
 
 bu = BusinessUser.make(:email=>"dude@dude.com")
-cafe = Business.make(:nyc_cafe, :user=> bu)
+cafe = Business.make(:oswego_cafe, :user=> bu)
 cafe.set_default_hours
 cafe.save
 
@@ -15,3 +17,8 @@ Event.make(:daily, :business=>cafe, :start_time => Time.utc(2011,now.month,5,7,3
 Event.make(:weekly,:business=>cafe, :start_time => Time.utc(2011,now.month,6,21,30),:end_time => Time.utc(2011,now.month,7,1,50), :title=>"bubbly times")
 
 User.make(:nyc)
+
+ZipCode.make(:oswego)
+ZipCode.make(:new_paltz)
+College.make(:suny_new_paltz)
+College.make(:suny_oswego)

@@ -1,13 +1,5 @@
 class EventsController < ApplicationController
 
-  def index
-    start_date = Time.at(params[:start].to_i).to_date
-    end_date = Time.at(params[:end].to_i).to_date
-    events = current_business.events.all
-    details = events.collect { |e| e.occurrences_between(start_date, end_date) }.flatten
-    render :json=> details
-  end
-
   def show
     @event = current_business.events.find(params[:id])
   end

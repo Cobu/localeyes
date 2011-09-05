@@ -81,7 +81,7 @@ describe Business do
 
     before(:all) do
       @bu = BusinessUser.make
-      @b = Business.make(:nyc_cafe, :user=>@bu)
+      @b = Business.make(:oswego_cafe, :user=>@bu)
       @b.set_default_hours
       @b.save
     end

@@ -1,10 +1,10 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.1.0.rc5'
+gem 'rails', '3.1.0'
 gem 'sqlite3'
 gem 'mysql'
-gem "arel", "2.1.4"
-gem 'sass-rails', "~> 3.1.0.rc"
+gem "arel", "2.2.1"
+gem 'sass-rails', "~> 3.1.0"
 gem 'jquery-rails'
 gem 'haml-rails'
 gem 'coffee-script'
@@ -17,9 +17,12 @@ gem 'dynamic_form'
 gem 'mongo'
 gem 'mongoid'
 gem 'bson_ext'
+gem 'geocoder'
 
 group :development, :test do
   gem "wirble"
+  gem "pry"
+  gem "hirb"
   gem "capistrano"
   gem 'capistrano-ext'
   gem 'rb-fsevent', :require => false
@@ -40,6 +43,7 @@ group :test do
   gem 'rr'
   gem "rspec-rails"
   gem 'database_cleaner'
+  gem 'timecop'
 end
 
 group :production do

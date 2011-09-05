@@ -46,7 +46,7 @@ describe "Business User" do
     it "with correct password logs in existing user" do
       password = "dudeman"
       bu = BusinessUser.make(:password=>password)
-      b = Business.make(:nyc_restaurant, :user=>bu)
+      b = Business.make(:oswego_restaurant, :user=>bu)
 
       visit login_business_users_path
 

@@ -16,6 +16,9 @@ Spork.prefork do
   RSpec.configure do |config|
     config.mock_with :rr
     config.use_transactional_fixtures = true
+    config.before(:each) do
+      Timecop.return
+    end
     config.after(:each) do
        ApplicationController.session_data = { }
     end

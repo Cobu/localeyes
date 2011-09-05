@@ -2,80 +2,108 @@ require 'spec_helper'
 
 describe Event do
 
-  context "one day" do
+  let(:business) { Business.new(Business.plan(:oswego_restaurant)) }
 
-    before(:each) do
-      @b = Business.make(:nyc_restaurant)
-      @e = Event.make(:once, :business=> @b)
+  describe "one day" do
+
+    let(:event) do
+      event = Event.new(Event.plan(:once,
+                                   :business => business,
+                                   :start_time => Time.utc(2011, 8, 5, 7, 30),
+                                   :end_time => Time.utc(2011, 8, 5, 9, 30)
+                        ))
+      event.id = 1
+      event
     end
 
-    it "makes event with schedule" do
-      @e.occurrences_between(@e.start_time, (@e.start_time + 2.days)).size.should==1
+    describe "#occurrences_between" do
+      it "start time, end time that are dates instead of times" do
+        event.occurrences_between(event.start_time.to_date, event.end_time.to_date+1.day).size.should== 1
+        event.occurrences_between(event.start_time.to_date-1.day, event.end_time.to_date).size.should== 0
+      end
+
+      it "start time, end time that are before search time range" do
+        event.occurrences_between(event.end_time + 1.second, (event.end_time + 2.days)).size.should== 0
+      end
+
+      it "start time, end time that are after search time range" do
+        event.occurrences_between(event.start_time - 1.day, (event.start_time - 1.second)).size.should== 0
+      end
+
+      it "start time, end time that are within time range" do
+        event.occurrences_between(event.start_time - 1.hour, (event.start_time + 1.hour)).size.should== 1
+      end
     end
 
-    it "makes event details" do
-      @e.calendar_detail.should == {
-              :id=>@e.to_param,
-              :title=>"one times",
-              :start=>Time.utc(2011, 8, 5, 7, 30),
-              :end=>Time.utc(2011, 8, 5, 9, 30),
-              :allDay=>false,
-              :url=>"/events/#{@e.id}/edit",
+    it "#business_event_details" do
+      event.business_event_details.should == {
+              :id=> event.to_param,
+              :title=> "one times",
+              :start=> Time.utc(2011, 8, 5, 7, 30),
+              :end=> Time.utc(2011, 8, 5, 9, 30),
+              :allDay=> false,
+              :url=> "/events/#{event.id}/edit",
               :className=> 'event_type'
       }
     end
 
-    it "makes event details for event spanning two days and at night" do
-      @e = Event.make(:once, :start_time => Time.utc(2011,8,3,23,00), :end_time => Time.utc(2011,8,4,1,30), :business=>@b)
+    it "#business_event_details for event spanning two days and at night" do
+      event.start_time = Time.utc(2011, 8, 3, 23, 00)
+      event.end_time = Time.utc(2011, 8, 4, 1, 30)
 
-      @e.calendar_detail.should == {
-              :id=>@e.to_param,
+      event.business_event_details.should == {
+              :id=>event.to_param,
               :title=>"one times",
               :start=>Time.utc(2011, 8, 3, 23, 00),
               :end=>Time.utc(2011, 8, 4, 1, 30),
               :allDay=>false,
-              :url=>"/events/#{@e.id}/edit",
+              :url=>"/events/#{event.id}/edit",
               :className=> 'event_type'
       }
     end
   end
 
-  context "daily" do
+  describe "daily" do
 
-    before(:each) do
-      @b = Business.make(:nyc_restaurant)
-      @e = Event.make(:daily, :business=> @b)
+    let(:event) do
+      event = Event.new(Event.plan(:daily,
+                                   :business => business,
+                                   :start_time => Time.utc(2011, 8, 5, 7, 30),
+                                   :end_time => Time.utc(2011, 8, 5, 9, 30)
+                        ))
+      event.id = 1
+      event.create_schedule
+      event
     end
 
-
     it "makes event with schedule" do
-       @e.schedule.occurrences_between(@e.start_time, @e.start_time+1.day).size.should == 2
-       @e.occurrences_between(@e.start_time, (@e.start_time + 2.days)).size.should==3
+      event.schedule.occurrences_between(event.start_time, event.start_time+1.day).size.should == 2
+      event.occurrences_between(event.start_time, (event.start_time + 2.days)).size.should==3
     end
 
     it "#occurrences_between" do
-      @e = Event.make(:once, :business=> @b)
-      @e.occurrences_between(@e.start_time, @e.start_time+1.day).size.should == 1
+      event.occurrences_between(event.start_time, event.start_time+1.hour).size.should == 1
+      event.occurrences_between(event.start_time, event.start_time+1.day).size.should == 2
     end
 
-    it "makes event details" do
-      @e.calendar_detail.should == {
-              :id=>@e.to_param,
+    it "#business_event_details" do
+      event.business_event_details.should == {
+              :id=>event.to_param,
               :title=>"say hi to rob and then go home",
               :start=>Time.utc(2011, 8, 5, 7, 30),
               :end=>Time.utc(2011, 8, 5, 9, 30),
               :allDay=>false,
-              :url=>"/events/#{@e.id}/edit",
+              :url=>"/events/#{event.id}/edit",
               :className=> 'event_type'
       }
 
-      @e.calendar_detail(@e.start_time+1.day).should == {
-              :id=>@e.to_param,
+      event.business_event_details(event.start_time+1.day).should == {
+              :id=>event.to_param,
               :title=>"say hi to rob and then go home",
               :start=>Time.utc(2011, 8, 6, 7, 30),
               :end=>Time.utc(2011, 8, 6, 9, 30),
               :allDay=>false,
-              :url=>"/events/#{@e.id}/edit",
+              :url=>"/events/#{event.id}/edit",
               :className=> 'event_type'
       }
     end

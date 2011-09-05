@@ -1,8 +1,8 @@
 class UsersController < ApplicationController
-  layout 'consumer_application'
 
   def login
     @user = User.new
+    render :new, :layout=> false
   end
 
   def new

@@ -4,13 +4,13 @@ describe "Business Events" do
 
   before(:all) do
     @bu = BusinessUser.make
-    @b = Business.make(:nyc_restaurant, :user=>@bu)
+    @b = Business.make(:oswego_restaurant, :user=>@bu)
   end
   after(:all) { BusinessUser.destroy_all }
   after(:each) { Event.delete_all }
 
   def sign_in_user(user)
-    ApplicationController.session_data = { :business_user_id=>@bu.id, :business_id=>@b.id }
+    ApplicationController.session_data = { :business_user_id=>user.id, :business_id=>@b.id }
   end
 
   let(:once_event) {Event.make(:once, :start_time=>Time.now, :end_time=>Time.now+1.hour, :business=> @b)}
@@ -21,13 +21,14 @@ describe "Business Events" do
     it "a one time event", :js=>true do
       start_time = Time.now.utc.change(:hour=>1, :min=>2, :sec=>0)
       e = Event.make(:once, :start_time=>start_time, :business=> @b)
-      new_start_time = Time.now.utc.change(:hour=>3, :min=>4, :sec=>0)
-      new_title = Time.now.to_i.to_s
 
       sign_in_user @bu
       visit business_path(@b)
 
       find(:css, "a.fc-event").click
+
+      new_start_time = Time.now.utc.change(:hour=>3, :min=>4, :sec=>0)
+      new_title = Time.now.to_i.to_s
 
       within('.edit_event') do
         fill_in 'event_title', :with=> new_title
@@ -67,7 +68,7 @@ describe "Business Events" do
 
   describe "deletes" do
 
-    it "a one time event", :js=>true, :driver=>:selenium_chrome do
+    it "a one time event", :js=>true do
       once_event
 
       sign_in_user @bu
@@ -106,7 +107,7 @@ describe "Business Events" do
 
   describe "creates" do
 
-    it "a new event", :js=>true, :driver=>:selenium_chrome do
+    it "a new event", :js=>true do
       new_title = Time.now.to_i.to_s
       new_start_time = Time.now.utc.change(:hour=>3, :min=>4, :sec=>0)
       new_end_time = Time.now.utc.change(:hour=>4, :min=>5, :sec=>0)

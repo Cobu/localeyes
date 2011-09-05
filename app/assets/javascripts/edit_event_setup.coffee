@@ -1,13 +1,3 @@
-window.CalendarOptions = {
-  mode :  'liquid',
-  header : {
-    left: 'prev,next today',
-    center: 'title',
-    right: 'month,agendaWeek'
-  },
-  events_url : '/events'
-}
-
 $(document).ready( ->
 
   # check the ending recur date and set message if blank

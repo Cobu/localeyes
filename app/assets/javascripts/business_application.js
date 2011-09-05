@@ -6,5 +6,5 @@
 //= require has_class_plugin
 //= require fullcalendar
 //= require edit_event_setup
-//= require calendar
+//= require business_event_calendar
 //= require rails.validations

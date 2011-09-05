@@ -1,3 +1,13 @@
+window.CalendarOptions = {
+  mode :  'liquid',
+  header : {
+    left: 'prev,next today',
+    center: 'title',
+    right: 'month,agendaWeek'
+  },
+  events_url : '/businesses/events'
+}
+
 $(document).ready( ->
   return unless $('.calendar_content')[0]
 

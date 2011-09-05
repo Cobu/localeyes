@@ -1,6 +1,19 @@
 class BusinessesController < ApplicationController
   layout 'business_application'
 
+  def events
+    start_date = Time.at(params[:start].to_i).to_date
+    end_date = Time.at(params[:end].to_i).to_date
+    events = current_business.events.all
+    details = events.collect { |e| e.business_events(start_date, end_date) }.flatten
+    render :json=> details
+  end
+
+  def index
+    businesses = Business.where(:id=>params[:business_ids])
+    render :json => businesses
+  end
+
   def new
     @business = current_business_user.businesses.new
     @business.set_default_hours

@@ -72,26 +72,56 @@ class Event < ActiveRecord::Base
     schedule_attributes.until_date
   end
 
+  def business_events(start_date, end_date)
+    occurrences_between(start_date, end_date).collect { |date| business_event_details(date) }
+  end
+
+  def consumer_events(start_date, end_date)
+    occurrences_between(start_date, end_date).collect { |date| consumer_event_details(date) }
+  end
+
   def occurrences_between(start_date, end_date)
+    start_date = start_date.to_time if start_date.is_a?(Date)
+    end_date = end_date.to_time if end_date.is_a?(Date)
     if schedule and schedule.rrules.any?
-      schedule.occurrences_between(start_date, end_date).collect { |date| calendar_detail(date) }
+      schedule.occurrences_between(start_date, end_date)
     else
-      [calendar_detail]
+      if (start_date - self.end_time) * (self.start_time - end_date) >= 0
+        [start_time]
+      else
+        []
+      end
     end
   end
 
-  def calendar_detail(date=start_time)
+  def consumer_event_details(date=start_time)
+    starttime, endtime = adjusted_times(date)
+    {
+      :id=> to_param,
+      :title=> title,
+      :start => starttime.strftime('%Y-%m-%d %H:%M:%S'),
+      :end => endtime,
+      :business_id => business_id,
+      :service_type => "#{EVENT_NAMES[event_type]}_type",
+    }
+  end
+
+  def adjusted_times(date)
     starttime = date.to_time.utc.change(:hour => start_time.hour, :min => start_time.min, :sec => 0)
     endtime = date.to_time.utc.advance(:days=>start_end_date_diff).change(:hour => end_time.hour, :min => end_time.min, :sec => 0)
+    return starttime, endtime
+  end
 
+  def business_event_details(date=start_time)
+    starttime, endtime = adjusted_times(date)
     {
-        :id=> to_param,
-        :title=> title,
-        :start => starttime,
-        :end => endtime,
-        :allDay => false, # will make the time show
-        :url => Rails.application.routes.url_helpers.edit_event_path(id),
-        :className => "#{EVENT_NAMES[event_type]}_type",
+      :id=> to_param,
+      :title=> title,
+      :start => starttime,
+      :end => endtime,
+      :allDay => false, # will make the time show
+      :url => Rails.application.routes.url_helpers.edit_event_path(id),
+      :className => "#{EVENT_NAMES[event_type]}_type",
     }
   end
 

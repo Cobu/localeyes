@@ -1,6 +1,16 @@
 Cal::Application.routes.draw do
-  resources :events
-  resources :businesses, :except=>[:index]
+  resources :events, :except=>[:index]
+  resources :businesses, :except=>[:index] do
+    collection do
+      get :events
+    end
+  end
+  resources :consumers, :only=>[:index] do
+    collection do
+      get :search_location
+      get :events
+    end
+  end
   resources :users, :only=>[:index,:show]
   resources :business_users, :except=>[:index,:show] do
     collection do
