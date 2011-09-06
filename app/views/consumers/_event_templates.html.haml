@@ -1,14 +1,17 @@
 - if current_user
   %script{:id=>"event_template", :type=>"text/x-handlebars-template"}
-    Logged in
     .event
       {{title}} {{start}}
 - else
   %script{:id=>"event_template", :type=>"text/x-handlebars-template"}
     .event
-      {{title}} {{start}}
+      .business
+        {{business_name}}
+      .info
+        {{attributes/title}} {{attributes/start}}
 
 %script{:id=>"day_header_template", :type=>"text/x-handlebars-template"}
   .day_header
     {{header date}}
+
 

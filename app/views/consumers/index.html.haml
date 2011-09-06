@@ -1,7 +1,10 @@
 = render :partial => 'event_templates'
-
-.ui-widget
-  =label_tag "location", 'Location'
-  =text_field_tag :search_location
-
-#event_list
+#content
+  .search
+    =label_tag "location", 'Location'
+    =text_field_tag :search_location
+  #event_list_container
+    #event_list_inner
+      #event_list
+  #map_canvas_container
+    #map_canvas

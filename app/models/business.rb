@@ -1,6 +1,7 @@
 class Business < ActiveRecord::Base
   belongs_to :user, :class_name => 'BusinessUser'
   has_many :events, :dependent => :destroy
+  has_one :zip_location, :class_name => 'ZipCode', :foreign_key => :zip_code, :primary_key => :zip_code
 
   validates :name, :phone, :city, :state, :zip_code, :presence => true
   #after_initialize :set_default_hours, :if => :new_record?
@@ -13,6 +14,10 @@ class Business < ActiveRecord::Base
   serialize :hours, Array
 
   HOURS_CLOSED = {:from=>nil, :to=>nil, :open=>false}
+
+  def as_json(options={})
+    super.as_json.merge({lat: zip_location.lat, lng: zip_location.lng})
+  end
 
   def set_default_hours
     nine_am = Time.utc(1970, 1, 1, 9, 00)
