@@ -3,7 +3,7 @@ Handlebars.registerHelper("rounded", (number)->
     parseFloat(number).toFixed(2)
 )
 
-Handlebars.registerHelper("titleize", (string)->
+Handlebars.registerHelper("hours", (string)->
   return unless _.isString(string)
   string
 )
@@ -26,10 +26,9 @@ $(document).ready( ->
 
   window.Event = Backbone.Model.extend({
      startDate : -> Date.parse(this.get('start')).toString("yyyy-MM-dd")
+     startHour : -> Date.parse(this.get('start')).toString("h:mm tt")
      business : ->
-       console.log(business_list.get(this.get('business_id')))
        business_list.get(this.get('business_id'))
-
      business_name : -> this.business().get('name')
   })
 
@@ -37,6 +36,10 @@ $(document).ready( ->
 
   window.BusinessList = Backbone.Collection.extend({
     model: Business
+    filteredModels: ->
+      _.filter( this.models, (model)->
+        model
+      )
   })
 
   window.MapView = Backbone.View.extend({
@@ -71,7 +74,7 @@ $(document).ready( ->
 
     render : ->
       this.prepareMap()
-      $.each(business_list.models, (index, business)->
+      $.each(business_list.filteredModels(), (index, business)->
         business.image = map_view.makeImage(index)
         business.point = new google.maps.LatLng(business.attributes.lat,business.attributes.lng)
         map_view.setMarker(business)
@@ -102,6 +105,10 @@ $(document).ready( ->
   window.EventList = Backbone.Collection.extend({
     url: '/consumers/events'
     model: Event
+    filteredModels: ->
+      _.filter( this.models, (model)->
+        model
+      )
   })
 
 
@@ -117,11 +124,11 @@ $(document).ready( ->
         date = Date.today().addDays(num)
         this.buildEventsForDay(date,events[date.toString("yyyy-MM-dd")])
 
-
     buildEventsForDay : (date,events)->
       return unless events
       this.el.append( this.day_header_template({'date': date}) )
       for event in events
+        continue unless window.filter.match(event)
         this.el.append( this.event_template( event ) )
   })
 
@@ -129,4 +136,17 @@ $(document).ready( ->
   window.event_view = new EventView
   window.map_view = new MapView
 
+  class Filter
+    constructor: ->
+      @service_type_cafe = false
+      @service_type_bar = false
+      @service_type_restaurant = false
+      @serviceTypes = [0,1,2]
+      @userFavorites = []
+
+    match : (event)->
+      _.include( @serviceTypes, event.business().get('service_type') )
+      _.include( @userFavorites, event.get('business_id') )
+
+  window.filter = new Filter()
 )

@@ -8,11 +8,12 @@ class ConsumersController < ApplicationController
   end
 
   def events
-    start_date = Time.now.utc.to_date
-    end_date = Time.now.utc.to_date + 7.days
+    start_date = Time.zone.parse(params[:time])
+    end_date = Time.now.utc + 7.days
     businesses = Business.where(:zip_code=>params[:zip_code])
     events = businesses.collect(&:events).flatten
     events = events.collect { |e| e.consumer_events(start_date, end_date) }.flatten
-    render :json=> {businesses: businesses, events: events}
+    favorites = current_user.try(:favorites) || [1]
+    render :json=> {businesses: businesses, events: events, favorites: favorites }
   end
 end
