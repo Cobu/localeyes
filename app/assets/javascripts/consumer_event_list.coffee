@@ -137,16 +137,40 @@ $(document).ready( ->
   window.map_view = new MapView
 
   class Filter
-    constructor: ->
-      @service_type_cafe = false
-      @service_type_bar = false
-      @service_type_restaurant = false
-      @serviceTypes = [0,1,2]
-      @userFavorites = []
+    service_type_constants = {
+      service_type_cafe : 0
+      service_type_restaurant : 1
+      service_type_bar : 2
+    }
+    @service_type_cafe = true
+    @service_type_restaurant = true
+    @service_type_bar = true
+    @serviceTypes = [0, 1, 2]
+    @filter_favorites = false
+    @userFavorites = [1]
+
+    setServiceType : (type, value)->
+      Filter[type] = value
+      Filter.serviceTypes = []
+      for name of service_type_constants
+        if Filter[name] then Filter.serviceTypes.push service_type_constants[name]
+      window.event_view.render()
+
 
     match : (event)->
-      _.include( @serviceTypes, event.business().get('service_type') )
-      _.include( @userFavorites, event.get('business_id') )
+      _.include( Filter.serviceTypes, event.business().get('service_type') )  #&&
+#        _.include( Filter.userFavorites, event.get('business_id') )
+
+    setValues : ->
+      $('.filter input[type=checkbox]').each( (index,elem)->
+        id = $(elem).attr('id')
+        $(elem).prop('checked', Filter[id])
+      )
 
   window.filter = new Filter()
+
+  $('.filter input[name^=service_type]').live('click', (event)->
+    elem = $(event.currentTarget)
+    window.filter.setServiceType( elem.attr('id'), elem.prop('checked') )
+  )
 )

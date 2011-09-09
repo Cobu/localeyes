@@ -1,8 +1,20 @@
 = render :partial => 'event_templates'
-#content
-  .search
-    =label_tag "location", 'Location'
-    =text_field_tag :search_location
+#content.consumer
+  .header
+    .filter
+      Cafe
+      =check_box_tag :service_type_cafe, 0
+      %br
+      Restaurant
+      =check_box_tag :service_type_restaurant, 1
+      %br
+      Bar
+      =check_box_tag :service_type_bar, 2
+      %br
+    .search
+      =label_tag "location", 'Location'
+      =text_field_tag :search_location
+
   #event_list_container
     #event_list_inner
       #event_list

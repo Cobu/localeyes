@@ -9,6 +9,7 @@ $(document).ready( ->
         window.business_list = new window.BusinessList(data.businesses)
         window.event_list = new window.EventList(data.events)
         window.filter.userFavorites = data.favorites
+        window.filter.setValues()
         window.event_view.render()
         window.map_view.render()
       )
@@ -24,6 +25,7 @@ $(document).ready( ->
     window.business_list = new BusinessList(data.businesses)
     window.event_list = new EventList(data.events)
     window.filter.userFavorites = data.favorites
+    window.filter.setValues()
     event_view.render()
     map_view.render()
   )

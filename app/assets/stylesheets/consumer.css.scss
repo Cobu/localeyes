@@ -11,12 +11,23 @@ body {
 
 
 
-#content {
+#content.consumer {
   width:930px;
 
+  .header {
+    margin-bottom: 15px;
+  }
+
+   .filter {
+    vertical-align:top;
+    display:inline-block;
+    width:50%;
+  }
+
   .search {
-    margin-bottom: 30px;
-    width:100%;
+    display:inline-block;
+
+    width:auto;
     text-align:right;
 
     input#search_location {
@@ -31,6 +42,7 @@ body {
   }
 
 }
+
 
 .event_bar {
   width:400px;
