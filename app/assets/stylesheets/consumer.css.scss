@@ -9,7 +9,26 @@ body {
   background: white url('ui-anim_basic_16x16.gif') right center no-repeat;
 }
 
+a.ui-corner-all {
+  font-size:12px !important;
+  font-family:Arial;
+}
 
+.event_list_header {
+  @include text_inset;
+  width:378px;
+  text-align:center;
+  font-size:140%;
+  border: 1px solid #666666;
+  height:20px;
+  padding:5px 0px;
+  border-top-right-radius: 8px;
+  -moz-border-radius-topright: 8px;
+  -webkit-border-top-right-radius: 8px;
+  border-top-left-radius: 8px;
+  -moz-border-radius-topleft: 8px;
+  -webkit-border-top-left-radius: 8px;
+}
 
 #content.consumer {
   width:930px;
@@ -26,15 +45,15 @@ body {
 
   .search {
     display:inline-block;
-
+    font-size:12px;
     width:auto;
     text-align:right;
 
     input#search_location {
       @include rounded(12px);
       height: 24px;
-      width:250px;
-      font-size:100%;
+      width:360px;
+
       padding-left:19px;
       background: url("data:image/png;charset=utf-8;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAK8AAACvABQqw0mAAAABx0RVh0U29mdHdhcmUAQWRvYmUgRmlyZXdvcmtzIENTM5jWRgMAAAFlSURBVCiRbY/NqqpgFIYfjxLiyEFCfyDZpElFRF5Pt1A3FN1BNyEqRATfSFAo+keCmuQn5PEMDsXZe59nuJ718q6lANxutzIMQ4QQ7HY7bNum1+vhui7ValXhH7Q0TcvlckkQBJ9hHMfEcczpdCJN09KyrE9IC8OQIAhot9uMRiM6nQ5JkrBarQjDkFqtxpcGIQQA4/EY13WpVCpYloWqqmy3W97+za/9fg/AYDDAMAx0XccwDPr9PgBv/wm0Wi0AoihC07S/tZpGFEUAvP0n0O12AfA8D9/3ybIM3/fxPA8Ax3G+/jAcDrler6zXa5Ik4TtCCO73e2mapgKgSCnLw+HAZrMhiiKOxyPNZhPHcRBCkKYp9Xqd2WyGaZqKAiClLLMsI89zXq8XmqahqiqPx4PFYsHlcqHRaDCdTtEAdF1XftwCPJ/PcjKZMJ/PkVIipeS/i2+KolDyPP99Pp8pigLbtvkDMDKl6nkCE08AAAAASUVORK5CYII=") 2% 60% no-repeat;
       outline:none;
@@ -46,27 +65,33 @@ body {
 
 .event_bar {
   width:400px;
-  height:40px;
+  height:38px;
   border: 1px solid #666666;
   display:inline-block;
 }
 
 .day_header {
   width:370px;
+  height:30px;
   @extend .event_bar;
-  background-color:yellow;
-  text-align:right;
-  padding-right:30px;
+  background-color: yellow;
+  text-align: right;
+  padding-right: 30px;
+  padding-top: 5px;
 }
 
 .event {
   @extend .event_bar;
-  background-color:grey;
-
-  .business {
-  }
+  background-color:white;
 
   .info {
+    width:67%;
+    display:inline-block;
+  }
+
+  .images {
+    cursor:pointer;
+    display:inline-block;
   }
 }
 

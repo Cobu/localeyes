@@ -1,6 +1,10 @@
 class ConsumersController < ApplicationController
   layout 'consumer_application'
 
+  def index
+    session[:user_id] = 6
+  end
+
   def search_location
     college_results = College.search(params[:term]).all
     zip_results = ZipCode.search(params[:term]).all
@@ -13,7 +17,7 @@ class ConsumersController < ApplicationController
     businesses = Business.where(:zip_code=>params[:zip_code])
     events = businesses.collect(&:events).flatten
     events = events.collect { |e| e.consumer_events(start_date, end_date) }.flatten
-    favorites = current_user.try(:favorites) || [1]
+    favorites = current_user.try(:favorites) || []
     render :json=> {businesses: businesses, events: events, favorites: favorites }
   end
 end

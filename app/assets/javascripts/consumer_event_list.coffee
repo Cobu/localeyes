@@ -30,6 +30,9 @@ $(document).ready( ->
      business : ->
        business_list.get(this.get('business_id'))
      business_name : -> this.business().get('name')
+     user_favorite_image : ->
+       prefix = if _.include( Filter.userFavorites, this.get('business_id') ) then '' else 'un'
+       "<img src='assets/fav_#{prefix}selected.gif' width='20px' data-busniess_id='#{this.get('business_id')}' rel='favorite'/>"
   })
 
   window.Business = Backbone.Model.extend({ })
@@ -94,7 +97,6 @@ $(document).ready( ->
     makeImage : (index)->
       "http://www.google.com/mapfiles/marker" + this.makeLetter(index) + ".png"
 
-
     makeLetter : (number)->
       return '' unless (number >= 0 && number <= 26)
       String.fromCharCode(number + 65)
@@ -116,20 +118,22 @@ $(document).ready( ->
     el: $( '#event_list' )
     day_header_template : Handlebars.compile($( '#day_header_template' ).html())
     event_template : Handlebars.compile($( '#event_template' ).html())
+    event_list_header : Handlebars.compile($( '#event_list_header' ).html())
 
     render: ->
       this.el.empty()
+      this.el.append( this.event_list_header() )
+
       events = _(event_list.models).groupBy( (event)-> event.startDate() )
       for num in [0..13]
         date = Date.today().addDays(num)
-        this.buildEventsForDay(date,events[date.toString("yyyy-MM-dd")])
+        days_events = _.select(events[date.toString("yyyy-MM-dd")], (event)-> filter.match(event) )
+        continue unless _.any(days_events)
+        this.buildEventsForDay( date, days_events )
 
-    buildEventsForDay : (date,events)->
-      return unless events
+    buildEventsForDay : ( date, events )->
       this.el.append( this.day_header_template({'date': date}) )
-      for event in events
-        continue unless window.filter.match(event)
-        this.el.append( this.event_template( event ) )
+      _.each(events, (event)-> event_view.el.append( event_view.event_template(event) ) )
   })
 
   window.event_list = new EventList
@@ -146,8 +150,8 @@ $(document).ready( ->
     @service_type_restaurant = true
     @service_type_bar = true
     @serviceTypes = [0, 1, 2]
-    @filter_favorites = false
-    @userFavorites = [1]
+    @filtering_favorites = false
+    @userFavorites = []
 
     setServiceType : (type, value)->
       Filter[type] = value
@@ -156,10 +160,20 @@ $(document).ready( ->
         if Filter[name] then Filter.serviceTypes.push service_type_constants[name]
       window.event_view.render()
 
+    setFilteringByFavorites : (bool)->
+      Filter.filtering_favorites = bool
+      window.event_view.render()
+
+    setFavorite : (business_id)->
+      if _.include( Filter.userFavorites, business_id )
+        Filter.userFavorites = _.without( Filter.userFavorites, business_id )
+      else
+        Filter.userFavorites.push(business_id)
+      window.event_view.render()
 
     match : (event)->
-      _.include( Filter.serviceTypes, event.business().get('service_type') )  #&&
-#        _.include( Filter.userFavorites, event.get('business_id') )
+      if Filter.filtering_favorites then return false unless _.include( Filter.userFavorites, event.get('business_id') )
+      _.include( Filter.serviceTypes, event.business().get('service_type') )
 
     setValues : ->
       $('.filter input[type=checkbox]').each( (index,elem)->
@@ -171,6 +185,16 @@ $(document).ready( ->
 
   $('.filter input[name^=service_type]').live('click', (event)->
     elem = $(event.currentTarget)
-    window.filter.setServiceType( elem.attr('id'), elem.prop('checked') )
+    filter.setServiceType( elem.attr('id'), elem.prop('checked') )
+  )
+
+  $('.filter input[name=filtering_favorites]').live('click', (event)->
+    elem = $(event.currentTarget)
+    filter.setFilteringByFavorites( elem.prop('checked') )
+  )
+
+  $('.images img[rel=favorite]').live('click', (event)->
+    elem = $(event.currentTarget)
+    filter.setFavorite( elem.data('busniess_id') )
   )
 )

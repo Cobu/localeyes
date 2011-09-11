@@ -1,10 +1,17 @@
+%script{:id=>"event_list_header", :type=>"text/x-handlebars-template"}
+  .event_list_header
+    The List
+
 - if current_user
   %script{:id=>"event_template", :type=>"text/x-handlebars-template"}
     .event
-      .business
-        {{business_name}}
       .info
-        {{attributes/title}} {{startHour}}
+        %div
+          {{business_name}}
+        %div
+          {{attributes/title}} {{startHour}}
+      .images
+        {{{user_favorite_image}}}
 - else
   %script{:id=>"event_template", :type=>"text/x-handlebars-template"}
     .event

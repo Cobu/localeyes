@@ -4,7 +4,7 @@ $(document).ready( ->
   $( "#search_location" ).autocomplete(
     source: '/consumers/search_location'
     select: ( event, ui ) ->
-      $( "#search_location" ).val( ui.item.zip_code )
+      $( "#search_location" ).val( ui.item.label )
       $.get('/consumers/events',{time: Date.now().toString('yyyy-MM-dd HH:mm'), zip_code: ui.item.zip_code}, (data)->
         window.business_list = new window.BusinessList(data.businesses)
         window.event_list = new window.EventList(data.events)
@@ -13,12 +13,8 @@ $(document).ready( ->
         window.event_view.render()
         window.map_view.render()
       )
+      return false
   )
-  .data( "autocomplete" )._renderItem = ( ul, item ) ->
-    return $( "<li></li>" )
-      .data( "item.autocomplete", item )
-      .append( "<a>" + item.city + ', ' + item.state_short + ', ' + item.zip_code + "</a>" )
-      .appendTo( ul )
 
 
   $.get('/consumers/events',{time: Date.now().toString('yyyy-MM-dd HH:mm'),zip_code: 13126}, (data)->

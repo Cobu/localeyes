@@ -8,7 +8,12 @@ User.blueprint {
   password { "moogoo" }
 }
 
-User.blueprint(:nyc) {
+User.blueprint(:dude) {
+  email { "geucyd@gmail.com" }
+  first_name { "Dude" }
+  last_name { "Smiley" }
+  phone { "5105551212" }
+  password { "moogoo" }
 }
 
 BusinessUser.blueprint {

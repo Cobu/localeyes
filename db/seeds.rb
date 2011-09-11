@@ -4,12 +4,14 @@ require_relative '../spec/blueprints'
 BusinessUser.destroy_all
 User.destroy_all
 ZipCode.connection.execute "TRUNCATE `zip_codes`"
-Colleges.connection.execute "TRUNCATE `colleges`"
+College.connection.execute "TRUNCATE `colleges`"
 
 bu = BusinessUser.make(:email=>"dude@dude.com")
 cafe = Business.make(:oswego_cafe, :user=> bu)
 cafe.set_default_hours
 cafe.save
+
+User.make(:dude)
 
 now = Time.now.utc
 Event.make(:once, :business=>cafe, :start_time => Time.utc(2011,now.month,3,21,10), :end_time => Time.utc(2011,now.month,4,2,30), :title=>"one times")
