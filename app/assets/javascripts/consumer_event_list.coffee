@@ -149,7 +149,7 @@ $(document).ready( ->
   window.event_view = new EventView
   window.map_view = new MapView
 
-  class Filter
+  class window.Filter
     service_type_constants = {
       service_type_cafe : 0
       service_type_restaurant : 1
@@ -174,10 +174,13 @@ $(document).ready( ->
       window.event_view.render()
 
     setFavorite : (business_id)->
+      type = 'pull'
       if _.include( Filter.userFavorites, business_id )
         Filter.userFavorites = _.without( Filter.userFavorites, business_id )
       else
         Filter.userFavorites.push(business_id)
+        type = 'push'
+      $.get('/users/set_favorite',{ b:business_id, t: type})
       window.event_view.render()
 
     match : (event)->
@@ -190,7 +193,7 @@ $(document).ready( ->
         $(elem).prop('checked', Filter[id])
       )
 
-  window.filter = new Filter()
+  window.filter = new window.Filter()
 
   $('.filter input[name^=service_type]').live('click', (event)->
     elem = $(event.currentTarget)

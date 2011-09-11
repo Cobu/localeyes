@@ -13,6 +13,10 @@ class User < ActiveRecord::Base
     EventVote.db.collection('favorites').update( {:user_id=> id}, {"$addToSet" => {:businesses=> business_id}}, {:upsert=>true})
   end
 
+  def remove_favorite(business_id)
+    EventVote.db.collection('favorites').update( {:user_id=> id}, {"$pull" => {:businesses=> business_id}}, {:upsert=>true})
+  end
+
   def favorites
     EventVote.db.collection('favorites').find( {:user_id=> id} ).first.try(:[],'businesses')
   end

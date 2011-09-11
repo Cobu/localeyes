@@ -11,7 +11,11 @@ Cal::Application.routes.draw do
       get :events
     end
   end
-  resources :users, :only=>[:index,:show]
+  resources :users, :only=>[:index,:show] do
+     collection do
+       get :set_favorite
+     end
+  end
   resources :business_users, :except=>[:index,:show] do
     collection do
       get :login
