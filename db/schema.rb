@@ -28,6 +28,8 @@ ActiveRecord::Schema.define(:version => 20110813215827) do
     t.text    "hours"
     t.string  "url"
     t.binary  "image"
+    t.float   "lat",                                                    :null => false
+    t.float   "lng",                                                    :null => false
     t.boolean "active"
   end
 
@@ -37,6 +39,8 @@ ActiveRecord::Schema.define(:version => 20110813215827) do
     t.string "city",        :null => false
     t.string "state_short", :null => false
     t.string "zip_code",    :null => false
+    t.float  "lat",         :null => false
+    t.float  "lng",         :null => false
   end
 
   create_table "events", :force => true do |t|

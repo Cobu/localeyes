@@ -15,10 +15,6 @@ class Business < ActiveRecord::Base
 
   HOURS_CLOSED = {:from=>nil, :to=>nil, :open=>false}
 
-  def as_json(options={})
-    super.as_json.merge({lat: zip_location.lat, lng: zip_location.lng})
-  end
-
   def set_default_hours
     nine_am = Time.utc(1970, 1, 1, 9, 00)
     five_pm = Time.utc(1970, 1, 1, 17, 00)

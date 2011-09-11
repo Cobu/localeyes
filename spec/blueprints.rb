@@ -41,14 +41,18 @@ Business.blueprint {
 
 Business.blueprint(:oswego_restaurant) {
   service_type { Business::RESTAURANT }
-  name { "Dudes Deli" }
-  address { "840 Main Street" }
+  name { "Law Library Deli" }
+  address { "25 East Oneida Street" }
+  lat { 43.456888 }
+  lng { -76.505652 }
 }
 
 Business.blueprint(:oswego_cafe) {
   service_type { Business::CAFE }
-  name { "Chads Cafe" }
-  address { "841 Main Street" }
+  name { "Public Library Cafe" }
+  address { "120 East 2nd Street" }
+  lat { 43.457044 }
+  lng { -76.506187 }
 }
 
 
@@ -83,8 +87,8 @@ ZipCode.blueprint(:oswego) {
   city { "Oswego" }
   state { "New York" }
   state_short { "NY" }
-  lat { 43.4654 }
-  lng { -76.3422 }
+  lat { 43.4552778 }
+  lng { -76.5108333 }
 }
 
 ZipCode.blueprint(:new_paltz) {
@@ -92,8 +96,8 @@ ZipCode.blueprint(:new_paltz) {
   city { "New Paltz" }
   state { "New York" }
   state_short { "NY" }
-  lat { 41.7464 }
-  lng { -74.1092 }
+  lat { 41.758 }
+  lng { -74.087 }
 }
 
 College.blueprint {}
@@ -103,6 +107,8 @@ College.blueprint(:suny_oswego) {
   city { "Oswego" }
   state_short { "NY" }
   zip_code { "13126" }
+  lat { 43.447299 }
+  lng { -76.540587 }
 }
 
 College.blueprint(:suny_new_paltz) {
@@ -111,4 +117,7 @@ College.blueprint(:suny_new_paltz) {
   city { "New Paltz" }
   state_short { "NY" }
   zip_code { "12561" }
+  lat { 41.738332 }
+  lng { -74.090667 }
+
 }

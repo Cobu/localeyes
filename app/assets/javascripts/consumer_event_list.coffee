@@ -45,17 +45,16 @@ $(document).ready( ->
       )
   })
 
-  window.MapView = Backbone.View.extend({
+  class MapView
     el : $('#map_canvas')
     tooltip_template : Handlebars.compile(" {{name}}\n{{address}}\n{{city}},{{state}} ")
+    center_point : null
     map : {
       options : {
-        center: new google.maps.LatLng(43.46540069580078,-76.34220123291016)
-        zoom: 10
         mapTypeId: google.maps.MapTypeId.ROADMAP
       },
       view : null
-      point : null
+      markers : []
       markerBounds : new google.maps.LatLngBounds()
     }
 
@@ -65,29 +64,39 @@ $(document).ready( ->
 
 
     clear : ->
+      console.log(this.map.markers)
+      _.each( this.map.markers, (marker)-> marker.setMap(null) )
+      this.map.markers = []
       this.map.markerBounds = new google.maps.LatLngBounds();
-      if (this.map.point)
-        map.markerBounds.extend(this.map.point)
+
+      if (this.center_point)
+        point = new google.maps.LatLng(this.center_point.lat, this.center_point.lng)
+        this.map.markerBounds.extend(point)
         new google.maps.Marker({
-          position: this.map.point,
+          position: point,
           map: this.map.view,
-          # title: center_location.city + ", " + center_location.state,
+          title: this.center_point.title
           icon: "http://www.google.com/mapfiles/arrow.png"
         })
 
     render : ->
       this.prepareMap()
+      this.clear()
       $.each(business_list.filteredModels(), (index, business)->
         business.image = map_view.makeImage(index)
         business.point = new google.maps.LatLng(business.attributes.lat,business.attributes.lng)
-        map_view.setMarker(business)
-#        map_view.map.markerBounds.extend(business.point)
+        map_view.map.markers.push(map_view.makeMarker(business))
+        map_view.map.markerBounds.extend(business.point)
       )
-#      this.map.view.fitBounds(map_view.map.markerBounds)
+      # here you extend your bound as you like
+      if (map_view.map.markerBounds.getNorthEast().equals(map_view.map.markerBounds.getSouthWest()))
+        extendPoint = new google.maps.LatLng(map_view.map.markerBounds.getNorthEast().lat() + 0.1, map_view.map.markerBounds.getNorthEast().lng() + 0.1)
+        map_view.map.markerBounds.extend(extendPoint)
+      this.map.view.fitBounds(map_view.map.markerBounds)
 
 
-    setMarker : (business)->
-      marker = new google.maps.Marker({
+    makeMarker : (business)->
+      new google.maps.Marker({
         position: business.point
         map: this.map.view
         title: this.tooltip_template(business.attributes)
@@ -101,7 +110,7 @@ $(document).ready( ->
       return '' unless (number >= 0 && number <= 26)
       String.fromCharCode(number + 65)
 
-  })
+
 
 
   window.EventList = Backbone.Collection.extend({
