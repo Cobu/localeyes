@@ -62,22 +62,21 @@ $(document).ready( ->
       if !this.map.view
         this.map.view = new google.maps.Map(document.getElementById("map_canvas"), this.map.options)
 
+    addCenterPoint : ->
+      point = new google.maps.LatLng(this.center_point.lat, this.center_point.lng)
+      marker = new google.maps.Marker({
+        position: point,
+        map: this.map.view,
+        title: this.center_point.title
+        icon: "http://www.google.com/mapfiles/arrow.png"
+      })
+      this.map.markers.push(marker)
+      this.map.markerBounds.extend(point)
 
     clear : ->
-      console.log(this.map.markers)
       _.each( this.map.markers, (marker)-> marker.setMap(null) )
       this.map.markers = []
       this.map.markerBounds = new google.maps.LatLngBounds();
-
-      if (this.center_point)
-        point = new google.maps.LatLng(this.center_point.lat, this.center_point.lng)
-        this.map.markerBounds.extend(point)
-        new google.maps.Marker({
-          position: point,
-          map: this.map.view,
-          title: this.center_point.title
-          icon: "http://www.google.com/mapfiles/arrow.png"
-        })
 
     render : ->
       this.prepareMap()
@@ -88,7 +87,8 @@ $(document).ready( ->
         map_view.map.markers.push(map_view.makeMarker(business))
         map_view.map.markerBounds.extend(business.point)
       )
-      # here you extend your bound as you like
+      this.addCenterPoint()
+      # extend the bounds if its too small
       if (map_view.map.markerBounds.getNorthEast().equals(map_view.map.markerBounds.getSouthWest()))
         extendPoint = new google.maps.LatLng(map_view.map.markerBounds.getNorthEast().lat() + 0.1, map_view.map.markerBounds.getNorthEast().lng() + 0.1)
         map_view.map.markerBounds.extend(extendPoint)
@@ -98,8 +98,8 @@ $(document).ready( ->
     makeMarker : (business)->
       new google.maps.Marker({
         position: business.point
-        map: this.map.view
-        title: this.tooltip_template(business.attributes)
+        map: map_view.map.view
+        title: map_view.tooltip_template(business.attributes)
         icon: business.image
       })
 
@@ -174,13 +174,12 @@ $(document).ready( ->
       window.event_view.render()
 
     setFavorite : (business_id)->
-      type = 'pull'
       if _.include( Filter.userFavorites, business_id )
+        $.get('/users/unset_favorite',{ b:business_id})
         Filter.userFavorites = _.without( Filter.userFavorites, business_id )
       else
         Filter.userFavorites.push(business_id)
-        type = 'push'
-      $.get('/users/set_favorite',{ b:business_id, t: type})
+        $.get('/users/set_favorite',{ b:business_id})
       window.event_view.render()
 
     match : (event)->

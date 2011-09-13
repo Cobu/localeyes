@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  before_filter :need_business_id, :only=>[:set_favorite, :unset_favorite]
 
   def login
     @user = User.new
@@ -9,13 +10,18 @@ class UsersController < ApplicationController
     @user = User.new
   end
 
-  def set_favorite
-    head :error and return unless Business.find_by_id(params[:b]) and %(push pull).include? params[:t]
-    if params[:t] == 'push'
-      current_user.add_favorite(params[:b].to_i)
-    else
-      current_user.remove_favorite(params[:b].to_i)
-    end
+  def unset_favorite
+    current_user.remove_favorite(params[:b].to_i)
     head :ok
+  end
+
+  def set_favorite
+    current_user.add_favorite(params[:b].to_i)
+    head :ok
+  end
+
+  private
+  def need_business_id
+    head :error unless Business.find_by_id(params[:b])
   end
 end

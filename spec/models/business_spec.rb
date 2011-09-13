@@ -72,6 +72,7 @@ describe Business do
       @attributes = {"name"=>"yo cafe", "service_type"=>"2", "description"=>"fun cafe", "address"=>"1 Dude street", "address2"=>"",
                      "city"=>"New York", "state"=>"NY", "zip_code"=>"10003",
                      "phone_first3"=>"900", "phone_second3"=>"111", "phone_last4"=>"2222",
+                     "lat" => 1, "lng"=>1,
                      "sunday_hours_from"=>{"hour"=>"00", "min"=>"00", "ampm"=>"am"}, "sunday_hours_to"=>{"hour"=>"00", "min"=>"00", "ampm"=>"am"}, "sunday_hours_open"=>"0",
                      "monday_hours_from"=>{"hour"=>"05", "min"=>"15", "ampm"=>"pm"}, "monday_hours_to"=>{"hour"=>"05", "min"=>"00", "ampm"=>"pm"}, "monday_hours_open"=>"1",
                      "tuesday_hours_from"=>{"hour"=>"09", "min"=>"00", "ampm"=>"am"}, "tuesday_hours_to"=>{"hour"=>"05", "min"=>"00", "ampm"=>"pm"}, "tuesday_hours_open"=>"1",

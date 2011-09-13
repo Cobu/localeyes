@@ -14,6 +14,7 @@ Cal::Application.routes.draw do
   resources :users, :only=>[:index,:show] do
      collection do
        get :set_favorite
+       get :unset_favorite
      end
   end
   resources :business_users, :except=>[:index,:show] do
