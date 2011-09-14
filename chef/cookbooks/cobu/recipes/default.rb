@@ -85,9 +85,9 @@ end
   cookbook_file "/#{location}/.ssh/known_hosts"
 end
 
-bash "make deploy app directory (var/www/order)" do
+bash "make deploy app directory (var/www/conu)" do
   user "root"
-  code "mkdir -p /var/www/order && chown -R deploy:deploy /var/www/order"
+  code "mkdir -p /var/www/cobu && chown -R deploy:deploy /var/www/cobu"
 end
 
 bash "install bundler gem" do
@@ -124,3 +124,18 @@ service 'nginx' do
   action :restart
 end
 
+### mongo db #####
+execute 'apt-key adv --keyserver keyserver.ubuntu.com --recv 7F0CEB10' do
+  user 'root'
+end
+
+execute "echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' >> /etc/apt/sources.list" do
+  user 'root'
+  not_if 'grep mongodb /etc/apt/sources.list'
+end
+
+execute 'apt-get update' do
+  user 'root'
+end
+
+package 'mongodb-10gen'

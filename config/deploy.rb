@@ -1,10 +1,10 @@
 set :default_stage, "staging"
 require 'capistrano/ext/multistage'
 require 'bundler/capistrano'
-require 'airbrake/capistrano'
+#require 'airbrake/capistrano'
 
-set :application, "cobu"
-set :repository,  "git@github.com:Cobu/cobu.git"
+set :application, "localeyes"
+set :repository,  "git@github.com:Cobu/localeyes.git"
 
 set :scm, :git
 set :deploy_to, "/var/www/#{application}"
@@ -23,11 +23,11 @@ namespace :deploy do
     run "cd #{deploy_to}/current; ./script/unicorn -E #{rails_env} -D -c config/unicorn.rb"
   end
   task :stop, :roles => :app do
-    run "/bin/kill -QUIT `cat /var/www/order/shared/pids/unicorn.pid`"
+    run "/bin/kill -QUIT `cat /var/www/localeyes/shared/pids/unicorn.pid`"
   end
 
   task :restart, :roles => :app do
-    run "/bin/kill -USR2 `cat /var/www/order/shared/pids/unicorn.pid`"
+    run "/bin/kill -USR2 `cat /var/www/localeyes/shared/pids/unicorn.pid`"
   end
 
   desc "Compile asets"
