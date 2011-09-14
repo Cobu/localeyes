@@ -21,6 +21,14 @@ test:
   encoding: utf8
   database: localeyes_test
 
+staging:
+  adapter: mysql2
+  host: 127.0.0.1
+  username: root
+  password:
+  encoding: utf8
+  database: localeyes_staging
+
 production:
   adapter: mysql2
   host: 127.0.0.1

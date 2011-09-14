@@ -8,7 +8,7 @@ alias ll='ls -l'
 alias tl='tail -f log/*.log'
 alias sb='source ~/.bash_aliases'
 alias ee='nano ~/.bash_aliases && sb'
-alias or='cd /var/www/order/current'
+alias le='cd /var/www/localeyes/current'
 
 alias rails='bundle exec rails'
 alias rake='bundle exec rake'
