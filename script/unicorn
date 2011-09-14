@@ -1,0 +1,7 @@
+#!/usr/bin/env ruby
+
+require 'bundler'
+Bundler.setup
+version = ">= 0"
+gem 'unicorn', version
+load Gem.bin_path('unicorn', 'unicorn', version)
