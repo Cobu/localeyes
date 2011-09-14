@@ -17,6 +17,7 @@ gem 'mongo'
 gem 'mongoid'
 gem 'bson_ext'
 gem 'geocoder'
+gem 'machinist'
 #gem 'airbrake'
 
 group :development, :test do
@@ -30,7 +31,6 @@ group :development, :test do
   gem 'guard-livereload'
   gem 'guard-spork'
   gem 'guard-bundler'
-  gem 'machinist'
 end
 
 group :test do
