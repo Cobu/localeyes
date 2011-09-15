@@ -2,7 +2,7 @@ class ConsumersController < ApplicationController
   layout 'consumer_application'
 
   def index
-    session[:user_id] = 2
+    #session[:user_id] = 2
   end
 
   def search_location

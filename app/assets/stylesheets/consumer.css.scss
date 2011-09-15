@@ -151,3 +151,20 @@ ul.event_list {
     }
   }
 }
+
+.business {
+  /*background-color:inherit;*/
+  position:relative;
+
+  .info {
+    width:67%;
+    display:inline-block;
+  }
+
+  .close {
+    position:absolute;
+    top: 2px;
+    right: 8px;
+    cursor:pointer;
+  }
+}

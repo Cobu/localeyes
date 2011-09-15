@@ -42,6 +42,7 @@ Business.blueprint {
 Business.blueprint(:oswego_restaurant) {
   service_type { Business::RESTAURANT }
   name { "Law Library Deli" }
+  description { "Eating here is probably legal. No funny business allowed" }
   address { "25 East Oneida Street" }
   lat { 43.456888 }
   lng { -76.505652 }
@@ -50,6 +51,7 @@ Business.blueprint(:oswego_restaurant) {
 Business.blueprint(:oswego_cafe) {
   service_type { Business::CAFE }
   name { "Public Library Cafe" }
+  description { "Free food for all. It's public" }
   address { "120 East 2nd Street" }
   lat { 43.457044 }
   lng { -76.506187 }

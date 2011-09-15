@@ -4,14 +4,14 @@
 
 - if current_user
   %script{:id=>"event_template", :type=>"text/x-handlebars-template"}
-    .event
+    .event{ 'data-id'=>"{{attributes/id}}" }
       .info
         %div
-          {{business_name}}
+          {{businessName}}
         %div
           {{attributes/title}} {{startHour}}
       .images
-        {{{user_favorite_image}}}
+        {{{userFavoriteImage}}}
 - else
   %script{:id=>"event_template", :type=>"text/x-handlebars-template"}
     .event
@@ -24,6 +24,14 @@
   .day_header
     {{header date}}
 
-%script{:id=>"filter_template", :type=>"text/x-handlebars-template"}
+%script{:id=>"business_info_template", :type=>"text/x-handlebars-template"}
+  .business{:style=>'color:green;display:none'}
+    .info
+      {{attributes/name}}
+      {{attributes/description}}
+      {{attributes/hours}}
+    .close
+      X
+
 
 

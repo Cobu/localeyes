@@ -19,7 +19,7 @@ package "xorg"
 package 'xpdf-utils'
 
 # --- Set host name ---
-hostname = 'staging.cobu.com'
+hostname = 'staging.localeyes.me'
 rails_env = 'staging'
 
 file '/etc/hostname' do

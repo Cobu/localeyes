@@ -29,13 +29,16 @@ $(document).ready( ->
      startHour : -> Date.parse(this.get('start')).toString("h:mm tt")
      business : ->
        business_list.get(this.get('business_id'))
-     business_name : -> this.business().get('name')
-     user_favorite_image : ->
+     businessName : -> this.business().get('name')
+     userFavoriteImage : ->
        prefix = if _.include( Filter.userFavorites, this.get('business_id') ) then '' else 'un'
        "<img src='assets/fav_#{prefix}selected.gif' width='20px' data-busniess_id='#{this.get('business_id')}' rel='favorite'/>"
   })
 
-  window.Business = Backbone.Model.extend({ })
+  window.Business = Backbone.Model.extend({
+    template: Handlebars.compile($( '#business_info_template' ).html())
+    render : -> this.template(this)
+  })
 
   window.BusinessList = Backbone.Collection.extend({
     model: Business
@@ -122,6 +125,20 @@ $(document).ready( ->
       )
   })
 
+  $('.event').live('click', (event)->
+    elem = $(event.currentTarget)
+    event = event_list.get(elem.data('id'))
+    console.log(event.business())
+    return if elem.next('.business')[0]
+    business_elem = $(event.business().render())
+    elem.after(business_elem)
+    business_elem.slideDown('slow')
+  )
+
+  $('.business .close').live('click', (event)->
+    elem = $(event.currentTarget)
+    elem.parent('.business').slideUp('slow').remove()
+  )
 
   window.EventView = Backbone.View.extend({
     el: $( '#event_list' )
@@ -193,6 +210,7 @@ $(document).ready( ->
       )
 
   window.filter = new window.Filter()
+
 
   $('.filter input[name^=service_type]').live('click', (event)->
     elem = $(event.currentTarget)
