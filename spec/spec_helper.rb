@@ -86,6 +86,7 @@ end
 Spork.each_run do
   Dir["#{Rails.root}/app/**/*.rb"].each { |f| load f }
   load "#{Rails.root}/config/routes.rb"
+  Dir["#{Rails.root}/config/initializers/*.rb"].each { |f| load f }
   load "#{Rails.root}/spec/blueprints.rb"
   Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| load f }
 end

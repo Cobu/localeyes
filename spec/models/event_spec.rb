@@ -66,6 +66,11 @@ describe Event do
   describe "daily" do
 
     let(:event) do
+      Event.plan(:daily,
+                                   :business => business,
+                                   :start_time => Time.utc(2011, 8, 5, 7, 30),
+                                   :end_time => Time.utc(2011, 8, 5, 9, 30)
+                        )
       event = Event.new(Event.plan(:daily,
                                    :business => business,
                                    :start_time => Time.utc(2011, 8, 5, 7, 30),

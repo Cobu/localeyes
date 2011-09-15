@@ -1,7 +1,7 @@
 class Event < ActiveRecord::Base
   belongs_to :business
 
-  serialize :schedule
+  serialize :schedule, IceCube::Schedule
 
   before_update  :edit_schedule
   before_update  :set_time_attributes, :if => :one_time_event?
