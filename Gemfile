@@ -18,6 +18,7 @@ gem 'mongoid'
 gem 'bson_ext'
 gem 'geocoder'
 gem 'machinist'
+gem 'unicorn'
 #gem 'airbrake'
 
 group :development, :test do
