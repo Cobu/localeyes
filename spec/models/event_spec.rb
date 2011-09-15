@@ -16,6 +16,12 @@ describe Event do
       event
     end
 
+    it "can save and load" do
+      business.save
+      event.save
+      Event.first
+    end
+
     describe "#occurrences_between" do
       it "start time, end time that are dates instead of times" do
         event.occurrences_between(event.start_time.to_date, event.end_time.to_date+1.day).size.should== 1
@@ -66,11 +72,6 @@ describe Event do
   describe "daily" do
 
     let(:event) do
-      Event.plan(:daily,
-                                   :business => business,
-                                   :start_time => Time.utc(2011, 8, 5, 7, 30),
-                                   :end_time => Time.utc(2011, 8, 5, 9, 30)
-                        )
       event = Event.new(Event.plan(:daily,
                                    :business => business,
                                    :start_time => Time.utc(2011, 8, 5, 7, 30),
@@ -79,6 +80,12 @@ describe Event do
       event.id = 1
       event.create_schedule
       event
+    end
+
+    it "can save and load" do
+      business.save
+      event.save
+      Event.first.schedule
     end
 
     it "makes event with schedule" do

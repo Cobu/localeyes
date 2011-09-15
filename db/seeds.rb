@@ -2,6 +2,7 @@ require 'machinist/active_record'
 require_relative '../spec/blueprints'
 
 BusinessUser.destroy_all
+Business.destroy_all
 User.destroy_all
 ZipCode.connection.execute "TRUNCATE `zip_codes`"
 College.connection.execute "TRUNCATE `colleges`"
