@@ -128,8 +128,7 @@ $(document).ready( ->
   $('.event').live('click', (event)->
     elem = $(event.currentTarget)
     event = event_list.get(elem.data('id'))
-    console.log(event.business())
-    return if elem.next('.business')[0]
+    elem.next('.business').remove() # make new one each time
     business_elem = $(event.business().render())
     elem.after(business_elem)
     business_elem.slideDown('slow')
@@ -137,7 +136,8 @@ $(document).ready( ->
 
   $('.business .close').live('click', (event)->
     elem = $(event.currentTarget)
-    elem.parent('.business').slideUp('slow').remove()
+    business_elem = elem.parent('.business')
+    business_elem.slideUp('slow')
   )
 
   window.EventView = Backbone.View.extend({

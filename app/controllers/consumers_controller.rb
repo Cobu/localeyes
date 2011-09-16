@@ -2,6 +2,7 @@ class ConsumersController < ApplicationController
   layout 'consumer_application'
 
   def index
+    #reset_session
     #session[:user_id] = 2
   end
 

@@ -11,12 +11,13 @@
       Bar
       =check_box_tag :service_type_bar, 2
       %br
+    - if current_user
       Favorites
       =check_box_tag :filtering_favorites, false
       %br
     .search
       =label_tag "location", 'Location'
-      =text_field_tag :search_location
+      =text_field_tag :search_location, '', :placeholder=>'City, State, Zip or College'
 
   #event_list_container
     #event_list_inner

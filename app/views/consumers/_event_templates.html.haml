@@ -14,9 +14,9 @@
         {{{userFavoriteImage}}}
 - else
   %script{:id=>"event_template", :type=>"text/x-handlebars-template"}
-    .event
+    .event{ 'data-id'=>"{{attributes/id}}" }
       .business
-        {{business_name}}
+        {{businessName}}
       .info
         {{attributes/title}} {{startHour}}
 
