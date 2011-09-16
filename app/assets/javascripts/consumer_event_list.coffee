@@ -55,6 +55,7 @@ $(document).ready( ->
     map : {
       options : {
         mapTypeId: google.maps.MapTypeId.ROADMAP
+        mapTypeControl: false,
       },
       view : null
       markers : []
