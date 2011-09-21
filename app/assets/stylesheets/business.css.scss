@@ -1,8 +1,6 @@
 @import 'mixins';
+@import 'shared';
 
-body {
-  font: normal normal normal 13.34px/normal helvetica, arial, freesans, clean, sans-serif;
-}
 
 /*  Buttons */
 span.button, a.button, input.button{
@@ -62,3 +60,21 @@ form.new_business, form.edit_business{
 }
 
 
+/* for coloring the events of different type  */
+.event_type {
+  span, div {
+    background-color: red;
+  }
+}
+
+.special_type {
+  span, div {
+    background-color: blue
+  }
+}
+
+.announcement_type {
+  span, div {
+    background-color: brown
+  }
+}

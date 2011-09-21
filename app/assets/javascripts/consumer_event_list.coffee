@@ -27,8 +27,7 @@ $(document).ready( ->
   window.Event = Backbone.Model.extend({
      startDate : -> Date.parse(this.get('start')).toString("yyyy-MM-dd")
      startHour : -> Date.parse(this.get('start')).toString("h:mm tt")
-     business : ->
-       business_list.get(this.get('business_id'))
+     business : -> business_list.get(this.get('business_id'))
      businessName : -> this.business().get('name')
      userFavoriteImage : ->
        prefix = if _.include( Filter.userFavorites, this.get('business_id') ) then '' else 'un'
@@ -36,21 +35,55 @@ $(document).ready( ->
   })
 
   window.Business = Backbone.Model.extend({
+    service_type_names : ['Cafe', 'Restaurant', 'Bar']
+    serviceName : -> this.service_type_names[this.get('service_type')].toLowerCase()
     template: Handlebars.compile($( '#business_info_template' ).html())
+    map_tooltip_template : Handlebars.compile(" {{name}}\n{{address}}\n{{city}},{{state}} ")
     render : -> this.template(this)
+    marker : null
+    setMarker : (map, markerBounds)->
+      this.point = new google.maps.LatLng(this.get('lat'),this.get('lng'))
+      this.marker = this.makeMarker(map)
+      markerBounds.extend(this.point)
+
+    makeMarker : (map)->
+      new google.maps.Marker({
+        position: this.point
+        map: map
+        title: this.map_tooltip_template(this.attributes)
+        icon: this.makeIcon()
+      })
+
+    makeIcon : (scaleFactor)->
+      scaleFactor = 1 if (scaleFactor == undefined)
+      new google.maps.MarkerImage(
+        "/assets/#{this.serviceName()}.png", null , null , null ,
+        new google.maps.Size(20*scaleFactor, 34*scaleFactor)
+      )
   })
 
   window.BusinessList = Backbone.Collection.extend({
     model: Business
-    filteredModels: ->
-      _.filter( this.models, (model)->
-        model
-      )
+    selected : null
+    filteredModels: ->  _.filter( this.models, (model)->  model )
+    clearMarkers : -> _.each( this.models, (business)->
+      if business.marker
+        business.marker.setMap(null)
+        business.marker = null
+    )
+    setMarkers : (map, markerBounds) ->  _.each( this.models, (business)-> business.setMarker(map, markerBounds) )
+    setSelected : (id)->
+      if (this.selected)
+        business = this.get(this.selected)
+        this.get(this.selected).marker.setIcon(business.makeIcon())
+      business = this.get(id)
+      business.marker.setIcon(business.makeIcon(1.3))
+      this.selected = id
   })
 
   class MapView
+    icon : null
     el : $('#map_canvas')
-    tooltip_template : Handlebars.compile(" {{name}}\n{{address}}\n{{city}},{{state}} ")
     center_point : null
     map : {
       options : {
@@ -58,7 +91,6 @@ $(document).ready( ->
         mapTypeControl: false,
       },
       view : null
-      markers : []
       markerBounds : new google.maps.LatLngBounds()
     }
 
@@ -74,24 +106,18 @@ $(document).ready( ->
         title: this.center_point.title
         icon: "http://www.google.com/mapfiles/arrow.png"
       })
-      this.map.markers.push(marker)
       this.map.markerBounds.extend(point)
 
     clear : ->
-      _.each( this.map.markers, (marker)-> marker.setMap(null) )
-      this.map.markers = []
+      business_list.clearMarkers()
       this.map.markerBounds = new google.maps.LatLngBounds();
 
     render : ->
       this.prepareMap()
       this.clear()
-      $.each(business_list.filteredModels(), (index, business)->
-        business.image = map_view.makeImage(index)
-        business.point = new google.maps.LatLng(business.attributes.lat,business.attributes.lng)
-        map_view.map.markers.push(map_view.makeMarker(business))
-        map_view.map.markerBounds.extend(business.point)
-      )
+      business_list.setMarkers(this.map.view, this.map.markerBounds)
       this.addCenterPoint()
+
       # extend the bounds if its too small
       if (map_view.map.markerBounds.getNorthEast().equals(map_view.map.markerBounds.getSouthWest()))
         extendPoint = new google.maps.LatLng(map_view.map.markerBounds.getNorthEast().lat() + 0.1, map_view.map.markerBounds.getNorthEast().lng() + 0.1)
@@ -99,38 +125,20 @@ $(document).ready( ->
       this.map.view.fitBounds(map_view.map.markerBounds)
 
 
-    makeMarker : (business)->
-      new google.maps.Marker({
-        position: business.point
-        map: map_view.map.view
-        title: map_view.tooltip_template(business.attributes)
-        icon: business.image
-      })
-
-    makeImage : (index)->
-      "http://www.google.com/mapfiles/marker" + this.makeLetter(index) + ".png"
-
-    makeLetter : (number)->
-      return '' unless (number >= 0 && number <= 26)
-      String.fromCharCode(number + 65)
-
-
-
-
   window.EventList = Backbone.Collection.extend({
     url: '/consumers/events'
     model: Event
-    filteredModels: ->
-      _.filter( this.models, (model)->
-        model
-      )
+    filteredModels: -> _.filter( this.models, (model)->  model )
   })
 
-  $('.event').live('click', (event)->
-    elem = $(event.currentTarget)
+  $('.event .info').live('click', (event)->
+    elem = $(event.currentTarget).parent('.event')
     event = event_list.get(elem.data('id'))
     elem.next('.business').remove() # make new one each time
+    business_list.setSelected(event.business().get('id')) # to grow the icon
     business_elem = $(event.business().render())
+    elem_event_class = elem.attr('class').match(/\w+_type/)[0]
+    business_elem.addClass(elem_event_class)
     elem.after(business_elem)
     business_elem.slideDown('slow')
   )

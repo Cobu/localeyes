@@ -1,9 +1,5 @@
 @import 'mixins';
-
-body {
- font-size:14px;
- font-family:Arial;
-}
+@import 'shared';
 
 .ui-autocomplete-loading {
   background: white url('ui-anim_basic_16x16.gif') right center no-repeat;
@@ -82,11 +78,14 @@ a.ui-corner-all {
 
 .event {
   @extend .event_bar;
-  background-color:white;
 
   .info {
     width:67%;
     display:inline-block;
+  }
+
+  .full {
+    width:100%;
   }
 
   .images {
@@ -119,42 +118,44 @@ a.ui-corner-all {
 }
 
 
-ul.event_list {
-  list-style: none;
-  padding: 0px;
-  margin: 0px;
-  width: 430px;
+/*ul.event_list {*/
+  /*list-style: none;*/
+  /*padding: 0px;*/
+  /*margin: 0px;*/
+  /*width: 430px;*/
 
-  li.lab_info {
-    padding: 5px;
-    border-bottom: 1px dotted #ccc;
-    padding-left: 28px;
-    position: relative;
+  /*li.lab_info {*/
+    /*padding: 5px;*/
+    /*border-bottom: 1px dotted #ccc;*/
+    /*padding-left: 28px;*/
+    /*position: relative;*/
 
-    &:hover {
-      background-color:#eee;
-    }
+    /*&:hover {*/
+      /*background-color:#eee;*/
+    /*}*/
 
-    img {
-      width: 17px;
-      position: absolute;
-      top:8px; left: 0;
-    }
+    /*img {*/
+      /*width: 17px;*/
+      /*position: absolute;*/
+      /*top:8px; left: 0;*/
+    /*}*/
 
-    .event_name {
-      font-size:120%;
-      font-weight: bold;
-    }
+    /*.event_name {*/
+      /*font-size:120%;*/
+      /*font-weight: bold;*/
+    /*}*/
 
-    .link {
-      margin: 15px 0;
-    }
-  }
-}
+    /*.link {*/
+      /*margin: 15px 0;*/
+    /*}*/
+  /*}*/
+/*}*/
+
 
 .business {
   /*background-color:inherit;*/
   position:relative;
+  width:380px;
 
   .info {
     width:67%;
@@ -167,4 +168,18 @@ ul.event_list {
     right: 8px;
     cursor:pointer;
   }
+}
+
+
+/* for coloring the events of different type  */
+.event_type {
+  background-color: #ff9933;
+}
+
+.special_type {
+  background-color: #999900
+}
+
+.announcement_type {
+  background-color: #ccffcc
 }

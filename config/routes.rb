@@ -9,6 +9,7 @@ Cal::Application.routes.draw do
     collection do
       get :search_location
       get :events
+      get :register
     end
   end
   resources :users, :only=>[:index,:show] do
