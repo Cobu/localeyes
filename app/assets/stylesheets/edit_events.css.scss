@@ -91,21 +91,3 @@ form.edit_event, form.new_event {
   font-size:10px
 }
 
-/* for coloring the events of different type  */
-.event_type {
-  span, div {
-    background-color: red;
-  }
-}
-
-.special_type {
-  span, div {
-    background-color: blue
-  }
-}
-
-.announcement_type {
-  span, div {
-    background-color: brown
-  }
-}

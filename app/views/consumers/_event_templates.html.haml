@@ -4,7 +4,7 @@
 
 - if current_user
   %script{:id=>"event_template", :type=>"text/x-handlebars-template"}
-    .event{ 'data-id'=>"{{attributes/id}}" }
+    .event{ 'data-id'=>"{{attributes/id}}", :class=> "{{attributes/service_type}}" }
       .info
         %div
           {{businessName}}
@@ -14,11 +14,12 @@
         {{{userFavoriteImage}}}
 - else
   %script{:id=>"event_template", :type=>"text/x-handlebars-template"}
-    .event{ 'data-id'=>"{{attributes/id}}" }
-      .business
-        {{businessName}}
-      .info
-        {{attributes/title}} {{startHour}}
+    .event{ 'data-id'=>"{{attributes/id}}", :class=> "{{attributes/service_type}}" }
+      .info.full
+        %div
+          {{businessName}}
+        %div
+          {{attributes/title}} {{startHour}}
 
 %script{:id=>"day_header_template", :type=>"text/x-handlebars-template"}
   .day_header

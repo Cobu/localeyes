@@ -59,7 +59,7 @@ Business.blueprint(:oswego_cafe) {
 
 
 Event.blueprint {
-  event_type { 0 }
+  event_type { Event::EVENT }
   title { 'say hi to rob and then go home' }
   description { title }
   start_time { blueprint_start_time }
