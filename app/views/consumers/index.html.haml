@@ -2,19 +2,21 @@
 #content.consumer
   .header
     .filter
-      Cafe
-      =check_box_tag :service_type_cafe, 0
-      %br
-      Restaurant
-      =check_box_tag :service_type_restaurant, 1
-      %br
-      Bar
-      =check_box_tag :service_type_bar, 2
-      %br
-    - if current_user
-      Favorites
-      =check_box_tag :filtering_favorites, false
-      %br
+      %div
+        Cafe
+        =check_box_tag :service_type_cafe, 0
+        %br
+        Restaurant
+        =check_box_tag :service_type_restaurant, 1
+      %div
+        %br
+        Bar
+        =check_box_tag :service_type_bar, 2
+        %br
+        - if current_user
+          Favorites
+          =check_box_tag :filtering_favorites, false
+        %br
     .search
       =label_tag "location", 'Location'
       =text_field_tag :search_location, '', :placeholder=>'City, State, Zip or College'

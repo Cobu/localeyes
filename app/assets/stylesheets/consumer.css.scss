@@ -30,27 +30,33 @@ a.ui-corner-all {
   width:930px;
 
   .header {
-    margin-bottom: 15px;
+    margin: 10px 0 20px 0;
+    border:1px sold black;
   }
 
    .filter {
-    vertical-align:top;
-    display:inline-block;
-    width:50%;
+     @include rounded(13px);
+     border:1px solid blue;
+     vertical-align:top;
+     display:inline-block;
+     width:41%;
+     div { margin-left:40px; display:inline-block; }
   }
 
   .search {
+    vertical-align:bottom;
     display:inline-block;
     font-size:12px;
     width:auto;
     text-align:right;
+    padding-left:30px;
 
     input#search_location {
       @include rounded(12px);
       height: 24px;
       width:360px;
 
-      padding-left:22px;
+      padding-left:25px;
       background: url("data:image/png;charset=utf-8;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAK8AAACvABQqw0mAAAABx0RVh0U29mdHdhcmUAQWRvYmUgRmlyZXdvcmtzIENTM5jWRgMAAAFlSURBVCiRbY/NqqpgFIYfjxLiyEFCfyDZpElFRF5Pt1A3FN1BNyEqRATfSFAo+keCmuQn5PEMDsXZe59nuJ718q6lANxutzIMQ4QQ7HY7bNum1+vhui7ValXhH7Q0TcvlckkQBJ9hHMfEcczpdCJN09KyrE9IC8OQIAhot9uMRiM6nQ5JkrBarQjDkFqtxpcGIQQA4/EY13WpVCpYloWqqmy3W97+za/9fg/AYDDAMAx0XccwDPr9PgBv/wm0Wi0AoihC07S/tZpGFEUAvP0n0O12AfA8D9/3ybIM3/fxPA8Ax3G+/jAcDrler6zXa5Ik4TtCCO73e2mapgKgSCnLw+HAZrMhiiKOxyPNZhPHcRBCkKYp9Xqd2WyGaZqKAiClLLMsI89zXq8XmqahqiqPx4PFYsHlcqHRaDCdTtEAdF1XftwCPJ/PcjKZMJ/PkVIipeS/i2+KolDyPP99Pp8pigLbtvkDMDKl6nkCE08AAAAASUVORK5CYII=") 2% 60% no-repeat;
       outline:none;
     }

@@ -7,7 +7,7 @@ class ConsumersController < ApplicationController
 
   def index
     #reset_session
-    #session[:user_id] = 2
+    session[:user_id] = 6
   end
 
   def search_location

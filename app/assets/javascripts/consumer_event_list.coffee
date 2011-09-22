@@ -134,7 +134,10 @@ $(document).ready( ->
   $('.event .info').live('click', (event)->
     elem = $(event.currentTarget).parent('.event')
     event = event_list.get(elem.data('id'))
-    elem.next('.business').remove() # make new one each time
+    business_elem = elem.next('.business')
+    if business_elem[0]
+      business_elem.slideUp('slow', -> business_elem.remove())
+      return
     business_list.setSelected(event.business().get('id')) # to grow the icon
     business_elem = $(event.business().render())
     elem_event_class = elem.attr('class').match(/\w+_type/)[0]
@@ -143,11 +146,6 @@ $(document).ready( ->
     business_elem.slideDown('slow')
   )
 
-  $('.business .close').live('click', (event)->
-    elem = $(event.currentTarget)
-    business_elem = elem.parent('.business')
-    business_elem.slideUp('slow')
-  )
 
   window.EventView = Backbone.View.extend({
     el: $( '#event_list' )
@@ -226,7 +224,7 @@ $(document).ready( ->
     filter.setServiceType( elem.attr('id'), elem.prop('checked') )
   )
 
-  $('.filter input[name=filtering_favorites]').live('click', (event)->
+  $('input[name=filtering_favorites]').live('click', (event)->
     elem = $(event.currentTarget)
     filter.setFilteringByFavorites( elem.prop('checked') )
   )
