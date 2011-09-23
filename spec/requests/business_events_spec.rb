@@ -46,6 +46,7 @@ describe "Business Events" do
     it "a daily event", :js=>true do
       e = daily_event
       new_title = Time.now.to_i.to_s
+      until_date = (Time.now + 1.day).to_date
 
       sign_in_user @bu
       visit business_path(@b)
@@ -54,15 +55,18 @@ describe "Business Events" do
 
       within('.edit_event') do
         fill_in 'event_title', :with=> new_title
+        fill_in 'event_recur_until_date', :with => until_date.strftime("%m/%d/%Y")
         click_on 'Update'
       end
 
       within('.choices_radio') do
         find(:css , "input#edit_affects_all_series").click
       end
+      sleep(0.5)
 
       e.reload
       e.title.should == new_title
+      e.schedule.rrules.first.until_date.to_date.should == until_date
     end
   end
 
@@ -107,37 +111,65 @@ describe "Business Events" do
 
   describe "creates" do
 
-    it "a new event", :js=>true do
-      new_title = Time.now.to_i.to_s
-      new_start_time = Time.now.utc.change(:hour=>3, :min=>4, :sec=>0)
-      new_end_time = Time.now.utc.change(:hour=>4, :min=>5, :sec=>0)
+    let(:title) { Time.now.to_i.to_s }
+    let(:start_time) { Time.now.utc.change(:hour=>3, :min=>4, :sec=>0) }
+    let(:end_time) { Time.now.utc.change(:hour=>4, :min=>5, :sec=>0) }
 
+    before do
       sign_in_user @bu
       visit business_path(@b)
 
       find(:css, "td.fc-day11").click
 
       within('.new_event') do
-        fill_in 'event_title', :with=> new_title
+        fill_in 'event_title', :with=> title
 
-        fill_in 'event_start_date', :with=> new_start_time.strftime("%m/%d/%Y")
-        select new_start_time.hour.to_s, :from => 'event_start_time_hour'
-        select new_start_time.strftime("%M"), :from => 'event_start_time_minute'
-        select new_start_time.strftime("%P"), :from => 'event_start_time_am_pm'
+        fill_in 'event_start_date', :with=> start_time.strftime("%m/%d/%Y")
+        select start_time.hour.to_s, :from => 'event_start_time_hour'
+        select start_time.strftime("%M"), :from => 'event_start_time_minute'
+        select start_time.strftime("%P"), :from => 'event_start_time_am_pm'
 
-        fill_in 'event_end_date', :with=> new_end_time.strftime("%m/%d/%Y")
-        select new_end_time.hour.to_s, :from => 'event_end_time_hour'
-        select new_end_time.strftime("%M"), :from => 'event_end_time_minute'
-        select new_end_time.strftime("%P"), :from => 'event_end_time_am_pm'
+        fill_in 'event_end_date', :with=> end_time.strftime("%m/%d/%Y")
+        select end_time.hour.to_s, :from => 'event_end_time_hour'
+        select end_time.strftime("%M"), :from => 'event_end_time_minute'
+        select end_time.strftime("%P"), :from => 'event_end_time_am_pm'
+      end
+    end
 
+    it "a new one day event", :js=>true do
+      within('.new_event') do
+        choose 'Once'
         click_on 'Create Event'
       end
 
+      sleep(0.5)
+
       Event.count.should == 1
       e = Event.first
-      e.title.should == new_title
-      e.start_time.should == new_start_time
-      e.end_time.should == new_end_time
+      e.schedule.should be_nil
+      e.title.should == title
+      e.start_time.should == start_time
+      e.end_time.should == end_time
+    end
+
+    it "a new daily event", :js=>true do
+      until_date = (start_time + 1.day).to_date
+
+      within('.new_event') do
+        choose 'Daily'
+        fill_in 'event_recur_until_date', :with => until_date.strftime("%m/%d/%Y")
+        click_on 'Create Event'
+      end
+
+      sleep(0.5)
+
+      Event.count.should == 1
+      e = Event.first
+      e.schedule.should_not be_nil
+      e.schedule.rrules.first.until_date.to_date.should == until_date
+      e.title.should == title
+      e.start_time.should == start_time
+      e.end_time.should == end_time
     end
 
   end

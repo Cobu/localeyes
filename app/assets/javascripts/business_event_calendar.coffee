@@ -11,6 +11,11 @@ window.CalendarOptions = {
 $(document).ready( ->
   return unless $('.calendar_content')[0]
 
+  $('.business_name > select').change( ()->
+    select = $(this)
+    window.location.href = "/businesses/#{select.val()}"
+  )
+
   eventDataParams = (start_time,end_time)->
     {
       '_method': 'get',

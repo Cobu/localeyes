@@ -120,6 +120,31 @@ describe Event do
       }
     end
 
-  end
+    it "can set until date on new schedule" do
+      until_date  = Date.today.to_time
+      event = Event.new(Event.plan(:daily,
+                                   :recur_until_date => until_date.strftime("%m/%d/%Y"),
+                                   :start_time => Time.utc(2011, 8, 5, 7, 30),
+                                   :end_time => Time.utc(2011, 8, 5, 9, 30)
+                        ))
+      event.create_schedule
+      event.schedule.rrules.first.until_date.class.should == Time
+      event.schedule.rrules.first.until_date.should == until_date
+    end
 
+    it "can update until date on existing schedule" do
+      until_date  = Date.today.to_time
+      event = Event.new(Event.plan(:daily,
+                                   :start_time => Time.utc(2011, 8, 5, 7, 30),
+                                   :end_time => Time.utc(2011, 8, 5, 9, 30)
+                        ))
+      event.create_schedule
+      event.schedule.rrules.first.until_date.should == nil
+      event.recur_until_date = until_date.strftime("%m/%d/%Y")
+      event.edit_schedule
+      event.schedule.rrules.first.until_date.should == until_date
+    end
+
+  end
 end
+

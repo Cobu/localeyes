@@ -145,9 +145,8 @@ class Event < ActiveRecord::Base
   end
 
   def create_schedule
-    schedule = IceCube::Schedule.new(start_time)
-
     if (RECUR_TYPES-[ONCE]).include? @recur_value
+      schedule = IceCube::Schedule.new(start_time)
       rule = case @recur_value
         when 'day'
           IceCube::Rule.daily
@@ -156,19 +155,18 @@ class Event < ActiveRecord::Base
         when 'month'
           IceCube::Rule.monthly
       end
-
-      until_date = Date.strptime(@recur_until_date,"%m/%d/%Y") rescue nil
+      until_date = Time.strptime(@recur_until_date,"%m/%d/%Y") rescue nil
       rule.until(until_date)
-
       schedule.add_recurrence_rule(rule)
+      self.schedule = schedule
     end
-    self.schedule = schedule
     true
   end
 
   def edit_schedule
-    if rule = self.schedule.rrules.first and @recur_until_date.present?
-      until_date = Date.strptime(@recur_until_date,"%m/%d/%Y") rescue nil
+    if schedule and schedule.rrules.any? and @recur_until_date
+      rule = schedule.rrules.first
+      until_date = Time.strptime(@recur_until_date,"%m/%d/%Y") rescue nil
       rule.until(until_date)
     end
     true

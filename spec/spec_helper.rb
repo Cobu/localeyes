@@ -80,6 +80,25 @@ Spork.prefork do
     end
 
   end
+
+  # fixed deprecation warnings
+  module Machinist
+    class ActiveRecordAdapter
+      def self.assigned_attributes_without_associations(lathe)
+        attributes = {}
+        lathe.assigned_attributes.each_pair do |attribute, value|
+          association = lathe.object.class.reflect_on_association(attribute)
+          if association && association.macro == :belongs_to && !value.nil?
+            attributes[association.foreign_key.to_sym] = value.id
+          else
+            attributes[attribute] = value
+          end
+        end
+        attributes
+      end
+    end
+  end
+
 end
 
 

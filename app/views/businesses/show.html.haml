@@ -1,6 +1,9 @@
 .header
   .business_name
-    = current_business.name
+    - if current_business_user.businesses.size > 1
+      = select(:business, :id, current_business_user.businesses.collect{|b| [b.name, b.id]}, :selected=>current_business.id)
+    - else
+      = current_business.name
     = link_to 'edit', edit_business_path(current_business)
 
 .calendar_content

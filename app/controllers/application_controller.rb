@@ -1,5 +1,10 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
+  rescue_from ActiveRecord::RecordNotFound, :with => :render_404
+
+  def render_404
+    render :template => '404', :status => 404
+  end
 
   def current_business
     @current_business ||= current_business_user.businesses.find(session[:business_id]) if session[:business_id]

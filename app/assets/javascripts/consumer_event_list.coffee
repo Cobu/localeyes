@@ -104,7 +104,7 @@ $(document).ready( ->
         position: point,
         map: this.map.view,
         title: this.center_point.title
-        icon: "http://www.google.com/mapfiles/arrow.png"
+        icon: "/assets/arrow.png"
       })
       this.map.markerBounds.extend(point)
 

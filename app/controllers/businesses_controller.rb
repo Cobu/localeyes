@@ -9,6 +9,10 @@ class BusinessesController < ApplicationController
     render :json=> details
   end
 
+  def show
+    session[:business_id] = current_business_user.businesses.find(params[:id]).id
+  end
+
   def index
     businesses = Business.where(:id=>params[:business_ids])
     render :json => businesses

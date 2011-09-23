@@ -5,6 +5,6 @@ class IceCube::Schedule
   end
 
   def self.dump(schedule)
-    schedule.to_yaml
+    schedule.to_yaml if schedule
   end
 end
