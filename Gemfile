@@ -19,7 +19,6 @@ gem 'bson_ext'
 gem 'geocoder'
 gem 'machinist'
 gem 'unicorn'
-#gem 'airbrake'
 
 group :development, :test do
   gem "wirble"
@@ -27,6 +26,7 @@ group :development, :test do
   gem "hirb"
   gem "capistrano"
   gem 'capistrano-ext'
+  gem 'capistrano_colors'
   gem 'rb-fsevent', :require => false
   gem 'guard-rspec'
   gem 'guard-livereload'
