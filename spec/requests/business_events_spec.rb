@@ -4,7 +4,7 @@ describe "Business Events" do
 
   before(:all) do
     @bu = BusinessUser.make
-    @b = Business.make(:oswego_restaurant, :user=>@bu)
+    @b = Business.make!(:oswego_restaurant, :user=>@bu)
   end
   after(:all) { BusinessUser.destroy_all }
   after(:each) { Event.delete_all }
@@ -13,14 +13,14 @@ describe "Business Events" do
     ApplicationController.session_data = { :business_user_id=>user.id, :business_id=>@b.id }
   end
 
-  let(:once_event) {Event.make(:once, :start_time=>Time.now, :end_time=>Time.now+1.hour, :business=> @b)}
-  let(:daily_event) {Event.make(:daily, :start_time=>Time.now, :end_time=>Time.now+1.hour, :business=> @b)}
+  let(:once_event) {Event.make!(:once, :start_time=>Time.now, :end_time=>Time.now+1.hour, :business=> @b)}
+  let(:daily_event) {Event.make!(:daily, :start_time=>Time.now, :end_time=>Time.now+1.hour, :business=> @b)}
 
   describe "edits" do
 
     it "a one time event", :js=>true do
       start_time = Time.now.utc.change(:hour=>1, :min=>2, :sec=>0)
-      e = Event.make(:once, :start_time=>start_time, :business=> @b)
+      e = Event.make!(:once, :start_time=>start_time, :business=> @b)
 
       sign_in_user @bu
       visit business_path(@b)

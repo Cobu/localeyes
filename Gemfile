@@ -16,7 +16,7 @@ gem 'mongo'
 gem 'mongoid'
 gem 'bson_ext'
 gem 'geocoder'
-gem 'machinist'
+gem 'machinist', '>= 2.0.0.beta2'
 gem 'unicorn'
 gem 'draper'
 

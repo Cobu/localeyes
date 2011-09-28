@@ -1,10 +1,5 @@
-require 'sham'
-
-Sham.bemail { |index| "b#{index}@dude.com" }
-Sham.uemail { |index| "u#{index}@dude.com" }
-
 User.blueprint {
-  email { Sham.uemail }
+  email { "u#{sn}@dude.com" }
   password { "moogoo" }
 }
 
@@ -17,7 +12,7 @@ User.blueprint(:dude) {
 }
 
 BusinessUser.blueprint {
-  email { Sham.bemail }
+  email { "b#{sn}@dude.com" }
   first_name { "Dude" }
   last_name { "Smiley" }
   phone { "5105551212" }
@@ -102,7 +97,7 @@ ZipCode.blueprint(:new_paltz) {
   lng { -74.087 }
 }
 
-College.blueprint {}
+#College.blueprint {}
 College.blueprint(:suny_oswego) {
   name { "SUNY College at Oswego" }
   address { "7060 State Route 104" }
@@ -121,5 +116,4 @@ College.blueprint(:suny_new_paltz) {
   zip_code { "12561" }
   lat { 41.738332 }
   lng { -74.090667 }
-
 }

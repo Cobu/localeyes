@@ -6,7 +6,7 @@ describe Business do
     Time.utc(1970, 1, 1, hour, min)
   end
 
-  let(:business) { b = Business.new(Business.plan(:oswego_cafe,:user=>nil)) ; b.set_default_hours ; b }
+  let(:business) { b = Business.make(:oswego_cafe,:user=>nil) ; b.set_default_hours ; b }
   subject { business }
 
   it { should respond_to :sunday_hours }

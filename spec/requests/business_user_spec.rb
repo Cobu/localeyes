@@ -9,7 +9,7 @@ describe "Business User" do
     it "with complete info takes you to create new busines page" do
       visit new_business_user_path
 
-      bu = BusinessUser.new BusinessUser.plan
+      bu = BusinessUser.make
       within "form" do
         fill_in 'business_user_email', :with => bu.email
         fill_in 'business_user_first_name', :with => bu.first_name
@@ -26,7 +26,7 @@ describe "Business User" do
     it "with IN COMPLETE info keeps you on this page and shows errors" do
       visit new_business_user_path
 
-      bu = BusinessUser.new BusinessUser.plan
+      bu = BusinessUser.make
       within "form" do
         fill_in 'business_user_email', :with => ''
         fill_in 'business_user_first_name', :with => bu.first_name
@@ -45,8 +45,8 @@ describe "Business User" do
   describe "logging in" do
     it "with correct password logs in existing user" do
       password = "dudeman"
-      bu = BusinessUser.make(:password=>password)
-      b = Business.make(:oswego_restaurant, :user=>bu)
+      bu = BusinessUser.make!(:password=>password)
+      b = Business.make!(:oswego_restaurant, :user=>bu)
 
       visit login_business_users_path
 
@@ -60,7 +60,7 @@ describe "Business User" do
     end
 
     it "with incorrect password keeps existing user on login page" do
-      bu = BusinessUser.make
+      bu = BusinessUser.make!
 
       visit login_business_users_path
 
