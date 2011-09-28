@@ -55,6 +55,7 @@ GEM
     carmen (0.2.8)
     childprocess (0.2.2)
       ffi (~> 1.0.6)
+    client_side_validations (3.1.0)
     coderay (0.9.8)
     coffee-script (2.2.0)
       coffee-script-source
@@ -241,6 +242,7 @@ DEPENDENCIES
   capistrano-ext
   capybara
   carmen
+  client_side_validations
   coffee-script
   database_cleaner
   draper
