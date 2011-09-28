@@ -1,6 +1,10 @@
 class College < ActiveRecord::Base
   scope :search, ->(term) { where("name LIKE :term", :term=> "%#{term}%") }
 
+  def full_address
+     [address, city, state_short, zip_code].compact.join(' ')
+   end
+
   def as_json(options={})
     {:label=> "#{name} #{city}, #{state_short} #{zip_code}", :zip_code=> zip_code, :type=>:c, id: id}
   end
@@ -10,7 +14,6 @@ class College < ActiveRecord::Base
   end
 
   def self.get_center_info(id)
-    college = find(id) rescue nil
-    college.center_json if college
+    find_by_id(id).try(:center_json)
   end
 end

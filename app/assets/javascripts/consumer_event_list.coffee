@@ -41,6 +41,10 @@ $(document).ready( ->
     map_tooltip_template : Handlebars.compile(" {{name}}\n{{address}}\n{{city}},{{state}} ")
     render : -> this.template(this)
     marker : null
+    clearMarker : ->
+      if this.marker
+        this.marker.setMap(null)
+        this.marker = null
     setMarker : (map, markerBounds)->
       this.point = new google.maps.LatLng(this.get('lat'),this.get('lng'))
       this.marker = this.makeMarker(map)
@@ -66,11 +70,7 @@ $(document).ready( ->
     model: Business
     selected : null
     filteredModels: ->  _.filter( this.models, (model)->  model )
-    clearMarkers : -> _.each( this.models, (business)->
-      if business.marker
-        business.marker.setMap(null)
-        business.marker = null
-    )
+    clearMarkers : -> _.each( this.models, (business)->  business.clearMarker() )
     setMarkers : (map, markerBounds) ->  _.each( this.models, (business)-> business.setMarker(map, markerBounds) )
     setSelected : (id)->
       if (this.selected)
@@ -85,6 +85,7 @@ $(document).ready( ->
     icon : null
     el : $('#map_canvas')
     center_point : null
+    center_marker : null
     map : {
       options : {
         mapTypeId: google.maps.MapTypeId.ROADMAP
@@ -100,7 +101,7 @@ $(document).ready( ->
 
     addCenterPoint : ->
       point = new google.maps.LatLng(this.center_point.lat, this.center_point.lng)
-      marker = new google.maps.Marker({
+      this.center_marker = new google.maps.Marker({
         position: point,
         map: this.map.view,
         title: this.center_point.title
@@ -110,6 +111,9 @@ $(document).ready( ->
 
     clear : ->
       business_list.clearMarkers()
+      if this.center_marker
+        this.center_marker.setMap(null)
+        this.center_marker = null
       this.map.markerBounds = new google.maps.LatLngBounds();
 
     render : ->
@@ -151,11 +155,9 @@ $(document).ready( ->
     el: $( '#event_list' )
     day_header_template : Handlebars.compile($( '#day_header_template' ).html())
     event_template : Handlebars.compile($( '#event_template' ).html())
-    event_list_header : Handlebars.compile($( '#event_list_header' ).html())
 
     render: ->
       this.el.empty()
-      this.el.append( this.event_list_header() )
 
       events = _(event_list.models).groupBy( (event)-> event.startDate() )
       for num in [0..13]

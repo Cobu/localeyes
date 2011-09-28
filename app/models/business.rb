@@ -4,7 +4,7 @@ class Business < ActiveRecord::Base
   has_one :zip_location, :class_name => 'ZipCode', :foreign_key => :zip_code, :primary_key => :zip_code
 
   validates :name, :phone, :city, :state, :zip_code, :presence => true
-  #after_initialize :set_default_hours, :if => :new_record?
+
   before_validation :set_phone_number
   before_save :check_open_hours
 
@@ -14,6 +14,10 @@ class Business < ActiveRecord::Base
   serialize :hours, Array
 
   HOURS_CLOSED = {:from=>nil, :to=>nil, :open=>false}
+
+  def full_address
+    [address, address2, city, state, zip_code].compact.join(' ')
+  end
 
   def set_default_hours
     nine_am = Time.utc(1970, 1, 1, 9, 00)

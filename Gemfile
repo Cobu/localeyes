@@ -8,7 +8,6 @@ gem 'jquery-rails'
 gem 'haml-rails'
 gem 'coffee-script'
 gem 'uglifier'
-gem 'client_side_validations'
 gem 'ice_cube'
 gem 'schedule_atts'
 gem 'carmen'
@@ -19,6 +18,7 @@ gem 'bson_ext'
 gem 'geocoder'
 gem 'machinist'
 gem 'unicorn'
+gem 'draper'
 
 group :development, :test do
   gem "wirble"
@@ -26,7 +26,6 @@ group :development, :test do
   gem "hirb"
   gem "capistrano"
   gem 'capistrano-ext'
-  gem 'capistrano_colors'
   gem 'rb-fsevent', :require => false
   gem 'guard-rspec'
   gem 'guard-livereload'

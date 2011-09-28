@@ -1,7 +1,3 @@
-%script{:id=>"event_list_header", :type=>"text/x-handlebars-template"}
-  .event_list_header
-    The List
-
 - if current_user
   %script{:id=>"event_template", :type=>"text/x-handlebars-template"}
     .event{ 'data-id'=>"{{attributes/id}}", :class=> "{{attributes/service_type}}" }
