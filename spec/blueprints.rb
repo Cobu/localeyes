@@ -78,7 +78,6 @@ Event.blueprint(:monthly) {
 }
 
 
-ZipCode.blueprint {}
 ZipCode.blueprint(:oswego) {
   zip_code { "13126" }
   city { "Oswego" }
@@ -97,7 +96,6 @@ ZipCode.blueprint(:new_paltz) {
   lng { -74.087 }
 }
 
-#College.blueprint {}
 College.blueprint(:suny_oswego) {
   name { "SUNY College at Oswego" }
   address { "7060 State Route 104" }
