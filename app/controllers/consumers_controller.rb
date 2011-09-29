@@ -2,12 +2,9 @@ class ConsumersController < ApplicationController
   layout 'consumer_application'
 
   def register
-
   end
 
   def index
-    #reset_session
-    #session[:user_id] = 2
   end
 
   def search_location
