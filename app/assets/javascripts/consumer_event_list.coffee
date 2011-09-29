@@ -3,9 +3,31 @@ Handlebars.registerHelper("rounded", (number)->
     parseFloat(number).toFixed(2)
 )
 
-Handlebars.registerHelper("hours", (string)->
+Handlebars.registerHelper("hour", (string)->
   return unless _.isString(string)
-  string
+  date = Date.parseExact(string,"yyyy-MM-ddTH:mm:ssZ")
+  if date then date.toString('h:mm tt') else ''
+)
+
+short_dayname = ['Su', 'M', 'T', 'W', 'Th', 'F', 'Sa']
+Handlebars.registerHelper("each_hour", (array, fn)->
+	buffer = ""
+	for num in [0..array.length-1]
+		item = array[num]
+    # add the day_name property onto the hours
+		item.day_name = short_dayname[num]
+		if (item.open == true)
+		  item.hour_value = this.renderHours(item)
+		else
+		  item.hour_value = "Closed"
+		# show the inside of the block
+		buffer += fn(item)
+	buffer # return the finished buffer
+)
+
+Handlebars.registerHelper("phone_format", (number)->
+  if (number != undefined)
+    number
 )
 
 Handlebars.registerHelper("header", (date)->
@@ -25,20 +47,23 @@ $(document).ready( ->
   $('#event_list_inner').qvivoScroll()
 
   window.Event = Backbone.Model.extend({
-     startDate : -> Date.parse(this.get('start')).toString("yyyy-MM-dd")
-     startHour : -> Date.parse(this.get('start')).toString("h:mm tt")
-     business : -> business_list.get(this.get('business_id'))
-     businessName : -> this.business().get('name')
-     userFavoriteImage : ->
-       prefix = if _.include( Filter.userFavorites, this.get('business_id') ) then '' else 'un'
-       "<img src='assets/fav_#{prefix}selected.gif' width='20px' data-busniess_id='#{this.get('business_id')}' rel='favorite'/>"
+    startDate : -> Date.parse(this.get('start')).toString("yyyy-MM-dd")
+    startHour : -> Date.parse(this.get('start')).toString("h:mm tt")
+    business : -> business_list.get(this.get('business_id'))
+    businessName : -> this.business().get('name')
+    userFavoriteImage : ->
+      prefix = if _.include( Filter.userFavorites, this.get('business_id') ) then '' else 'un'
+      "<img src='assets/fav_#{prefix}selected.gif' width='20px' data-busniess_id='#{this.get('business_id')}' rel='favorite'/>"
   })
 
   window.Business = Backbone.Model.extend({
     service_type_names : ['Cafe', 'Restaurant', 'Bar']
     serviceName : -> this.service_type_names[this.get('service_type')].toLowerCase()
     template: Handlebars.compile($( '#business_info_template' ).html())
-    map_tooltip_template : Handlebars.compile(" {{name}}\n{{address}}\n{{city}},{{state}} ")
+    map_tooltip_template : Handlebars.compile("{{name}}\n{{address}}\n{{city}},{{state}} ")
+    hours_template : Handlebars.compile("{{hour from}} - {{hour to}}")
+
+    renderHours : (item)-> this.hours_template(item)
     render : -> this.template(this)
     marker : null
     clearMarker : ->
@@ -158,7 +183,6 @@ $(document).ready( ->
 
     render: ->
       this.el.empty()
-
       events = _(event_list.models).groupBy( (event)-> event.startDate() )
       for num in [0..13]
         date = Date.today().addDays(num)

@@ -127,12 +127,28 @@ a.ui-corner-all {
 
 .business {
   /*background-color:inherit;*/
-  position:relative;
-  width:380px;
+  width:100%;
 
   .info {
-    width:67%;
+    width:48%;
+    vertical-align:top;
     display:inline-block;
+  }
+
+  .hours {
+    width:44%;
+    padding-left:25px;
+    display:inline-block;
+
+    .line {
+      .day_name {
+        display:inline-block;
+        width:20px;
+      }
+      .from_to {
+        display:inline-block;
+      }
+    }
   }
 
   .close {
