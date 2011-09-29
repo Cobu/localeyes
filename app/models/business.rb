@@ -5,6 +5,9 @@ class Business < ActiveRecord::Base
 
   validates :name, :phone, :city, :state, :zip_code, :presence => true
 
+  geocoded_by :full_address, :latitude => :lat, :longitude => :lng
+  before_create :geocode
+
   before_validation :set_phone_number
   before_save :check_open_hours
 
