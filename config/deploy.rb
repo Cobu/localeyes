@@ -23,11 +23,11 @@ namespace :deploy do
     run "cd #{deploy_to}/current; ./script/unicorn -E #{rails_env} -D -c config/unicorn.rb"
   end
   task :stop, :roles => :app do
-    run "/bin/kill -QUIT `cat /var/www/localeyes/shared/pids/unicorn.pid`"
+    run "/bin/kill -QUIT `cat /var/www/#{application}/shared/pids/unicorn.pid`"
   end
 
   task :restart, :roles => :app do
-    run "/bin/kill -USR2 `cat /var/www/localeyes/shared/pids/unicorn.pid`"
+    run "/bin/kill -USR2 `cat /var/www/#{application}/shared/pids/unicorn.pid`"
   end
 
   desc "Compile asets"
