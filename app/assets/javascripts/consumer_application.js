@@ -5,7 +5,6 @@
 //= require handlebars
 //= require underscore
 //= require backbone
-//= require mapping
 //= require date
 //= require consumer_event_list
 //= require location_search

@@ -9,7 +9,14 @@ Handlebars.registerHelper("hour", (string)->
   if date then date.toString('h:mm tt') else ''
 )
 
+Handlebars.registerHelper("phone_format", (phone) ->
+  return if _.isEmpty(phone)
+  phone = phone.toString()
+  "(" + phone.substr(0,3) + ") " + phone.substr(3,3) + "-" + phone.substr(6,4)
+)
+
 short_dayname = ['Su', 'M', 'T', 'W', 'Th', 'F', 'Sa']
+hours_template = Handlebars.compile("{{hour from}} - {{hour to}}")
 Handlebars.registerHelper("each_hour", (array, fn)->
 	buffer = ""
 	for num in [0..array.length-1]
@@ -17,17 +24,12 @@ Handlebars.registerHelper("each_hour", (array, fn)->
     # add the day_name property onto the hours
 		item.day_name = short_dayname[num]
 		if (item.open == true)
-		  item.hour_value = this.renderHours(item)
+		  item.hour_value = hours_template(item)
 		else
 		  item.hour_value = "Closed"
 		# show the inside of the block
 		buffer += fn(item)
 	buffer # return the finished buffer
-)
-
-Handlebars.registerHelper("phone_format", (number)->
-  if (number != undefined)
-    number
 )
 
 Handlebars.registerHelper("header", (date)->
@@ -61,7 +63,6 @@ $(document).ready( ->
     serviceName : -> this.service_type_names[this.get('service_type')].toLowerCase()
     template: Handlebars.compile($( '#business_info_template' ).html())
     map_tooltip_template : Handlebars.compile("{{name}}\n{{address}}\n{{city}},{{state}} ")
-    hours_template : Handlebars.compile("{{hour from}} - {{hour to}}")
 
     renderHours : (item)-> this.hours_template(item)
     render : -> this.template(this)
