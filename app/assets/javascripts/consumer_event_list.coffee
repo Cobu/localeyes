@@ -48,134 +48,22 @@ $(document).ready( ->
 
   $('#event_list_inner').qvivoScroll()
 
-  window.Event = Backbone.Model.extend({
-    startDate : -> Date.parse(this.get('start')).toString("yyyy-MM-dd")
-    startHour : -> Date.parse(this.get('start')).toString("h:mm tt")
-    business : -> business_list.get(this.get('business_id'))
-    businessName : -> this.business().get('name')
-    userFavoriteImage : ->
-      prefix = if _.include( Filter.userFavorites, this.get('business_id') ) then '' else 'un'
-      "<img src='assets/fav_#{prefix}selected.gif' width='20px' data-busniess_id='#{this.get('business_id')}' rel='favorite'/>"
-  })
 
-  window.Business = Backbone.Model.extend({
-    service_type_names : ['Cafe', 'Restaurant', 'Bar']
-    serviceName : -> this.service_type_names[this.get('service_type')].toLowerCase()
-    template: Handlebars.compile($( '#business_info_template' ).html())
-    map_tooltip_template : Handlebars.compile("{{name}}\n{{address}}\n{{city}},{{state}} ")
-
-    renderHours : (item)-> this.hours_template(item)
-    render : -> this.template(this)
-    marker : null
-    clearMarker : ->
-      if this.marker
-        this.marker.setMap(null)
-        this.marker = null
-    setMarker : (map, markerBounds)->
-      this.point = new google.maps.LatLng(this.get('lat'),this.get('lng'))
-      this.marker = this.makeMarker(map)
-      markerBounds.extend(this.point)
-
-    makeMarker : (map)->
-      new google.maps.Marker({
-        position: this.point
-        map: map
-        title: this.map_tooltip_template(this.attributes)
-        icon: this.makeIcon()
-      })
-
-    makeIcon : (scaleFactor)->
-      scaleFactor = 1 if (scaleFactor == undefined)
-      new google.maps.MarkerImage(
-        "/assets/#{this.serviceName()}.png", null , null , null ,
-        new google.maps.Size(20*scaleFactor, 34*scaleFactor)
-      )
-  })
-
-  window.BusinessList = Backbone.Collection.extend({
-    model: Business
-    selected : null
-    filteredModels: ->  _.filter( this.models, (model)->  model )
-    clearMarkers : -> _.each( this.models, (business)->  business.clearMarker() )
-    setMarkers : (map, markerBounds) ->  _.each( this.models, (business)-> business.setMarker(map, markerBounds) )
-    setSelected : (id)->
-      if (this.selected)
-        business = this.get(this.selected)
-        this.get(this.selected).marker.setIcon(business.makeIcon())
-      business = this.get(id)
-      business.marker.setIcon(business.makeIcon(1.3))
-      this.selected = id
-  })
-
-  class MapView
-    icon : null
-    el : $('#map_canvas')
-    center_point : null
-    center_marker : null
-    map : {
-      options : {
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-        mapTypeControl: false,
-      },
-      view : null
-      markerBounds : new google.maps.LatLngBounds()
-    }
-
-    prepareMap : ->
-      if !this.map.view
-        this.map.view = new google.maps.Map(document.getElementById("map_canvas"), this.map.options)
-
-    addCenterPoint : ->
-      point = new google.maps.LatLng(this.center_point.lat, this.center_point.lng)
-      this.center_marker = new google.maps.Marker({
-        position: point,
-        map: this.map.view,
-        title: this.center_point.title
-        icon: "/assets/arrow.png"
-      })
-      this.map.markerBounds.extend(point)
-
-    clear : ->
-      business_list.clearMarkers()
-      if this.center_marker
-        this.center_marker.setMap(null)
-        this.center_marker = null
-      this.map.markerBounds = new google.maps.LatLngBounds();
-
-    render : ->
-      this.prepareMap()
-      this.clear()
-      business_list.setMarkers(this.map.view, this.map.markerBounds)
-      this.addCenterPoint()
-
-      # extend the bounds if its too small
-      if (map_view.map.markerBounds.getNorthEast().equals(map_view.map.markerBounds.getSouthWest()))
-        extendPoint = new google.maps.LatLng(map_view.map.markerBounds.getNorthEast().lat() + 0.1, map_view.map.markerBounds.getNorthEast().lng() + 0.1)
-        map_view.map.markerBounds.extend(extendPoint)
-      this.map.view.fitBounds(map_view.map.markerBounds)
-
-
-  window.EventList = Backbone.Collection.extend({
-    url: '/consumers/events'
-    model: Event
-    filteredModels: -> _.filter( this.models, (model)->  model )
-  })
 
   $('.event .info').live('click', (event)->
-    elem = $(event.currentTarget).parent('.event')
-    event = event_list.get(elem.data('id'))
-    business_elem = elem.next('.business')
-    if business_elem[0]
-      business_elem.slideUp('slow', -> business_elem.remove())
-      return
-    business_list.setSelected(event.business().get('id')) # to grow the icon
-    business_elem = $(event.business().render())
-    elem_event_class = elem.attr('class').match(/\w+_type/)[0]
-    business_elem.addClass(elem_event_class)
-    elem.after(business_elem)
-    business_elem.slideDown('slow')
+   elem = $(event.currentTarget).parent('.event')
+   event = event_list.get(elem.data('id'))
+   business_elem = elem.next('.business')
+   if business_elem[0]
+     business_elem.slideUp('slow', -> business_elem.remove())
+     return
+   business_list.setSelected(event.business().get('id')) # to grow the icon
+   business_elem = $(event.business().render())
+   elem_event_class = elem.attr('class').match(/\w+_type/)[0]
+   business_elem.addClass(elem_event_class)
+   elem.after(business_elem)
+   business_elem.slideDown('slow')
   )
-
 
   window.EventView = Backbone.View.extend({
     el: $( '#event_list' )
@@ -195,6 +83,8 @@ $(document).ready( ->
       this.el.append( this.day_header_template({'date': date}) )
       _.each(events, (event)-> event_view.el.append( event_view.event_template(event) ) )
   })
+
+  window.Business.template = Handlebars.compile($( '#business_info_template' ).html())
 
   window.event_list = new EventList
   window.event_view = new EventView

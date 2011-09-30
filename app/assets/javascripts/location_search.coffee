@@ -10,6 +10,7 @@ $(document).ready( ->
             zip_code: ui.item.zip_code,
             t: ui.item.type,
             d: ui.item.id }, (data)->
+              window.map_view.clear()
               window.business_list = new window.BusinessList(data.businesses)
               window.event_list = new window.EventList(data.events)
               window.Filter.userFavorites = data.favorites
@@ -23,6 +24,7 @@ $(document).ready( ->
 
 
   $.get('/consumers/events',{time: Date.now().toString('yyyy-MM-dd HH:mm'),zip_code: 13126, t: 'z', d: 1}, (data)->
+    window.map_view.clear()
     window.business_list = new BusinessList(data.businesses)
     window.event_list = new EventList(data.events)
     window.Filter.userFavorites = data.favorites

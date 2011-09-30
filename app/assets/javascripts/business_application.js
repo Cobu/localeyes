@@ -8,3 +8,9 @@
 //= require edit_event_setup
 //= require business_event_calendar
 //= require rails.validations
+//= require handlebars
+//= require underscore
+//= require backbone
+//= require map
+//= require models
+//= require business_edit

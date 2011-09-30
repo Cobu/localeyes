@@ -41,12 +41,16 @@ span.button, a.button, input.button{
   margin: auto
 }
 
+#wrapper { width:100% }
+
 form.new_business, form.edit_business{
+  width:50%;
+  display:inline-block;
   padding-top:10px;
   padding-left:10px;
 
   .open_times {
-
+    margin-top:15px;
     .days_times {
       .day_name {
         width:15px;
@@ -57,6 +61,30 @@ form.new_business, form.edit_business{
     }
   }
 
+  .field.phone {
+    input { width:40px;  }
+  }
+
+  .field.zip {
+    input { width:60px; }
+  }
+
+  .field.position {
+    margin:10px 0px;
+    input { width:100px; }
+  }
+
+}
+
+#map_canvas_container {
+  display:inline-block;
+  vertical-align:top;
+  width:40%;
+  #map_canvas {
+    width: 430px;
+    height: 380px;
+    border: 1px solid #666666;
+  }
 }
 
 

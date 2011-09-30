@@ -1,48 +1,62 @@
-= form_for(@business) do |f|
-  .error_messages
-    = f.error_messages if @business.errors
-  %div
-    .field
-      = f.text_field :name, :placeholder => 'Business Name'
-    .field
-      = f.select :service_type, Business::SERVICE_TYPE_NAMES.zip(Business::SERVICE_TYPES)
-    .field
-      = f.text_field :description
-  %div
-    .field
-      = f.text_field :address, :placeholder => 'Street Address'
-    .field
-      = f.text_field :address2, :placeholder => 'Street Address2'
-    .field
-      = f.text_field :city, :placeholder => 'City'
-      = f.select :state, Carmen::state_codes('US')
-      = f.text_field :zip_code, :placeholder => 'Zip'
-    .field
-      = f.label :phone
-      = f.text_field :phone_first3
-      -
-      = f.text_field :phone_second3
-      -
-      = f.text_field :phone_last4
+#wrapper
+  = form_for(@business) do |f|
+    .error_messages
+      = f.error_messages if @business.errors
+    #business_data{:'data-info' => @business.to_json}
+    %div
+      .field
+        = f.text_field :name, :placeholder => 'Business Name'
+      .field
+        = f.select :service_type, Business::SERVICE_TYPE_NAMES.zip(Business::SERVICE_TYPES)
+      .field
+        = f.text_field :description
+    %div
+      .field
+        = f.text_field :address, :placeholder => 'Street Address'
+      .field
+        = f.text_field :address2, :placeholder => 'Street Address2'
+      .field
+        = f.text_field :city, :placeholder => 'City'
+        = f.select :state, Carmen::state_codes('US')
+      .field.zip
+        = f.text_field :zip_code, :placeholder => 'Zip Code'
+      .field.phone
+        = f.label :phone
+        = f.text_field :phone_first3
+        -
+        = f.text_field :phone_second3
+        -
+        = f.text_field :phone_last4
+      .field.position
+        = f.label :lat
+        = f.text_field :lat
+        -
+        = f.label :lng
+        = f.text_field :lng
 
-  .open_times
-    - Date::DAYNAMES.each_with_index do |dayname,day_index|
-      - hour_method = "#{dayname.downcase}_hours"
-      .days_times
-        .day_name
-          = Business::SHORT_DAYNAME[day_index]
-        - Business::TIME_TYPES.each_with_index do |type,index|
-          .hours
-            = f.select "#{hour_method}_#{type}_hour", (0..12).zip(('00'..'12')), {}, :name=>"business[#{hour_method}_#{type}[hour]]"
-          .minutes
-            = f.select "#{hour_method}_#{type}_min", ('00'..'60'), {}, :name=>"business[#{hour_method}_#{type}[min]]"
-          .ampm
-            = f.select "#{hour_method}_#{type}_ampm", %w(am pm), {}, :name=>"business[#{hour_method}_#{type}[ampm]]"
-          - if index == 0
-            == -
-          - else
-            = f.check_box "#{hour_method}_open", :name=>"business[#{hour_method}_open]"
-            Open
+    .open_times
+      - Date::DAYNAMES.each_with_index do |dayname,day_index|
+        - hour_method = "#{dayname.downcase}_hours"
+        .days_times
+          .day_name
+            = Business::SHORT_DAYNAME[day_index]
+          - Business::TIME_TYPES.each_with_index do |type,index|
+            .hours
+              = f.select "#{hour_method}_#{type}_hour", (0..12).zip(('00'..'12')), {}, :name=>"business[#{hour_method}_#{type}[hour]]"
+            .minutes
+              = f.select "#{hour_method}_#{type}_min", ('00'..'60'), {}, :name=>"business[#{hour_method}_#{type}[min]]"
+            .ampm
+              = f.select "#{hour_method}_#{type}_ampm", %w(am pm), {}, :name=>"business[#{hour_method}_#{type}[ampm]]"
+            - if index == 0
+              == -
+            - else
+              = f.check_box "#{hour_method}_open", :name=>"business[#{hour_method}_open]"
+              Open
+    %br
+    %center
+      = f.submit
 
-  = f.submit
+  #map_canvas_container
+    #map_canvas
+
 
