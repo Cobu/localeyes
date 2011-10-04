@@ -48,27 +48,20 @@ $(document).ready( ->
 
   $('#event_list_inner').qvivoScroll()
 
-
-
-  $('.event .info').live('click', (event)->
-   elem = $(event.currentTarget).parent('.event')
-   event = event_list.get(elem.data('id'))
-   business_elem = elem.next('.business')
-   if business_elem[0]
-     business_elem.slideUp('slow', -> business_elem.remove())
-     return
-   business_list.setSelected(event.business().get('id')) # to grow the icon
-   business_elem = $(event.business().render())
-   elem_event_class = elem.attr('class').match(/\w+_type/)[0]
-   business_elem.addClass(elem_event_class)
-   elem.after(business_elem)
-   business_elem.slideDown('slow')
-  )
-
   window.EventView = Backbone.View.extend({
     el: $( '#event_list' )
-    day_header_template : Handlebars.compile($( '#day_header_template' ).html())
-    event_template : Handlebars.compile($( '#event_template' ).html())
+    day_header_template: Handlebars.compile($( '#day_header_template' ).html())
+    event_template: Handlebars.compile($( '#event_template' ).html())
+    events: { "click .info" : "showBusiness" }
+    showBusiness: (event)->
+      elem = $(event.currentTarget).parent('.event')
+      event = event_list.get(elem.data('id'))
+      business_elem = elem.next('.business')
+      if business_elem[0]
+        business_elem.slideUp('slow', -> business_elem.remove())
+        return
+      business_list.setSelected(event.business().get('id')) # to grow the icon
+      new BusinessView(elem, event)
 
     render: ->
       this.el.empty()
@@ -79,16 +72,29 @@ $(document).ready( ->
         continue unless _.any(days_events)
         this.buildEventsForDay( date, days_events )
 
-    buildEventsForDay : ( date, events )->
+    buildEventsForDay: ( date, events )->
       this.el.append( this.day_header_template({'date': date}) )
       _.each(events, (event)-> event_view.el.append( event_view.event_template(event) ) )
   })
 
-  window.Business.template = Handlebars.compile($( '#business_info_template' ).html())
+  window.BusinessView = Backbone.View.extend(
+    template: Handlebars.compile($( '#business_info_template' ).html())
+
+    initialize: (elem, event)->
+      this.elem = elem
+      this.event = event
+      this.render()
+
+    render: ->
+      business_elem = $(this.template(this.event.business()))
+      elem_event_class = this.elem.attr('class').match(/\w+_type/)[0]
+      business_elem.addClass(elem_event_class)
+      this.elem.after(business_elem)
+      business_elem.slideDown('slow')
+  )
 
   window.event_list = new EventList
   window.event_view = new EventView
-  window.map_view = new MapView
 
   class window.Filter
     service_type_constants = {

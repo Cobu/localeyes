@@ -1,9 +1,10 @@
+
 window.Event = Backbone.Model.extend({
-  startDate : -> Date.parse(this.get('start')).toString("yyyy-MM-dd")
-  startHour : -> Date.parse(this.get('start')).toString("h:mm tt")
-  business : -> business_list.get(this.get('business_id'))
-  businessName : -> this.business().get('name')
-  userFavoriteImage : ->
+  startDate: -> Date.parse(this.get('start')).toString("yyyy-MM-dd")
+  startHour: -> Date.parse(this.get('start')).toString("h:mm tt")
+  business: -> business_list.get(this.get('business_id'))
+  businessName: -> this.business().get('name')
+  userFavoriteImage: ->
     prefix = if _.include( Filter.userFavorites, this.get('business_id') ) then '' else 'un'
     "<img src='assets/fav_#{prefix}selected.gif' width='20px' data-busniess_id='#{this.get('business_id')}' rel='favorite'/>"
 })
@@ -11,29 +12,31 @@ window.Event = Backbone.Model.extend({
 window.EventList = Backbone.Collection.extend({
   url: '/consumers/events'
   model: Event
-  filteredModels: -> _.filter( this.models, (model)->  model )
 })
 
 
-window.Business = Backbone.Model.extend({
-  service_type_names : ['Cafe', 'Restaurant', 'Bar']
-  serviceName : -> this.service_type_names[this.get('service_type')].toLowerCase()
-  template: null
-  map_tooltip_template : Handlebars.compile("{{name}}\n{{address}}\n{{city}},{{state}} ")
 
-  renderHours : (item)-> this.hours_template(item)
-  render : -> this.template(this)
-  marker : null
-  clearMarker : ->
+window.Business = Backbone.Model.extend(
+  service_type_names: ['Cafe', 'Restaurant', 'Bar']
+  marker: null
+  map_tooltip_template: Handlebars.compile("{{name}}\n{{address}}\n{{city}},{{state}} ")
+
+  serviceName: -> this.service_type_names[this.get('service_type')].toLowerCase()
+
+  renderHours: (item)-> this.hours_template(item)
+
+  clearMarker: ->
     if this.marker
       this.marker.setMap(null)
       this.marker = null
-  setMarker : (map, markerBounds)->
+
+  setMarker: (map, markerBounds)->
     this.point = new google.maps.LatLng(this.get('lat'),this.get('lng'))
     this.marker = this.makeMarker(map)
-    markerBounds.extend(this.point)
+    if markerBounds
+      markerBounds.extend(this.point)
 
-  makeMarker : (map)->
+  makeMarker: (map)->
     new google.maps.Marker({
       position: this.point
       map: map
@@ -41,29 +44,31 @@ window.Business = Backbone.Model.extend({
       icon: this.makeIcon()
     })
 
-  makeIcon : (scaleFactor)->
+  makeIcon: (scaleFactor)->
     scaleFactor = 1 if (scaleFactor == undefined)
     new google.maps.MarkerImage(
       "/assets/#{this.serviceName()}.png", null , null , null ,
       new google.maps.Size(20*scaleFactor, 34*scaleFactor)
     )
-})
+)
 
 
-window.BusinessList = Backbone.Collection.extend({
+window.BusinessList = Backbone.Collection.extend(
   model: Business
-  selected : null
+  selected: null
+
   filteredModels: ->  _.filter( this.models, (model)->  model )
-  clearMarkers : -> _.each( this.models, (business)->  business.clearMarker() )
-  setMarkers : (map, markerBounds) ->  _.each( this.models, (business)-> business.setMarker(map, markerBounds) )
-  setSelected : (id)->
+
+  clearMarkers: -> _.each( this.models, (business)->  business.clearMarker() )
+
+  setSelected: (id)->
     if (this.selected)
       business = this.get(this.selected)
       this.get(this.selected).marker.setIcon(business.makeIcon())
     business = this.get(id)
     business.marker.setIcon(business.makeIcon(1.3))
     this.selected = id
-})
+)
 
 
 

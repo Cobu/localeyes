@@ -3,6 +3,7 @@ Cal::Application.routes.draw do
   resources :businesses, :except=>[:index] do
     collection do
       get :events
+      get :geocode
     end
   end
   resources :consumers, :only=>[:index] do

@@ -1,6 +1,13 @@
 class BusinessesController < ApplicationController
   layout 'business_application'
 
+  def geocode
+    geo_lookup = params[:geo_lookup]
+    Geocoder::Configuration.lookup = geo_lookup.to_sym
+    coordinates = Geocoder.coordinates(params[:address])
+    render :json => coordinates
+  end
+
   def events
     start_date = Time.at(params[:start].to_i).to_date
     end_date = Time.at(params[:end].to_i).to_date

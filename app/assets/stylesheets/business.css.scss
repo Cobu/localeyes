@@ -74,10 +74,14 @@ form.new_business, form.edit_business{
     input { width:100px; }
   }
 
+
+
+
 }
 
 #map_canvas_container {
   display:inline-block;
+  margin:20px 0px;
   vertical-align:top;
   width:40%;
   #map_canvas {
