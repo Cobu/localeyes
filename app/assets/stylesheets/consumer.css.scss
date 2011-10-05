@@ -66,24 +66,25 @@ a.ui-corner-all {
 }
 
 .event_bar {
-  width:400px;
+  width:370px;
   border: 1px solid #666666;
   display:inline-block;
 }
 
 .day_header {
-  width:370px;
+  width:360px;
   height:30px;
   @extend .event_bar;
   background-color: yellow;
   text-align: right;
-  padding-right: 30px;
+  padding-right: 20px;
   padding-top: 5px;
 }
 
 .event {
   @extend .event_bar;
-  padding: 8px;
+  width:375px;
+  padding: 5px 0px 5px 5px;
 
   .info {
     width:67%;
@@ -109,15 +110,17 @@ a.ui-corner-all {
 #event_list_container {
   margin-right:10px;
   width: 400px;
-  height: 500px;
+  height: 490px;
   vertical-align:top;
   display:inline-block;
 }
 
-#event_list_inner {
+#event_list {
+  width: 400px;
+	height: 470px;
+	overflow: auto;
   position: relative;
 }
-
 
 #map_canvas_container {
   display:inline-block;

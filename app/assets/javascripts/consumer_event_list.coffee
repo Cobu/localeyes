@@ -46,7 +46,7 @@ Handlebars.registerHelper("header", (date)->
 
 $(document).ready( ->
 
-  $('#event_list_inner').qvivoScroll()
+#  $('#event_list').jScrollPane()
 
   window.EventView = Backbone.View.extend({
     el: $( '#event_list' )
