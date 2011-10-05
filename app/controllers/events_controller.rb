@@ -1,7 +1,7 @@
 class EventsController < ApplicationController
+  before_filter :find_event, :only => [:show, :edit, :update, :destroy]
 
   def show
-    @event = current_business.events.find(params[:id])
   end
 
   def new
@@ -10,19 +10,15 @@ class EventsController < ApplicationController
   end
 
   def edit
-    @event = current_business.events.find(params[:id])
     render :layout=> 'events'
   end
 
   def create
-    e = current_business.events.new(params[:event])
-    e.save
+    current_business.events.create(params[:event])
     head :ok
   end
 
   def update
-    @event = current_business.events.find(params[:id])
-
     case params[:edit_affects_type]
       when 'all_series','' then
         @event.update_attributes(params[:event])
@@ -45,8 +41,6 @@ class EventsController < ApplicationController
   end
 
   def destroy
-    @event = current_business.events.find(params[:id])
-
     case  params[:edit_affects_type]
       when 'all_series', '' then
         @event.destroy
@@ -59,4 +53,9 @@ class EventsController < ApplicationController
     head :ok
   end
 
+  private
+
+  def find_event
+    @event = current_business.events.find(params[:id])
+  end
 end

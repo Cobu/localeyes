@@ -53,6 +53,7 @@ $(document).ready( ->
     day_header_template: Handlebars.compile($( '#day_header_template' ).html())
     event_template: Handlebars.compile($( '#event_template' ).html())
     events: { "click .info" : "showBusiness" }
+
     showBusiness: (event)->
       elem = $(event.currentTarget).parent('.event')
       event = event_list.get(elem.data('id'))
@@ -77,6 +78,7 @@ $(document).ready( ->
       _.each(events, (event)-> event_view.el.append( event_view.event_template(event) ) )
   })
 
+
   window.BusinessView = Backbone.View.extend(
     template: Handlebars.compile($( '#business_info_template' ).html())
 
@@ -93,8 +95,8 @@ $(document).ready( ->
       business_elem.slideDown('slow')
   )
 
-  window.event_list = new EventList
   window.event_view = new EventView
+
 
   class window.Filter
     service_type_constants = {

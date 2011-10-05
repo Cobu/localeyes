@@ -36,7 +36,6 @@ class BusinessesController < ApplicationController
 
   def create
     @business = current_business_user.businesses.create(params[:business])
-    # have to call 'businesses.new' first to get the hours set up
     if @business.valid?
       session[:business_id]=@business.id
       redirect_to business_path(@business), :message=>"Business created"

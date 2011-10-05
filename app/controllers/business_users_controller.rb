@@ -7,9 +7,7 @@ class BusinessUsersController < ApplicationController
 
   def login_submit
     @user = BusinessUser.authenticate(params[:business_user][:email],params[:business_user][:password])
-
     redirect_to(login_business_users_path, :alert => 'Wrong username/password') and return unless @user
-
     session[:business_user_id] = @user.id
     send_to_business
   end
