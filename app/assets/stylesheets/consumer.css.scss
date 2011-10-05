@@ -94,6 +94,12 @@ a.ui-corner-all {
     width:100%;
   }
 
+  .description {
+    display:none;
+    margin:6px 0;
+    width:90% !important;
+  }
+
   .images {
     cursor:pointer;
     display:inline-block;

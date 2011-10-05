@@ -52,14 +52,22 @@ $(document).ready( ->
     el: $( '#event_list' )
     day_header_template: Handlebars.compile($( '#day_header_template' ).html())
     event_template: Handlebars.compile($( '#event_template' ).html())
-    events: { "click .info" : "showBusiness" }
+    events: { "click .info,.description" : "showBusiness" }
+
+    showDescription: (event)->
+      elem = $(event.currentTarget).parent('.event')
+      console.log(3)
 
     showBusiness: (event)->
       elem = $(event.currentTarget).parent('.event')
       event = event_list.get(elem.data('id'))
+      elem.find('.description').show()
       business_elem = elem.next('.business')
       if business_elem[0]
-        business_elem.slideUp('slow', -> business_elem.remove())
+        business_elem.slideUp('slow', ->
+          business_elem.remove()
+          elem.find('.description').hide()
+        )
         return
       business_list.setSelected(event.business().get('id')) # to grow the icon
       new BusinessView(elem, event)

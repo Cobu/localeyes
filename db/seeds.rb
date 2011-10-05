@@ -15,19 +15,17 @@ resto = Business.make(:oswego_restaurant, :user=> bu)
 resto.set_default_hours
 resto.save
 
-User.make(:dude)
+User.make!(:dude)
 
 now = Time.now.utc
-Event.make(:once, :business=>cafe, :start_time => Time.utc(2011,now.month,3,21,10), :end_time => Time.utc(2011,now.month,4,2,30), :title=>"one times")
-Event.make(:daily, :business=>cafe, :start_time => Time.utc(2011,now.month,5,7,30), :title=>"fun day times")
-Event.make(:weekly,:business=>cafe, :start_time => Time.utc(2011,now.month,6,21,30),:end_time => Time.utc(2011,now.month,7,1,50), :title=>"bubbly times")
+Event.make!(:once, :business=>cafe, :start_time => Time.utc(2011,now.month,3,21,10), :end_time => Time.utc(2011,now.month,4,2,30), :title=>"one times")
+Event.make!(:daily, :business=>cafe, :start_time => Time.utc(2011,now.month,5,7,30), :title=>"fun day times")
+Event.make!(:weekly,:business=>cafe, :start_time => Time.utc(2011,now.month,6,21,30),:end_time => Time.utc(2011,now.month,7,1,50), :title=>"bubbly times")
 
-Event.make(:once, :business=>resto, :start_time => Time.utc(2011,now.month,4,20,5), :end_time => Time.utc(2011,now.month,4,2,30), :title=>"one times special")
-Event.make(:daily, :business=>resto, :start_time => Time.utc(2011,now.month,1,19,30), :title=>"happy hour", :event_type=> Event::SPECIAL)
+Event.make!(:once, :business=>resto, :start_time => Time.utc(2011,now.month,4,20,5), :end_time => Time.utc(2011,now.month,4,2,30), :title=>"one times special")
+Event.make!(:daily, :business=>resto, :start_time => Time.utc(2011,now.month,1,19,30), :title=>"happy hour", :event_type=> Event::SPECIAL)
 
-User.make(:nyc)
-
-ZipCode.make(:oswego)
-ZipCode.make(:new_paltz)
-College.make(:suny_new_paltz)
-College.make(:suny_oswego)
+ZipCode.make!(:oswego)
+ZipCode.make!(:new_paltz)
+College.make!(:suny_new_paltz)
+College.make!(:suny_oswego)

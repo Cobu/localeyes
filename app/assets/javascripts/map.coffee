@@ -26,7 +26,7 @@ class window.MapView
         title: this.center_point.title
         icon: "/assets/arrow.png"
       })
-    this.markerBounds.extend(this.center_marker.position)# if this.markerBounds
+    this.markerBounds.extend(this.center_marker.position) if this.markerBounds and this.center_marker
 
   setMarkers: (map, markerBounds) ->
     _.each( @collection.models, (model)-> model.setMarker(map, markerBounds) )

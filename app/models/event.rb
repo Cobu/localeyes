@@ -99,6 +99,7 @@ class Event < ActiveRecord::Base
     {
       :id=> to_param,
       :title=> title,
+      :description=> description,
       :start => starttime.strftime('%Y-%m-%d %H:%M:%S'),
       :end => endtime,
       :business_id => business_id,

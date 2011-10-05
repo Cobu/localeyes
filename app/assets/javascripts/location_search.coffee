@@ -11,12 +11,11 @@ $(document).ready( ->
             t: ui.item.type,
             d: ui.item.id }, (data)->
               window.business_list = new window.BusinessList(data.businesses)
-              window.map_view.clear()
-              window.map_view.collection = business_list
               window.event_list = new window.EventList(data.events)
               window.Filter.userFavorites = data.favorites
               window.filter.setValues()
               window.event_view.render()
+              window.map_view.collection = business_list
               window.map_view.center_point = data.center
               window.map_view.render()
       )

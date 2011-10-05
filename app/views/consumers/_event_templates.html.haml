@@ -6,6 +6,8 @@
           {{businessName}}
         %div
           {{attributes/title}} {{startHour}}
+      .description
+        {{attributes/description}}
       .images
         {{{userFavoriteImage}}}
 - else
@@ -16,6 +18,8 @@
           {{businessName}}
         %div
           {{attributes/title}} {{startHour}}
+      .description.full
+        {{attributes/description}}
 
 %script{:id=>"day_header_template", :type=>"text/x-handlebars-template"}
   .day_header
