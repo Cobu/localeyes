@@ -46,8 +46,8 @@ class window.MapView
 
 
 class window.SingleZoomMapView extends MapView
-  constructor: (@model, @props)->
-    throw "you need a collection to make a MapView" unless @model
+  constructor: (@model, props)->
+    throw "you need a model to make a MapView" unless @model
 
   options: {
     mapTypeId: google.maps.MapTypeId.ROADMAP
@@ -66,7 +66,7 @@ class window.SingleZoomMapView extends MapView
 class window.ExtendBoundMapView extends MapView
 
   markerBounds: new google.maps.LatLngBounds()
-  markerBoundsZoomOut: 0.001
+  markerBoundsZoomOut: 0.1
 
   render: ->
     super

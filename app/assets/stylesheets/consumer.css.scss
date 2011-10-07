@@ -132,11 +132,12 @@ a.ui-corner-all {
 }
 
 
-
 .business {
   /*background-color:inherit;*/
-  width:361px;
+  width:360px;
   padding:10px;
+  border-right: 1px solid #666666;
+  border-left: 1px solid #666666;
 
   .info {
     width:48%;
