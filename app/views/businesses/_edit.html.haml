@@ -34,7 +34,7 @@
         = f.label :lng
         = f.text_field :lng
         - if @business.new_record?
-          = select(:geo_lookup, :id, Geocoder.street_lookups.collect{|l| [l.to_s, l]}, :selected=> Geocoder::Configuration.lookup)
+          = select(:geo_lookup, :id, [:google, :yahoo,  :geocoder_ca].collect{|l| [l.to_s, l]}, :selected=> Geocoder::Configuration.lookup)
     .open_times
       - Date::DAYNAMES.each_with_index do |dayname,day_index|
         - hour_method = "#{dayname.downcase}_hours"
