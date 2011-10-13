@@ -10,12 +10,13 @@ $(document).ready( ->
             zip_code: ui.item.zip_code,
             t: ui.item.type,
             d: ui.item.id }, (data)->
-              window.business_list = new window.BusinessList(data.businesses)
-              window.event_list = new EventList(data.events)
-              window.event_list_view = new window.EventListView(window.event_list)
+              # eventually use binding to re render when collections are reset
+              window.business_list.clearSelected()
+              window.business_list.reset(data.businesses)
+              window.event_list.reset(data.events)
+              window.event_list_view.render()
               window.Filter.userFavorites = data.favorites
               window.filter.setValues()
-              window.event_view.render()
               window.map_view.collection = business_list
               window.map_view.center_point = data.center
               window.map_view.render()
