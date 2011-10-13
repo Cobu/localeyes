@@ -10,6 +10,7 @@ class Business < ActiveRecord::Base
 
   before_validation :set_phone_number
   before_save :check_open_hours
+  after_initialize :set_defaults, :if => :new_record?
 
   # day order is  [sun, mon, tues, wed , thu, fri, sat]
   # hours = [ [ :from=>time, :to=>time, :closed=>true], etc.. for each day starting with sunday ]
@@ -20,6 +21,10 @@ class Business < ActiveRecord::Base
 
   def full_address
     [address, address2, city, state, zip_code].compact.join(' ')
+  end
+
+  def set_defaults
+    self.service_type = BAR
   end
 
   def set_default_hours

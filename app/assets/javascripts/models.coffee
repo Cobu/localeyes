@@ -21,7 +21,11 @@ window.Business = Backbone.Model.extend(
   marker: null
   map_tooltip_template: Handlebars.compile("{{name}}\n{{address}}\n{{city}},{{state}} ")
 
-  serviceName: -> this.service_type_names[this.get('service_type')].toLowerCase()
+  serviceName: ->
+    console.log(this.get('service_type'))
+    if (this.get('service_type'))
+      return this.service_type_names[this.get('service_type')].toLowerCase()
+    ''
 
   renderHours: (item)-> this.hours_template(item)
 

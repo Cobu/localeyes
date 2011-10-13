@@ -11,6 +11,11 @@ $(document).ready( ->
     window.map_view.render()
   )
 
+  $('#business_service_type').live('change', ->
+    business.set( { service_type: $('#business_service_type').val() } )
+    window.map_view.render()
+  )
+
   $('#geo_lookup_id').live('change', (event)->
     elem = $(event.currentTarget)
     address = _.map(['address', 'address2', 'city', 'state', 'zip_code'], (field)->

@@ -1,10 +1,12 @@
 .header
-  .business_name
+  %center
     - if current_business_user.businesses.size > 1
       = select(:business, :id, current_business_user.businesses.collect{|b| [b.name, b.id]}, :selected=>current_business.id)
     - else
       = current_business.name
     = link_to 'edit', edit_business_path(current_business)
+    &nbsp;&nbsp;&nbsp;
+    = link_to 'create new business', new_business_path
 
 .calendar_content
   #event_pop_up
