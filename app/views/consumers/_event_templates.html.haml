@@ -12,7 +12,7 @@
         {{{userFavoriteImage}}}
 - else
   %script{:id=>"event_template", :type=>"text/x-handlebars-template"}
-    .event{ 'data-id'=>"{{attributes/id}}", :class=> "{{attributes/service_type}}" }
+    %li.event{ 'data-id'=>"{{attributes/id}}", :class=> "{{attributes/service_type}}" }
       .info.full
         %div
           {{businessName}}
@@ -22,7 +22,7 @@
         {{attributes/description}}
 
 %script{:id=>"day_header_template", :type=>"text/x-handlebars-template"}
-  .day_header
+  %li.day_header{:'data-role'=>"list-divider"}
     {{header date}}
 
 %script{:id=>"business_info_template", :type=>"text/x-handlebars-template"}

@@ -1,7 +1,6 @@
 set :default_stage, "staging"
 require 'capistrano/ext/multistage'
 require 'bundler/capistrano'
-#require 'airbrake/capistrano'
 
 set :application, "localeyes"
 set :repository,  "git@github.com:Cobu/localeyes.git"
@@ -13,10 +12,6 @@ set :user, "deploy"
 set :runner, user
 
 set :use_sudo, false
-
-#set :whenever_command, "bundle exec whenever"
-#set :whenever_environment, defer { stage }
-#require "whenever/capistrano"
 
 namespace :deploy do
   task :start, :roles => :app do

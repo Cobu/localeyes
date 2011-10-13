@@ -11,7 +11,7 @@ window.CalendarOptions = {
 $(document).ready( ->
   return unless $('.calendar_content')[0]
 
-  $('.business_name > select').change( ()->
+  $('.business_name > select').change( ->
     select = $(this)
     window.location.href = "/businesses/#{select.val()}"
   )
@@ -29,8 +29,8 @@ $(document).ready( ->
         modal:true,
         title: title,
         resizable:false,
-        width:370,
-        height:425,
+        width:375,
+        height:435,
         closeOnEscape: false,
       })
     )

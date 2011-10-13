@@ -24,8 +24,8 @@ class Initial < ActiveRecord::Migration
       t.text :hours
       t.string :url
       t.binary :image
-      t.float "lat", :null => false
-      t.float "lng", :null => false
+      t.float :lat, :null => false
+      t.float :lng, :null => false
       t.boolean :active
     end
 
@@ -41,22 +41,22 @@ class Initial < ActiveRecord::Migration
     end
 
     create_table "colleges", :force => true do |t|
-      t.string "name", :null => false
-      t.string "address", :null => false
-      t.string "city", :null => false
-      t.string "state_short", :null => false
-      t.string "zip_code", :null => false
-      t.float "lat", :null => false
-      t.float "lng", :null => false
+      t.string :name, :null => false
+      t.string :address, :null => false
+      t.string :city, :null => false
+      t.string :state_short, :null => false
+      t.string :zip_code, :null => false
+      t.float :lat, :null => false
+      t.float :lng, :null => false
     end
 
     create_table "zip_codes", :force => true do |t|
-      t.string "city", :null => false
-      t.string "state", :null => false
-      t.string "state_short", :null => false, :limit=>2
-      t.string "zip_code", :null => false
-      t.float "lat", :null => false
-      t.float "lng", :null => false
+      t.string :city, :null => false
+      t.string :state, :null => false
+      t.string :state_short, :null => false, :limit=>2
+      t.string :zip_code, :null => false
+      t.float :lat, :null => false
+      t.float :lng, :null => false
     end
 
     add_index "zip_codes", ["zip_code"], :unique => true

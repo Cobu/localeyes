@@ -45,22 +45,16 @@ Handlebars.registerHelper("header", (date)->
 
 
 $(document).ready( ->
+  #  $('#event_list').jScrollPane()
 
-#  $('#event_list').jScrollPane()
+  window.EventView = Backbone.View.extend(
+    template: Handlebars.compile($( '#event_template' ).html())
+    tagName: 'li'
+    initialize: (@event)-> this.render()
 
-  window.EventView = Backbone.View.extend({
-    el: $( '#event_list' )
-    day_header_template: Handlebars.compile($( '#day_header_template' ).html())
-    event_template: Handlebars.compile($( '#event_template' ).html())
-    events: { "click .info,.description" : "showBusiness" }
-
-    showDescription: (event)->
-      elem = $(event.currentTarget).parent('.event')
-      console.log(3)
-
-    showBusiness: (event)->
-      elem = $(event.currentTarget).parent('.event')
-      event = event_list.get(elem.data('id'))
+    showBusiness: ->
+      elem = this.el
+      console.log('here')
       elem.find('.description').show()
       business_elem = elem.next('.business')
       if business_elem[0]
@@ -68,13 +62,31 @@ $(document).ready( ->
           business_elem.remove()
           elem.find('.description').hide()
         )
+        business_list.clearSelected() # to shrink the icon
         return
-      business_list.setSelected(event.business().get('id')) # to grow the icon
-      new BusinessView(elem, event)
+      business_list.setSelected(@event.business().get('id')) # to grow the icon
+      new BusinessView( this )
+
+    render: ->
+      view = this;
+      if @event != undefined
+        this.el = $(this.template(@event))
+        this.el.find('.info, .description').bind('click', -> view.showBusiness() )
+      this
+  )
+
+  window.EventListView = Backbone.View.extend({
+    el: $( '#event_list' )
+    day_header_template: Handlebars.compile($( '#day_header_template' ).html())
+
+    initialize: (@event_list)->
+
+    showDescription: (event)->
+      elem = $(event.currentTarget).parent('.event')
 
     render: ->
       this.el.empty()
-      events = _(event_list.models).groupBy( (event)-> event.startDate() )
+      events = _(@event_list.models).groupBy( (event)-> event.startDate() )
       for num in [0..13]
         date = Date.today().addDays(num)
         days_events = _.select(events[date.toString("yyyy-MM-dd")], (event)-> filter.match(event) )
@@ -83,23 +95,23 @@ $(document).ready( ->
 
     buildEventsForDay: ( date, events )->
       this.el.append( this.day_header_template({'date': date}) )
-      _.each(events, (event)-> event_view.el.append( event_view.event_template(event) ) )
+      _.each(events, (event)->
+        event_view = new EventView(event)
+        event_list_view.el.append( event_view.el )
+      )
   })
 
 
   window.BusinessView = Backbone.View.extend(
     template: Handlebars.compile($( '#business_info_template' ).html())
 
-    initialize: (elem, event)->
-      this.elem = elem
-      this.event = event
-      this.render()
+    initialize: (@event_view)-> this.render()
 
     render: ->
-      business_elem = $(this.template(this.event.business()))
-      elem_event_class = this.elem.attr('class').match(/\w+_type/)[0]
+      business_elem = $(this.template(@event_view.event.business()))
+      elem_event_class = @event_view.el.attr('class').match(/\w+_type/)[0]
       business_elem.addClass(elem_event_class)
-      this.elem.after(business_elem)
+      @event_view.el.after(business_elem)
       business_elem.slideDown('slow')
   )
 

@@ -1,0 +1,95 @@
+@import 'mixins';
+@import 'shared';
+
+
+.ui-autocomplete-loading {
+  background: white url('ui-anim_basic_16x16.gif') right center no-repeat;
+}
+
+a.ui-corner-all {
+  font-size:12px !important;
+  font-family:Arial;
+}
+
+
+.event {
+  width:100%;
+  padding: 5px 0px 5px 5px;
+
+  .info {
+    width:67%;
+    display:inline-block;
+  }
+
+  .full {
+    width:100%;
+  }
+
+  .description {
+    display:none;
+    margin:6px 0;
+    width:90% !important;
+  }
+
+  .images {
+    cursor:pointer;
+    display:inline-block;
+  }
+}
+
+
+#map_canvas {
+  width: 500px;
+  height: 500px;
+  border: 1px solid #666666;
+}
+
+.business {
+  width:360px;
+  padding:10px;
+  border-right: 1px solid #666666;
+  border-left: 1px solid #666666;
+
+  .info {
+    width:48%;
+    vertical-align:top;
+    display:inline-block;
+  }
+
+  .hours {
+    width:44%;
+    padding-left:25px;
+    display:inline-block;
+
+    .line {
+      .day_name {
+        display:inline-block;
+        width:20px;
+      }
+      .from_to {
+        display:inline-block;
+      }
+    }
+  }
+
+  .close {
+    position:absolute;
+    top: 2px;
+    right: 8px;
+    cursor:pointer;
+  }
+}
+
+
+/* for coloring the events of different type  */
+.event_type {
+  background-color: #ff9933;
+}
+
+.special_type {
+  background-color: #999900
+}
+
+.announcement_type {
+  background-color: #ccffcc
+}

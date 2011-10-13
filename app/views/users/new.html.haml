@@ -1,0 +1,20 @@
+= form_for(@user) do |f|
+  = f.error_messages :header_message => nil, :message=> "There were problems with the following fields highlighted below:"
+  %h2
+    Enter Your Contact Information
+
+  .field
+    = f.label :first_name
+    = f.text_field :first_name
+  .field
+    = f.label :last_name
+    = f.text_field :last_name
+  .field.required
+    = f.label :email
+    = f.email_field :email
+  .field
+    = f.label :password
+    = f.password_field :password
+  .field
+    = f.label :password_confirmation
+    = f.password_field :password_confirmation

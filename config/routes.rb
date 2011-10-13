@@ -10,13 +10,13 @@ Cal::Application.routes.draw do
     collection do
       get :search_location
       get :events
-      get :register
     end
   end
-  resources :users, :only=>[:index,:show] do
+  resources :users, :only=>[:index,:new] do
      collection do
        get :set_favorite
        get :unset_favorite
+       get :register
      end
   end
   resources :business_users, :except=>[:index,:show] do
@@ -25,5 +25,5 @@ Cal::Application.routes.draw do
       post :login_submit
     end
   end
-  root :to => 'users#login'
+  root :to => 'consumers#index'
 end

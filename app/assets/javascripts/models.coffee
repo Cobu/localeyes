@@ -61,6 +61,12 @@ window.BusinessList = Backbone.Collection.extend(
 
   clearMarkers: -> _.each( this.models, (business)->  business.clearMarker() )
 
+  clearSelected: ->
+    if (this.selected)
+      business = this.get(this.selected)
+      this.get(this.selected).marker.setIcon(business.makeIcon())
+    this.selected = null
+
   setSelected: (id)->
     if (this.selected)
       business = this.get(this.selected)

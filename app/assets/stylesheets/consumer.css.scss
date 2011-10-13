@@ -12,9 +12,11 @@ a.ui-corner-all {
 
 .event_list_header {
   @include text_inset;
-  width:378px;
+  width:380px;
   text-align:center;
   font-size:140%;
+  color:black;
+  background-color: #cccccc;
   border: 1px solid #666666;
   height:20px;
   padding:5px 0px;
@@ -36,7 +38,7 @@ a.ui-corner-all {
 
    .filter {
      @include rounded(13px);
-     border:1px solid blue;
+     border:1px solid gray;
      vertical-align:top;
      display:inline-block;
      width:41%;
@@ -75,16 +77,21 @@ a.ui-corner-all {
   width:360px;
   height:30px;
   @extend .event_bar;
-  background-color: yellow;
+  background-color: #ffffff;
   text-align: right;
   padding-right: 20px;
   padding-top: 5px;
+}
+
+ul, li {
+  list-style-type: none;
 }
 
 .event {
   @extend .event_bar;
   width:375px;
   padding: 5px 0px 5px 5px;
+
 
   .info {
     width:67%;
@@ -172,13 +179,13 @@ a.ui-corner-all {
 
 /* for coloring the events of different type  */
 .event_type {
-  background-color: #ff9933;
+  background-color: #f2f2c8;
 }
 
 .special_type {
-  background-color: #999900
+  background-color: #d9ddd9
 }
 
 .announcement_type {
-  background-color: #ccffcc
+  background-color: #f2b8b8
 }

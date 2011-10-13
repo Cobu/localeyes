@@ -44,10 +44,11 @@ form.edit_event, form.new_event {
   }
 
   .recurring {
-    margin-top: 15px;
+    margin-top: 10px;
 
-    .header {
+    .title {
       text-align: center;
+      margin: 5px auto;
     }
 
     .recurrence_radio {
