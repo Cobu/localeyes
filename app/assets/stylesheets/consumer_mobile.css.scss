@@ -38,6 +38,7 @@ a.ui-corner-all {
 }
 
 
+
 #map_canvas {
   width: 500px;
   height: 500px;
@@ -81,15 +82,3 @@ a.ui-corner-all {
 }
 
 
-/* for coloring the events of different type  */
-.event_type {
-  background-color: #ff9933;
-}
-
-.special_type {
-  background-color: #999900
-}
-
-.announcement_type {
-  background-color: #ccffcc
-}

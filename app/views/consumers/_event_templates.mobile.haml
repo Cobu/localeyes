@@ -1,0 +1,48 @@
+- if current_user
+  %script{:id=>"event_template", :type=>"text/x-handlebars-template"}
+    .event{ 'data-id'=>"{{attributes/id}}", :class=> "{{attributes/service_type}}" }
+      .info
+        %div
+          {{businessName}}
+        %div
+          {{attributes/title}} {{startHour}}
+      .description
+        {{attributes/description}}
+      .images
+        {{{userFavoriteImage}}}
+- else
+  %script{:id=>"event_template", :type=>"text/x-handlebars-template"}
+    %li.event{ 'data-id'=>"{{attributes/id}}", :class=> "{{attributes/service_type}} ui-li ui-li-static ui-body-g" }
+      .info.full
+        %div
+          {{businessName}}
+        %div
+          {{attributes/title}} {{startHour}}
+      .description.full
+        {{attributes/description}}
+
+%script{:id=>"day_header_template", :type=>"text/x-handlebars-template"}
+  %li.day_header{ 'data-role'=>"list-divider", :class=> "ui-li ui-li-static ui-body-g" }
+    {{header date}}
+
+%script{:id=>"business_info_template", :type=>"text/x-handlebars-template"}
+  .business{:style=>'display:none'}
+    .info
+      {{attributes/name}}
+      {{attributes/description}}
+      %p
+        {{attributes/address}}
+        %br
+        {{attributes/city}}, {{attributes/state}} {{attributes/zip_code}}
+      %p
+        {{phone_format attributes/phone}}
+    .hours
+      {{#each_hour attributes/hours}}
+      .line
+        .day_name
+          {{day_name}}
+        .from_to
+          {{hour_value}}
+      {{/each_hour}}
+
+

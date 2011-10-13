@@ -8,7 +8,7 @@
   = javascript_include_tag 'consumer_mobile_application'
 
   %body
-    = render :partial => 'event_templates.html'
+    = render :partial => 'event_templates'
 
     %div{ 'data-role'=> "page", :id => "event_list_page" }
 
@@ -20,10 +20,9 @@
           %li
             Acura
             %a{ :href=>"acura.html" }
-
           %li Dude
           %li Rob
-        </ul>
+
         %ul{'data-role'=> "listview", 'data-theme'=>"g"}
 
 
