@@ -54,7 +54,6 @@ $(document).ready( ->
 
     showBusiness: ->
       elem = this.el
-      console.log('here')
       elem.find('.description').show()
       business_elem = elem.next('.business')
       if business_elem[0]

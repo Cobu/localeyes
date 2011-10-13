@@ -27,12 +27,13 @@
         = f.text_field :phone_second3
         -
         = f.text_field :phone_last4
+      .field
+        = f.text_field :url, :placeholder => 'home page'
+
       .field.position
-        = f.label :lat
-        = f.text_field :lat
+        = f.text_field :lat, :placeholder => 'latitude'
         -
-        = f.label :lng
-        = f.text_field :lng
+        = f.text_field :lng, :placeholder => 'longitude'
         - if @business.new_record?
           = select(:geo_lookup, :id, [:google, :yahoo,  :geocoder_ca].collect{|l| [l.to_s, l]}, :selected=> Geocoder::Configuration.lookup)
     .open_times

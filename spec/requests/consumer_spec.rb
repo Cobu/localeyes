@@ -41,15 +41,17 @@ describe "Consumer User" do
 
     it "can see events", :js =>true, :driver=>:selenium_chrome do
       ZipCode.make!(:oswego)
-      Event.make!(:once,
+      utc_offset_hours = Time.now.utc_offset / 3600
+      e = Event.make!(:once,
                   :business=>cafe,
-                  :start_time => now.change(:hour =>now.hour - 1, :min => 0, :sec => 0),
-                  :end_time => now.change(:hour =>now.hour + 1, :min => 0, :sec => 0),
+                  :start_time => now.change(:hour =>now.hour + utc_offset_hours + 1, :min => 0, :sec => 0),
+                  :end_time => now.change(:hour =>now.hour + utc_offset_hours + 2, :min => 0, :sec => 0),
                   :title=>"one times")
       #Event.make(:daily, :business=>cafe, :start_time => Time.utc(2011, now.month, 5, 7, 30), :title=>"fun day times")
       #Event.make(:weekly, :business=>cafe, :start_time => Time.utc(2011, now.month, 6, 21, 30), :end_time => Time.utc(2011, now.month, 7, 1, 50), :title=>"bubbly times")
-
+      p [Time.now, e.start_time, e.end_time]
       fill_in "search_location", :with=> 'Oswego'
+
       find(:css, '.ui-menu-item .ui-corner-all:contains("Oswego, NY 13126")').click
 
       page.has_content?("Public Library Cafe").should be_true

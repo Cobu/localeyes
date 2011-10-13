@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(:version => 20110813215827) do
   create_table "businesses", :force => true do |t|
     t.integer "user_id",                                                :null => false
     t.string  "name",                                                   :null => false
-    t.integer "service_type",                                           :null => false
+    t.integer "service_type", :default => 2,                            :null => false
     t.string  "description"
     t.string  "time_zone",    :default => "Eastern Time (US & Canada)"
     t.string  "address",                                                :null => false
