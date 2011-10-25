@@ -11,7 +11,7 @@ window.CalendarOptions = {
 $(document).ready( ->
   return unless $('.calendar_content')[0]
 
-  $('.business_name > select').change( ->
+  $('select#business_id').change( ->
     select = $(this)
     window.location.href = "/businesses/#{select.val()}"
   )
@@ -32,6 +32,9 @@ $(document).ready( ->
         width:375,
         height:435,
         closeOnEscape: false,
+        # need to enable the select again after modal is closed
+        # this is should not be needed ...
+        close: -> $('select#business_id').attr( 'disabled', false)
       })
     )
 
