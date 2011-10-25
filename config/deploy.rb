@@ -31,8 +31,8 @@ namespace :deploy do
   end
 end
 
-after "deploy:update_code", "deploy:migrate"
-before :"deploy:symlink", :"deploy:assets"
+#after "deploy:update_code", "deploy:migrate"
+#before :"deploy:symlink", :"deploy:assets"
 
 
 

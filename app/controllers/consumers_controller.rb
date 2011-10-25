@@ -1,5 +1,6 @@
 class ConsumersController < ApplicationController
-  layout -> controller { mobile_device? ? false : 'consumer_application' }
+  layout  'consumer_application'
+  #layout -> controller { mobile_device? ? false : 'consumer_application' }
 
   def register
   end
