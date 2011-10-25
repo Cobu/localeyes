@@ -29,7 +29,10 @@ class window.MapView
     this.markerBounds.extend(this.center_marker.position) if this.markerBounds and this.center_marker
 
   setMarkers: (map, markerBounds) ->
-    _.each( @collection.models, (model)-> model.setMarker(map, markerBounds) )
+    businesses = _.each(@collection.models, (business)->
+      if filter.match(business)
+        business.setMarker(map, markerBounds)
+    )
 
   clear: ->
     this.collection.clearMarkers()

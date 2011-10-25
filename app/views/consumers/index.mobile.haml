@@ -13,7 +13,8 @@
     %div{ 'data-role'=> "page", :id => "event_list_page" }
 
       %div{ 'data-role'=> "header" }
-        %h1 Event List
+        %a{:href=>"#map_page", 'data-role'=>"button", 'data-inline'=>"true"} Map
+        %h2 Event List
 
       %div{'data-role'=> "content"}
         %ul{ 'data-role'=>"listview", 'data-theme'=>"g"}
@@ -22,10 +23,17 @@
             %a{ :href=>"acura.html" }
           %li Dude
           %li Rob
-
         %ul{'data-role'=> "listview", 'data-theme'=>"g"}
+      %div{ 'data-role'=> "footer"}
 
+    %div{ 'data-role'=> "page", :id => "map_page" }
+
+      %div{ 'data-role'=> "header" }
+        %a{:href=>"#event_list_page", 'data-role'=>"button", 'data-inline'=>"true"} Events
+        %h2 Map View
+
+      %div{'data-role'=> "content"}
+        #map_canvas_container
+          #map_canvas
 
       %div{ 'data-role'=> "footer"}
-        %p Footer
-

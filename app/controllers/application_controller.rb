@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   rescue_from ActiveRecord::RecordNotFound, :with => :render_404
 
-  before_filter :set_mobile_format
+  #before_filter :set_mobile_format
 
   def set_mobile_format
     request.format = :mobile if mobile_device?

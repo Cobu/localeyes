@@ -88,7 +88,7 @@ $(document).ready( ->
       events = _(@event_list.models).groupBy( (event)-> event.startDate() )
       for num in [0..13]
         date = Date.today().addDays(num)
-        days_events = _.select(events[date.toString("yyyy-MM-dd")], (event)-> filter.match(event) )
+        days_events = _.select(events[date.toString("yyyy-MM-dd")], (event)-> filter.match(event.business()) )
         continue unless _.any(days_events)
         this.buildEventsForDay( date, days_events )
 
@@ -114,8 +114,6 @@ $(document).ready( ->
       business_elem.slideDown('slow')
   )
 
-  window.event_view = new EventView
-
 
   class window.Filter
     service_type_constants = {
@@ -135,7 +133,8 @@ $(document).ready( ->
       Filter.serviceTypes = []
       for name of service_type_constants
         if Filter[name] then Filter.serviceTypes.push service_type_constants[name]
-      window.event_view.render()
+      window.event_list_view.render()
+      window.map_view.render()
 
     setFilteringByFavorites : (bool)->
       Filter.filtering_favorites = bool
@@ -150,9 +149,9 @@ $(document).ready( ->
         $.get('/users/set_favorite',{ b:business_id})
       window.event_view.render()
 
-    match : (event)->
-      if Filter.filtering_favorites then return false unless _.include( Filter.userFavorites, event.get('business_id') )
-      _.include( Filter.serviceTypes, event.business().get('service_type') )
+    match : (business)->
+      if Filter.filtering_favorites then return false unless _.include( Filter.userFavorites, business.get('id') )
+      _.include( Filter.serviceTypes, business.get('service_type') )
 
     setValues : ->
       $('.filter input[type=checkbox]').each( (index,elem)->

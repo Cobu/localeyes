@@ -10,15 +10,27 @@ Spork.prefork do
   require 'capybara/rails'
   require 'machinist/active_record'
   require 'blueprints'
+  require 'database_cleaner'
 
   Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 
   RSpec.configure do |config|
     config.mock_with :rr
-    config.use_transactional_fixtures = true
-    config.before(:each) do
-      Timecop.return
-    end
+    #config.use_transactional_fixtures = false
+
+    config.before(:suite) do
+        DatabaseCleaner.strategy = :transaction
+        DatabaseCleaner.clean_with(:truncation)
+      end
+
+      config.before(:each) do
+        DatabaseCleaner.start
+      end
+
+      config.after(:each) do
+        DatabaseCleaner.clean
+      end
+
     config.after(:each) do
        ApplicationController.session_data = { }
     end
@@ -28,23 +40,23 @@ Spork.prefork do
     Capybara::Selenium::Driver.new(app, :browser => :chrome)
   end
 
-  class ActiveRecord::Base
-    mattr_accessor :shared_connection
-    @@shared_connection = nil
-
-    def self.connection
-      @@shared_connection || retrieve_connection
-    end
-  end
+  #class ActiveRecord::Base
+  #  mattr_accessor :shared_connection
+  #  @@shared_connection = nil
+  #
+  #  def self.connection
+  #    @@shared_connection || retrieve_connection
+  #  end
+  #end
 
   # Forces all threads to share the same connection. This works on
   # Capybara because it starts the web server in a thread.
-  ActiveRecord::Base.shared_connection = ActiveRecord::Base.connection
+  #ActiveRecord::Base.shared_connection = ActiveRecord::Base.connection
 
-  ## for selenium tests to be on the same database transaction as specs
+  # for selenium tests to be on the same database transaction as specs
   #ActiveRecord::ConnectionAdapters::ConnectionPool.class_eval do
   #  def current_connection_id
-  #    # Thread.current.object_id
+  #    #Thread.current.object_id
   #    Thread.main.object_id
   #  end
   #end
