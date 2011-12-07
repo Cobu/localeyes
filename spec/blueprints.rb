@@ -25,6 +25,7 @@ $now_month = now.month
 blueprint_start_time = Time.utc(2011, now.month, 5, 7, 30)
 
 Business.blueprint {
+  name { 'Dans Diner'}
   user
   phone { "6505551212" }
   address { '1 Dude street' }

@@ -6,29 +6,32 @@ describe Business do
     Time.utc(1970, 1, 1, hour, min)
   end
 
-  let(:business) { b = Business.make(:oswego_cafe,:user=>nil) ; b.set_default_hours ; b }
+  let(:business) { b = Business.make(:oswego_cafe, :user=>nil); b.set_default_hours; b }
   subject { business }
 
   it { should respond_to :sunday_hours }
   it { should respond_to :monday_hours }
   it { should respond_to :tuesday_hours }
-  it { should respond_to :wednesday_hours } # etc ..
+  it { should respond_to :wednesday_hours }
+  it { should respond_to :thursday_hours }
+  it { should respond_to :friday_hours }
+  it { should respond_to :saturday_hours }
 
   context "has daily hours" do
-    it { business.sunday_hours.should == {:from=>nil, :to=>nil, :open=>false} }
-    it { business.monday_hours.should == {:from=>set_hours(9, 0), :to=>set_hours(17, 0), :open=>true} }
+    its(:sunday_hours) { should == {:from=>nil, :to=>nil, :open=>false} }
+    its(:monday_hours) { should == {:from=>set_hours(9, 0), :to=>set_hours(17, 0), :open=>true} }
   end
 
-  context "can see from hours on day" do
-    it { business.monday_hours_from.should == Time.utc(1970, 1, 1, 9, 0) }
-    it { business.monday_hours_from_ampm.should == "am" }
-    it { business.saturday_hours_to.should == Time.utc(1970, 1, 1, 17, 0) }
-    it { business.saturday_hours_to_ampm.should == "pm" }
+  context "can return 'to' and from' time elements for a given day" do
+    its(:monday_hours_from) { should == Time.utc(1970, 1, 1, 9, 0) }
+    its(:monday_hours_from_ampm) { should == "am" }
+    its(:saturday_hours_to) { should == Time.utc(1970, 1, 1, 17, 0) }
+    its(:saturday_hours_to_ampm) { should == "pm" }
   end
 
   context "can handle null hours on closed day" do
-    it { business.sunday_hours_open.should == false }
-    it { business.sunday_hours_to.should == nil }
+    its(:sunday_hours_open) { should == false }
+    its(:sunday_hours_to) { should == nil }
   end
 
   context "with hours set up" do
@@ -45,7 +48,7 @@ describe Business do
   end
 
   context "without hours set up" do
-    let(:business){ Business.new }
+    let(:business) { Business.new }
 
     it "can set hours on day" do
       business.monday_hours_from={'hour'=>"05", 'min'=>'12', 'ampm'=> 'am'}
@@ -69,6 +72,7 @@ describe Business do
 
   describe "makes valid model" do
     before do
+
       @attributes = {"name"=>"yo cafe", "service_type"=>"2", "description"=>"fun cafe", "address"=>"1 Dude street", "address2"=>"",
                      "city"=>"New York", "state"=>"NY", "zip_code"=>"10003",
                      "phone_first3"=>"900", "phone_second3"=>"111", "phone_last4"=>"2222",

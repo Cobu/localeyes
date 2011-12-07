@@ -5,12 +5,13 @@ class Business < ActiveRecord::Base
 
   validates :name, :phone, :city, :state, :zip_code, :presence => true
 
-  #geocoded_by :full_address, :latitude => :lat, :longitude => :lng
+  geocoded_by :full_address, latitude: :lat, longitude: :lng
   before_create :geocode, :unless => -> { lat.present? and lng.present? }
 
   before_validation :set_phone_number
   before_save :check_open_hours
-  after_initialize :set_defaults, :if => :new_record?
+
+  before_create :set_default_hours
 
   # day order is  [sun, mon, tues, wed , thu, fri, sat]
   # hours = [ [ :from=>time, :to=>time, :closed=>true], etc.. for each day starting with sunday ]
@@ -23,11 +24,8 @@ class Business < ActiveRecord::Base
     [address, address2, city, state, zip_code].compact.join(' ')
   end
 
-  def set_defaults
-    self.service_type = BAR
-  end
-
   def set_default_hours
+    return unless hours.blank?
     nine_am = Time.utc(1970, 1, 1, 9, 00)
     five_pm = Time.utc(1970, 1, 1, 17, 00)
     (1..6).each do |num|
@@ -67,15 +65,16 @@ class Business < ActiveRecord::Base
   CAFE = 0
   RESTAURANT = 1
   BAR = 2
-  SERVICE_TYPES = [CAFE, RESTAURANT, BAR]
-  SERVICE_TYPE_NAMES = ['Cafe', 'Restaurant', 'Bar']
+  RETAIL = 3
+  SERVICE_TYPES = [CAFE, RESTAURANT, BAR, RETAIL]
+  SERVICE_TYPE_NAMES = %w[Cafe Restaurant Bar Retail]
 
   def service_name
     SERVICE_TYPE_NAMES[service_type]
   end
 
-  TIME_TYPES = ['from', 'to']
-  SHORT_DAYNAME = ['Su', 'M', 'T', 'W', 'Th', 'F', 'Sa']
+  TIME_TYPES = %w[from to]
+  SHORT_DAYNAME = %w[Su M T W Th F Sa]
 
   Date::DAYNAMES.each_with_index do |dayname, day_index|
     hour_method = "#{dayname.downcase}_hours"

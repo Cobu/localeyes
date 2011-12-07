@@ -1,8 +1,8 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.1.0'
+gem 'rails', '3.1.1'
+gem 'bcrypt-ruby'
 gem 'mysql2'
-#gem 'pg'
 gem "arel", "2.2.1"
 gem 'sass-rails', "~> 3.1.0"
 gem 'jquery-rails'
@@ -30,7 +30,6 @@ group :development, :test do
   gem "capistrano"
   gem 'capistrano-ext'
   gem 'rb-fsevent', :require => false
-  gem 'guard-rspec'
   gem 'guard-livereload'
   gem 'guard-spork'
   gem 'guard-bundler'
@@ -38,7 +37,7 @@ end
 
 group :test do
   gem 'turn', :require => false
-  gem 'spork'
+  gem 'spork', '0.9.0.rc9'
   gem 'jasmine'
   gem 'capybara'
   gem 'launchy'

@@ -17,6 +17,7 @@ Cal::Application.routes.draw do
        get :set_favorite
        get :unset_favorite
        get :register
+       post :facebook
      end
   end
   resources :business_users, :except=>[:index,:show] do

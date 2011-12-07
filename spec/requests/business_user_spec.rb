@@ -1,22 +1,18 @@
 require 'spec_helper'
 
 describe "Business User" do
-
-  before(:each) do
-  end
+  let(:user) { BusinessUser.make }
 
   describe "creating profile" do
     it "with complete info takes you to create new busines page" do
       visit new_business_user_path
-
-      bu = BusinessUser.make
       within "form" do
-        fill_in 'business_user_email', :with => bu.email
-        fill_in 'business_user_first_name', :with => bu.first_name
-        fill_in 'business_user_last_name', :with => bu.last_name
-        fill_in 'business_user_phone', :with => bu.phone
-        fill_in 'business_user_password', :with => "password"
-        fill_in 'business_user_password_confirmation', :with => "password"
+        fill_in 'business_user_email', with: user.email
+        fill_in 'business_user_first_name', with: user.first_name
+        fill_in 'business_user_last_name', with: user.last_name
+        fill_in 'business_user_phone', with: user.phone
+        fill_in 'business_user_password', with: "password"
+        fill_in 'business_user_password_confirmation', with: "password"
         click_on "Create"
       end
 
@@ -26,14 +22,13 @@ describe "Business User" do
     it "with IN COMPLETE info keeps you on this page and shows errors" do
       visit new_business_user_path
 
-      bu = BusinessUser.make
       within "form" do
-        fill_in 'business_user_email', :with => ''
-        fill_in 'business_user_first_name', :with => bu.first_name
-        fill_in 'business_user_last_name', :with => bu.last_name
-        fill_in 'business_user_phone', :with => bu.phone
-        fill_in 'business_user_password', :with => "password"
-        fill_in 'business_user_password_confirmation', :with => "password"
+        fill_in 'business_user_email', with: ''
+        fill_in 'business_user_first_name', with: user.first_name
+        fill_in 'business_user_last_name', with: user.last_name
+        fill_in 'business_user_phone', with: user.phone
+        fill_in 'business_user_password', with: "password"
+        fill_in 'business_user_password_confirmation', with: "password"
         click_on "Create"
       end
 
@@ -43,16 +38,16 @@ describe "Business User" do
   end
 
   describe "logging in" do
+
     it "with correct password logs in existing user" do
-      password = "dudeman"
-      bu = BusinessUser.make!(:password=>password)
-      b = Business.make!(:oswego_restaurant, :user=>bu)
+      user.save
+      b = Business.make!(:oswego_restaurant, user: user)
 
       visit login_business_users_path
 
       within "form" do
-        fill_in "business_user_email", :with=> bu.email
-        fill_in "business_user_password", :with=> password
+        fill_in "business_user_email", with: user.email
+        fill_in "business_user_password", with: user.password
         click_on "Sign in"
       end
 
@@ -60,13 +55,12 @@ describe "Business User" do
     end
 
     it "with incorrect password keeps existing user on login page" do
-      bu = BusinessUser.make!
-
+      user.save
       visit login_business_users_path
 
       within "form" do
-        fill_in "business_user_email", :with=> bu.email
-        fill_in "business_user_password", :with=> "wrong password"
+        fill_in "business_user_email", with: user.email
+        fill_in "business_user_password", with: "wrong password"
         click_on "Sign in"
       end
 
@@ -78,8 +72,8 @@ describe "Business User" do
       visit login_business_users_path
 
       within "form" do
-        fill_in "business_user_email", :with=> "email@for.non.existent.user"
-        fill_in "business_user_password", :with=> "password"
+        fill_in "business_user_email", with: "email@for.non.existent.user"
+        fill_in "business_user_password", with: "password"
         click_on "Sign in"
       end
 

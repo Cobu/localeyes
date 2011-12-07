@@ -1,3 +1,5 @@
+require Rails.root.join 'lib', 'facebook'
+
 class UsersController < ApplicationController
   before_filter :need_business_id, :only=>[:set_favorite, :unset_favorite]
 
@@ -17,6 +19,12 @@ class UsersController < ApplicationController
 
   def set_favorite
     current_user.add_favorite(params[:b].to_i)
+    head :ok
+  end
+
+  def facebook
+    data = Facebook.decode_data(params[:signed_request])
+    Rails.logger.info data
     head :ok
   end
 

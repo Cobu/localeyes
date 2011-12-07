@@ -2,41 +2,32 @@ require 'spec_helper'
 
 describe Business do
 
+  let(:user) { BusinessUser.make! }
+
   describe "create" do
 
-    before(:all) do
-      @bu = BusinessUser.make!
-    end
-    after(:all) { BusinessUser.destroy_all }
-
-    def register_user(user)
-      ApplicationController.session_data = {:business_user_id=>user.id}
-    end
 
     it "succeeds and takes you to calendar page" do
-      register_user(@bu)
+      login_business_user user
       visit new_business_path
-      b = Business.make(:name=>"yo cafe",
-                        :description=>"fun cafe",
-                        :service_type=>2, # Bar
-                        :phone=>"9001112222")
+      b = Business.make(:oswego_cafe)
       within "form" do
-        fill_in 'business_name', :with => b.name
-        fill_in 'business_description', :with => b.description
-        select b.service_name, :from => 'business_service_type'
-        fill_in 'business_address', :with => b.address
-        fill_in 'business_city', :with => b.city
-        select b.state, :from => 'business_state'
-        fill_in 'business_zip_code', :with => b.zip_code
-        fill_in 'business_phone_first3', :with => b.phone_first3
-        fill_in 'business_phone_second3', :with => b.phone_second3
-        fill_in 'business_phone_last4', :with => b.phone_last4
-        select "5", :from => 'business_monday_hours_from_hour'
-        select "15", :from => 'business_monday_hours_from_min'
-        select "pm", :from => 'business_monday_hours_from_ampm'
-        select "2", :from => 'business_saturday_hours_to_hour'
-        select "22", :from => 'business_saturday_hours_to_min'
-        select "am", :from => 'business_saturday_hours_to_ampm'
+        fill_in 'business_name', with: b.name
+        fill_in 'business_description', with: b.description
+        select b.service_name, from: 'business_service_type'
+        fill_in 'business_address', with: b.address
+        fill_in 'business_city', with: b.city
+        select b.state, from: 'business_state'
+        fill_in 'business_zip_code', with: b.zip_code
+        fill_in 'business_phone_first3', with: b.phone_first3
+        fill_in 'business_phone_second3', with: b.phone_second3
+        fill_in 'business_phone_last4', with: b.phone_last4
+        select "5", from: 'business_monday_hours_from_hour'
+        select "15", from: 'business_monday_hours_from_min'
+        select "pm", from: 'business_monday_hours_from_ampm'
+        select "2", from: 'business_saturday_hours_to_hour'
+        select "22", from: 'business_saturday_hours_to_min'
+        select "am", from: 'business_saturday_hours_to_ampm'
         click_on "Create Business"
       end
 
@@ -44,7 +35,7 @@ describe Business do
 
       bnew.name.should == b.name
       bnew.description.should == b.description
-      bnew.service_type.should == b.service_type
+      bnew.service_name.should == b.service_name
       bnew.address.should == b.address
       bnew.city.should == b.city
       bnew.state.should == b.state
@@ -60,12 +51,12 @@ describe Business do
     end
 
     it "fails and keeps you on create page" do
-      register_user(@bu)
+      login_business_user user
       visit new_business_path
       b = Business.new(:name=>"yo cafe")
 
       within "form" do
-        fill_in 'business_name', :with => b.name
+        fill_in 'business_name', with: b.name
         click_on "Create Business"
       end
 
@@ -75,21 +66,15 @@ describe Business do
 
   describe "edit" do
 
-    def register_user_business(user, business)
-      ApplicationController.session_data = {:business_user_id=>user.id, :business_id=>business.id}
+    def login_business_user(business)
+      any_instance_of(ApplicationController, current_business_user: business.user, current_business: business )
     end
 
-    before(:all) do
-      @bu = BusinessUser.make!
-      @b = Business.make!(:oswego_cafe, :user=>@bu)
-      @b.set_default_hours
-      @b.save
-    end
-    after(:all) { BusinessUser.destroy_all }
+    let(:business) { Business.make!(:oswego_cafe) }
 
     before(:each) do
-      register_user_business(@bu, @b)
-      visit edit_business_path(@b)
+      login_business_user(business)
+      visit edit_business_path(business)
     end
 
     it "succeeds and takes you to calendar page" do
@@ -102,23 +87,23 @@ describe Business do
                         :service_type=>2, # Bar
                         :phone=>"9001112222")
 
-      within "form" do
-        fill_in 'business_name', :with => b.name
-        fill_in 'business_description', :with => b.description
-        select b.service_name, :from => 'business_service_type'
-        fill_in 'business_address', :with => b.address
-        fill_in 'business_city', :with => b.city
-        select b.state, :from => 'business_state'
-        fill_in 'business_zip_code', :with => b.zip_code
-        fill_in 'business_phone_first3', :with => b.phone_first3
-        fill_in 'business_phone_second3', :with => b.phone_second3
-        fill_in 'business_phone_last4', :with => b.phone_last4
-        select "5", :from => 'business_monday_hours_from_hour'
-        select "15", :from => 'business_monday_hours_from_min'
-        select "pm", :from => 'business_monday_hours_from_ampm'
-        select "2", :from => 'business_saturday_hours_to_hour'
-        select "22", :from => 'business_saturday_hours_to_min'
-        select "am", :from => 'business_saturday_hours_to_ampm'
+      within "form.edit_business" do
+        fill_in 'business_name', with: b.name
+        fill_in 'business_description', with: b.description
+        select b.service_name, from: 'business_service_type'
+        fill_in 'business_address', with: b.address
+        fill_in 'business_city', with: b.city
+        select b.state, from: 'business_state'
+        fill_in 'business_zip_code', with: b.zip_code
+        fill_in 'business_phone_first3', with: b.phone_first3
+        fill_in 'business_phone_second3', with: b.phone_second3
+        fill_in 'business_phone_last4', with: b.phone_last4
+        select "5", from: 'business_monday_hours_from_hour'
+        select "15", from: 'business_monday_hours_from_min'
+        select "pm", from: 'business_monday_hours_from_ampm'
+        select "2", from: 'business_saturday_hours_to_hour'
+        select "22", from: 'business_saturday_hours_to_min'
+        select "am", from: 'business_saturday_hours_to_ampm'
         uncheck "business_tuesday_hours_open" # change from open to closed
         click_on "Update Business"
       end
@@ -142,12 +127,13 @@ describe Business do
     end
 
     it "fails and keeps you on edit page" do
-      within "form" do
-        fill_in 'business_name', :with => ''
+
+      within "form.edit_business" do
+        fill_in 'business_name', with: ''
         click_on "Update Business"
       end
 
-      page.current_path.should == business_path(@b)
+      page.current_path.should == business_path(business)
     end
 
   end

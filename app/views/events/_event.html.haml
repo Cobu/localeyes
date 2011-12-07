@@ -24,13 +24,13 @@
     = f.label :start_time
     = f.text_field :start_date, :class=> :datepicker
     = f.select :start_time_hour, (0..12).zip(('00'..'12'))
-    = f.select :start_time_minute, ('00'..'60')
+    = f.select :start_time_minute, ["00", "15", "30", "45", "60"]
     = f.select :start_time_am_pm, ['am', 'pm']
   .time_field
     = f.label :end_time
     = f.text_field :end_date, :class=> :datepicker
     = f.select :end_time_hour, (0..12).zip(('00'..'12'))
-    = f.select :end_time_minute, ('00'..'60')
+    = f.select :end_time_minute, ["00", "15", "30", "45", "60"]
     = f.select :end_time_am_pm, ['am', 'pm']
 
   .recurring

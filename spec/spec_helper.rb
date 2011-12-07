@@ -16,10 +16,9 @@ Spork.prefork do
 
   RSpec.configure do |config|
     config.mock_with :rr
-    #config.use_transactional_fixtures = false
 
     config.before(:suite) do
-        DatabaseCleaner.strategy = :transaction
+        DatabaseCleaner.strategy = :truncation
         DatabaseCleaner.clean_with(:truncation)
       end
 
@@ -30,73 +29,16 @@ Spork.prefork do
       config.after(:each) do
         DatabaseCleaner.clean
       end
-
-    config.after(:each) do
-       ApplicationController.session_data = { }
-    end
   end
 
-  Capybara.register_driver :selenium_chrome do |app|
+  Capybara.register_driver :chrome do |app|
     Capybara::Selenium::Driver.new(app, :browser => :chrome)
-  end
-
-  #class ActiveRecord::Base
-  #  mattr_accessor :shared_connection
-  #  @@shared_connection = nil
-  #
-  #  def self.connection
-  #    @@shared_connection || retrieve_connection
-  #  end
-  #end
-
-  # Forces all threads to share the same connection. This works on
-  # Capybara because it starts the web server in a thread.
-  #ActiveRecord::Base.shared_connection = ActiveRecord::Base.connection
-
-  # for selenium tests to be on the same database transaction as specs
-  #ActiveRecord::ConnectionAdapters::ConnectionPool.class_eval do
-  #  def current_connection_id
-  #    #Thread.current.object_id
-  #    Thread.main.object_id
-  #  end
-  #end
-
-  class ApplicationController < ActionController::Base
-    @@session_data = nil
-
-    def self.session_data=(hash)
-      @@session_data = hash
-    end
-
-    def self.add_session_data(hash)
-      @@session_data ||= {}
-      @@session_data.merge!(hash)
-    end
-
-    def self.get_session_data
-      @@current_session_data
-    end
-
-    prepend_before_filter :set_session_data
-
-    def set_session_data
-      @@current_session_data = session.dup
-
-      if @@session_data then
-        @@session_data.each do |k, v|
-          session[k] = v
-        end
-        @@session_data = nil
-      end
-
-    end
-
   end
 
 end
 
-
 Spork.each_run do
+  $rspec_start_time = Time.now
   Dir["#{Rails.root}/app/**/*.rb"].each { |f| load f }
   load "#{Rails.root}/config/routes.rb"
   Dir["#{Rails.root}/config/initializers/*.rb"].each { |f| load f }

@@ -1,7 +1,5 @@
+#############  Map view #############
 class window.MapView
-  constructor: (@collection, @props)->
-    throw "you need a collection to make a MapView" unless @collection
-
   icon: null
   el: $('#map_canvas')
   center_point: null
@@ -13,20 +11,26 @@ class window.MapView
     mapTypeControl: false
   }
 
+  constructor: (@collection, @center_point)->
+    this.render()
+    map_view = this
+    @collection.bind('reset', -> map_view.render() )
+
   prepareMap: ->
-    if !this.view
-      this.view = new google.maps.Map(document.getElementById("map_canvas"), this.options)
+    return unless document.getElementById("map_canvas")
+    if !@view
+      @view = new google.maps.Map(document.getElementById("map_canvas"), @options)
 
   createCenterMarker: ->
-    if this.center_point
-      point = new google.maps.LatLng(this.center_point.lat, this.center_point.lng)
-      this.center_marker = new google.maps.Marker({
+    if @center_point
+      point = new google.maps.LatLng(@center_point.lat, @center_point.lng)
+      @center_marker = new google.maps.Marker({
         position: point,
-        map: this.view,
-        title: this.center_point.title
+        map: @view,
+        title: @center_point.title
         icon: "/assets/arrow.png"
       })
-    this.markerBounds.extend(this.center_marker.position) if this.markerBounds and this.center_marker
+    @markerBounds.extend(@center_marker.position) if @markerBounds and @center_marker
 
   setMarkers: (map, markerBounds) ->
     businesses = _.each(@collection.models, (business)->
@@ -35,21 +39,22 @@ class window.MapView
     )
 
   clear: ->
-    this.collection.clearMarkers()
-    if this.center_marker
-      this.center_marker.setMap(null)
-      this.center_marker = null
-    this.markerBounds = new google.maps.LatLngBounds()
+    @collection.clearMarkers()
+    if @center_marker
+      @center_marker.setMap(null)
+      @center_marker = null
+    @markerBounds = new google.maps.LatLngBounds()
 
   render: ->
     this.clear()
     this.prepareMap()
     this.createCenterMarker()
-    this.setMarkers(this.view, this.markerBounds)
+    this.setMarkers(@view, @markerBounds)
 
 
+############  SingleZoomMap view #############
 class window.SingleZoomMapView extends MapView
-  constructor: (@model, props)->
+  constructor: (@model, @center_point)->
     throw "you need a model to make a MapView" unless @model
 
   options: {
@@ -61,18 +66,18 @@ class window.SingleZoomMapView extends MapView
   render: ->
     this.model.clearMarker()
     this.prepareMap()
-    this.model.setMarker(this.view)
-    this.view.setCenter(this.model.marker.position)
+    @model.setMarker(@view)
+    @view.setCenter(@model.marker.position)
 
 
-
+############  ExtendBoundMap view #############
 class window.ExtendBoundMapView extends MapView
 
   markerBounds: new google.maps.LatLngBounds()
   markerBoundsZoomOut: 0.1
 
   render: ->
-    super
+    super()
     # extend the bounds if its too small
     if (this.markerBounds.getNorthEast().equals(this.markerBounds.getSouthWest()))
       extendPoint = new google.maps.LatLng(
@@ -80,4 +85,4 @@ class window.ExtendBoundMapView extends MapView
         this.markerBounds.getNorthEast().lng() + this.markerBoundsZoomOut
       )
       this.markerBounds.extend(extendPoint)
-    this.view.fitBounds(this.markerBounds)
+    @view.fitBounds(this.markerBounds)

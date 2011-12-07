@@ -2,29 +2,15 @@ require 'spec_helper'
 
 describe "Consumer User" do
   let(:user) { User.make!(:dude) }
-  let(:business_user) { BusinessUser.make!(:email=>"dude@dude.com") }
-  let(:cafe) {
-    cafe = Business.make(:oswego_cafe, :user=> business_user)
-    cafe.set_default_hours
-    cafe.save
-    cafe
-  }
-  let(:resto) {
-    resto = Business.make(:oswego_restaurant, :user=> business_user)
-    resto.set_default_hours
-    resto.save
-    resto
-  }
+  let(:business_user) { BusinessUser.make! }
+  let(:cafe) { Business.make(:oswego_cafe, :user=> business_user) }
+  let(:resto) { Business.make(:oswego_restaurant, :user=> business_user) }
   let(:now) { Time.now.utc }
 
-  def sign_in_user(user)
-    ApplicationController.session_data = {:user_id=>user.id}
-  end
-
-  it "can autocomplete search locations", :js =>true, :driver=>:selenium_chrome do
+  it "can autocomplete search locations", :js =>true do
     College.make!(:suny_oswego)
 
-    sign_in_user(user)
+    login_user(user)
     visit consumers_path
 
     fill_in "search_location", :with=> 'Suny'
@@ -34,7 +20,7 @@ describe "Consumer User" do
   describe "logged in" do
 
     before(:each) do
-      sign_in_user(user)
+      login_user(user)
       visit consumers_path
     end
 
@@ -43,7 +29,7 @@ describe "Consumer User" do
 
       utc_offset_hours = Time.now.utc_offset / 3600
 
-      p Event.make!(:once,
+      Event.make!(:once,
                   :business=>cafe,
                   :start_time => now.change(:min => 0, :sec => 0).advance(:hours => utc_offset_hours + 1),
                   :end_time => now.change(:min => 0, :sec => 0).advance(:hours => utc_offset_hours + 2),
@@ -59,4 +45,4 @@ describe "Consumer User" do
     end
 
   end
-  end
+end

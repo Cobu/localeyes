@@ -45,8 +45,8 @@ Handlebars.registerHelper("header", (date)->
 
 
 $(document).ready( ->
-  #  $('#event_list').jScrollPane()
 
+  ############  Event view #############
   window.EventView = Backbone.View.extend(
     template: Handlebars.compile($( '#event_template' ).html())
     tagName: 'li'
@@ -74,11 +74,17 @@ $(document).ready( ->
       this
   )
 
+  ############  EventList view #############
   window.EventListView = Backbone.View.extend({
     el: $( '#event_list' )
     day_header_template: Handlebars.compile($( '#day_header_template' ).html())
 
     initialize: (@event_list)->
+      if @event_list
+        this.render()
+      else
+        @event_list = []
+      @event_list.bind('reset', => this.render() )
 
     showDescription: (event)->
       elem = $(event.currentTarget).parent('.event')
