@@ -22,20 +22,18 @@
         = f.text_field :zip_code, :placeholder => 'Zip Code'
       .field.phone
         = f.label :phone
-        = f.text_field :phone_first3
+        = f.text_field :phone_first3, placeholder: :area_code
         -
         = f.text_field :phone_second3
         -
         = f.text_field :phone_last4
       .field
-        = f.text_field :url, :placeholder => 'home page'
-
-      .field.position
-        = f.text_field :lat, :placeholder => 'latitude'
-        -
-        = f.text_field :lng, :placeholder => 'longitude'
-        - if @business.new_record?
-          = select(:geo_lookup, :id, [:google, :yahoo,  :geocoder_ca].collect{|l| [l.to_s, l]}, :selected=> Geocoder::Configuration.lookup)
+        = f.text_field :url, placeholder: 'home page'
+      %br
+      .field
+        Map Location with:
+        = select(:geo_lookup, :id, [:google, :yahoo,  :geocoder_ca].collect{|l| [l.to_s, l]}, :selected=> Geocoder::Configuration.lookup)
+        = button_tag :go, type: :button, id: :geo_lookup_button
     .open_times
       - Date::DAYNAMES.each_with_index do |dayname,day_index|
         - hour_method = "#{dayname.downcase}_hours"
@@ -44,15 +42,15 @@
             = Business::SHORT_DAYNAME[day_index]
           - Business::TIME_TYPES.each_with_index do |type,index|
             .hours
-              = f.select "#{hour_method}_#{type}_hour", (0..12).zip(('00'..'12')), {}, :name=>"business[#{hour_method}_#{type}[hour]]"
+              = f.select "#{hour_method}_#{type}_hour", (0..12).zip(('00'..'12')), {}, name: "business[#{hour_method}_#{type}[hour]]"
             .minutes
-              = f.select "#{hour_method}_#{type}_min", ('00'..'60'), {}, :name=>"business[#{hour_method}_#{type}[min]]"
+              = f.select "#{hour_method}_#{type}_min", ('00'..'60'), {}, name: "business[#{hour_method}_#{type}[min]]"
             .ampm
-              = f.select "#{hour_method}_#{type}_ampm", %w(am pm), {}, :name=>"business[#{hour_method}_#{type}[ampm]]"
+              = f.select "#{hour_method}_#{type}_ampm", %w(am pm), {}, name: "business[#{hour_method}_#{type}[ampm]]"
             - if index == 0
               == -
             - else
-              = f.check_box "#{hour_method}_open", :name=>"business[#{hour_method}_open]"
+              = f.check_box "#{hour_method}_open", name: "business[#{hour_method}_open]"
               Open
     %br
     %center

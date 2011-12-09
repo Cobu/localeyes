@@ -1,5 +1,5 @@
 
-#..###########  Event model #############
+#..hack..###########  Event model #############
 window.Event = Backbone.Model.extend({
   startDate: -> Date.parse(this.get('start')).toString("yyyy-MM-dd")
   startHour: -> Date.parse(this.get('start')).toString("h:mm tt")
@@ -10,7 +10,7 @@ window.Event = Backbone.Model.extend({
     "<img src='assets/fav_#{prefix}selected.gif' width='20px' data-busniess_id='#{this.get('business_id')}' rel='favorite'/>"
 })
 
-############  EventList model #############
+############  EventList Collection #############
 window.EventList = Backbone.Collection.extend({
   url: '/consumers/events'
   model: Event
@@ -35,15 +35,15 @@ window.Business = Backbone.Model.extend(
       @marker = null
 
   setMarker: (map, markerBounds)->
-    this.point = new google.maps.LatLng(this.get('lat'),this.get('lng'))
+    @point = new google.maps.LatLng(this.get('lat'),this.get('lng'))
     @marker = this.makeMarker(map)
-    markerBounds.extend(this.point) if markerBounds
+    markerBounds.extend(@point) if markerBounds
 
   setMarkerIcon: (scaleFactor)-> @marker.setIcon( this.makeIcon(scaleFactor) )
 
   makeMarker: (map)->
     new google.maps.Marker({
-      position: this.point
+      position: @point
       map: map
       title: this.map_tooltip_template(this.attributes)
       icon: this.makeIcon()
@@ -57,7 +57,7 @@ window.Business = Backbone.Model.extend(
     )
 )
 
-############  BusinessList model #############
+############  BusinessList Collection #############
 window.BusinessList = Backbone.Collection.extend(
   model: Business
   selected_id: null
@@ -66,7 +66,7 @@ window.BusinessList = Backbone.Collection.extend(
   # the new collection takes its place
   reset: (collection)->
     _.each( @models, (business)-> business.clearMarker() )
-    return Backbone.Collection.prototype.reset.call(this, collection)
+    Backbone.Collection.prototype.reset.call(this, collection)
 
   clearSelected: ->
     this.get( @selected_id ).setMarkerIcon() if @selected_id

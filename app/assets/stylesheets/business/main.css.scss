@@ -55,7 +55,10 @@ form.new_business, form.edit_business{
   }
 
   .field.phone {
-    input { width:40px;  }
+    input { margin-right: 3px; }
+    input#business_phone_first3 { width:30px; }
+    input#business_phone_second3 { width:30px; }
+    input#business_phone_last4 { width:40px; }
   }
 
   .field.zip {
