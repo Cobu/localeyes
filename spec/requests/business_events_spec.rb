@@ -2,31 +2,20 @@ require 'spec_helper'
 
 describe "Business Events" do
 
-  before(:each) do
-    @bu = BusinessUser.make!
-    @b = Business.make!(:oswego_restaurant, :user=>@bu)
-  end
+  let(:user) { BusinessUser.make! }
+  let(:business) { Business.make!(:oswego_restaurant, :user=>user) }
+  let(:once_event) {Event.make!(:once, :start_time=>Time.now.utc.change(:min=>15), :end_time=>Time.now+1.hour, :business=> business)}
+  let(:daily_event) {Event.make!(:daily, :start_time=>Time.now.utc.change(:min=>15), :end_time=>Time.now+1.hour, :business=> business)}
 
-  #after(:each) do
-  #  BusinessUser.destroy_all
-  #  Event.delete_all
-  #end
-
-  def sign_in_user(user)
-    any_instance_of(ApplicationController, current_business_user: user, current_business: @b )
-  end
-
-  let(:once_event) {Event.make!(:once, :start_time=>Time.now.utc.change(:min=>15), :end_time=>Time.now+1.hour, :business=> @b)}
-  let(:daily_event) {Event.make!(:daily, :start_time=>Time.now.utc.change(:min=>15), :end_time=>Time.now+1.hour, :business=> @b)}
+  before { login_business_user user }
 
   describe "edits" do
 
     it "a one time event", :js=>true do
       start_time = Time.now.utc.change(:hour=>1, :min=>15, :sec=>0)
-      e = Event.make!(:once, :start_time=>start_time, :business=> @b)
+      e = Event.make!(:once, :start_time=>start_time, :business=> business)
 
-      sign_in_user @bu
-      visit business_path(@b)
+      visit business_path(business)
 
       find(:css, "a.fc-event").click
 
@@ -51,8 +40,8 @@ describe "Business Events" do
       new_title = Time.now.to_i.to_s
       until_date = (Time.now + 1.day).to_date
 
-      sign_in_user @bu
-      visit business_path(@b)
+      login_business_user user
+      visit business_path(business)
 
       find(:css, "a.fc-event").click
 
@@ -78,8 +67,8 @@ describe "Business Events" do
     it "a one time event", :js=>true do
       once_event
 
-      sign_in_user @bu
-      visit business_path(@b)
+      login_business_user user
+      visit business_path(business)
 
       find(:css, "a.fc-event").click
 
@@ -93,8 +82,8 @@ describe "Business Events" do
     it "a daily event, just one day", :js=>true do
       e = daily_event
 
-      sign_in_user @bu
-      visit business_path(@b)
+      login_business_user user
+      visit business_path(business)
 
       find(:css, "a.fc-event").click
 
@@ -119,8 +108,8 @@ describe "Business Events" do
     let(:end_time) { Time.now.utc.change(:hour=>4, :min=>30, :sec=>0) }
 
     before do
-      sign_in_user @bu
-      visit business_path(@b)
+      login_business_user user
+      visit business_path(business)
 
       find(:css, "td.fc-day11").click
 

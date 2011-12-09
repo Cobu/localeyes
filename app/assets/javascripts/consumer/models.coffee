@@ -1,5 +1,5 @@
 
-# ###########  Event model #############
+#..###########  Event model #############
 window.Event = Backbone.Model.extend({
   startDate: -> Date.parse(this.get('start')).toString("yyyy-MM-dd")
   startHour: -> Date.parse(this.get('start')).toString("h:mm tt")
@@ -19,29 +19,27 @@ window.EventList = Backbone.Collection.extend({
 
 ############  Business model #############
 window.Business = Backbone.Model.extend(
-  service_type_names: ['Cafe', 'Restaurant', 'Bar']
+  service_type_names: ['Cafe', 'Restaurant', 'Bar', 'Retail']
   marker: null
-  map_tooltip_template: Handlebars.compile("{{name}}\n{{address}}\n{{city}},{{state}} ")
+  map_tooltip_template: Handlebars.compile("{{name}}\n{{address}}\n{{city}},{{state}}")
 
   serviceName: ->
     return '' unless _.isNumber(this.get('service_type'))
-    this.service_type_names[this.get('service_type')].toLowerCase()
+    @service_type_names[this.get('service_type')].toLowerCase()
 
-  renderHours: (item)-> this.hours_template(item)
+  renderHours: (item)-> window.hours_template(item)
 
   clearMarker: ->
-#    console.log([1,this.marker])
-    if this.marker
-      this.marker.setMap(null)
-      this.marker = null
+    if @marker
+      @marker.setMap(null)
+      @marker = null
 
   setMarker: (map, markerBounds)->
-    console.log(this.marker)
     this.point = new google.maps.LatLng(this.get('lat'),this.get('lng'))
-    this.marker = this.makeMarker(map)
-    console.log([2,this.marker])
-    if markerBounds
-      markerBounds.extend(this.point)
+    @marker = this.makeMarker(map)
+    markerBounds.extend(this.point) if markerBounds
+
+  setMarkerIcon: (scaleFactor)-> @marker.setIcon( this.makeIcon(scaleFactor) )
 
   makeMarker: (map)->
     new google.maps.Marker({
@@ -62,23 +60,22 @@ window.Business = Backbone.Model.extend(
 ############  BusinessList model #############
 window.BusinessList = Backbone.Collection.extend(
   model: Business
-  selected: null
+  selected_id: null
 
-  clearMarkers: -> _.each( @models, (business)->  business.clearMarker() )
+  # override rest to clear the business markers in old collection before
+  # the new collection takes its place
+  reset: (collection)->
+    _.each( @models, (business)-> business.clearMarker() )
+    return Backbone.Collection.prototype.reset.call(this, collection)
 
   clearSelected: ->
-    if (this.selected)
-      business = this.get(this.selected)
-      this.get(this.selected).marker.setIcon(business.makeIcon())
-    this.selected = null
+    this.get( @selected_id ).setMarkerIcon() if @selected_id
+    @selected_id = null
 
-  setSelected: (id)->
-    if (this.selected)
-      business = this.get(this.selected)
-      this.get(this.selected).marker.setIcon(business.makeIcon())
-    business = this.get(id)
-    business.marker.setIcon(business.makeIcon(1.3))
-    this.selected = id
+  setSelected: (business_id)->
+    this.get( @selected_id ).setMarkerIcon() if @selected_id # shrink icon
+    this.get( business_id ).setMarkerIcon(1.3) # bigger icon
+    @selected_id = business_id
 )
 
 

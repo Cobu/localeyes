@@ -33,13 +33,12 @@ class window.MapView
     @markerBounds.extend(@center_marker.position) if @markerBounds and @center_marker
 
   setMarkers: (map, markerBounds) ->
-    businesses = _.each(@collection.models, (business)->
-      if filter.match(business)
+    _.each( @collection.models, (business) ->
+      if window.filter.match(business)
         business.setMarker(map, markerBounds)
     )
 
   clear: ->
-    @collection.clearMarkers()
     if @center_marker
       @center_marker.setMap(null)
       @center_marker = null

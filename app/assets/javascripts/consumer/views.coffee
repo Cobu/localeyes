@@ -15,8 +15,8 @@ Handlebars.registerHelper("phone_format", (phone) ->
   "(" + phone.substr(0,3) + ") " + phone.substr(3,3) + "-" + phone.substr(6,4)
 )
 
-short_dayname = ['Su', 'M', 'T', 'W', 'Th', 'F', 'Sa']
-hours_template = Handlebars.compile("{{hour from}} - {{hour to}}")
+window.short_dayname = ['Su', 'M', 'T', 'W', 'Th', 'F', 'Sa']
+window.hours_template = Handlebars.compile("{{hour from}} - {{hour to}}")
 Handlebars.registerHelper("each_hour", (array, fn)->
 	buffer = ""
 	for num in [0..array.length-1]
@@ -24,7 +24,7 @@ Handlebars.registerHelper("each_hour", (array, fn)->
     # add the day_name property onto the hours
 		item.day_name = short_dayname[num]
 		if (item.open == true)
-		  item.hour_value = hours_template(item)
+		  item.hour_value = window.hours_template(item)
 		else
 		  item.hour_value = "Closed"
 		# show the inside of the block
@@ -50,6 +50,7 @@ $(document).ready( ->
   window.EventView = Backbone.View.extend(
     template: Handlebars.compile($( '#event_template' ).html())
     tagName: 'li'
+
     initialize: (@event)-> this.render()
 
     showBusiness: ->
@@ -67,10 +68,9 @@ $(document).ready( ->
       new BusinessView( this )
 
     render: ->
-      view = this;
       if @event != undefined
         this.el = $(this.template(@event))
-        this.el.find('.info, .description').bind('click', -> view.showBusiness() )
+        this.el.find('.info, .description').bind('click', => this.showBusiness() )
       this
   )
 
@@ -94,7 +94,7 @@ $(document).ready( ->
       events = _(@event_list.models).groupBy( (event)-> event.startDate() )
       for num in [0..13]
         date = Date.today().addDays(num)
-        days_events = _.select(events[date.toString("yyyy-MM-dd")], (event)-> filter.match(event.business()) )
+        days_events = _.select( events[date.toString("yyyy-MM-dd")], (event)-> window.filter.match(event.business()) )
         continue unless _.any(days_events)
         this.buildEventsForDay( date, days_events )
 
@@ -108,16 +108,18 @@ $(document).ready( ->
 
 
   window.BusinessView = Backbone.View.extend(
-    template: Handlebars.compile($( '#business_info_template' ).html())
+    template: null
 
-    initialize: (@event_view)-> this.render()
+    initialize: (@event_view)->
+      @template = Handlebars.compile($( '#business_info_template' ).html())
+      this.render()
 
     render: ->
-      business_elem = $(this.template(@event_view.event.business()))
+      business_elem = $( @template( @event_view.event.business() ) )
       elem_event_class = @event_view.el.attr('class').match(/\w+_type/)[0]
-      business_elem.addClass(elem_event_class)
-      @event_view.el.after(business_elem)
-      business_elem.slideDown('slow')
+      business_elem.addClass( elem_event_class )
+      @event_view.el.after( business_elem )
+      business_elem.slideDown( 'slow' )
   )
 
 

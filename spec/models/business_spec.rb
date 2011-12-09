@@ -2,11 +2,11 @@ require 'spec_helper'
 
 describe Business do
 
-  def set_hours(hour, min)
+  def time_hm(hour, min)
     Time.utc(1970, 1, 1, hour, min)
   end
 
-  let(:business) { b = Business.make(:oswego_cafe, :user=>nil); b.set_default_hours; b }
+  let(:business) { Business.make(:oswego_cafe, :user=>nil) }
   subject { business }
 
   it { should respond_to :sunday_hours }
@@ -19,13 +19,13 @@ describe Business do
 
   context "has daily hours" do
     its(:sunday_hours) { should == {:from=>nil, :to=>nil, :open=>false} }
-    its(:monday_hours) { should == {:from=>set_hours(9, 0), :to=>set_hours(17, 0), :open=>true} }
+    its(:monday_hours) { should == {:from=>time_hm(9, 0), :to=>time_hm(17, 0), :open=>true} }
   end
 
   context "can return 'to' and from' time elements for a given day" do
-    its(:monday_hours_from) { should == Time.utc(1970, 1, 1, 9, 0) }
+    its(:monday_hours_from) { should == time_hm(9, 0) }
     its(:monday_hours_from_ampm) { should == "am" }
-    its(:saturday_hours_to) { should == Time.utc(1970, 1, 1, 17, 0) }
+    its(:saturday_hours_to) { should == time_hm(17, 0) }
     its(:saturday_hours_to_ampm) { should == "pm" }
   end
 
@@ -37,8 +37,8 @@ describe Business do
   context "with hours set up" do
 
     it "can set hours on day" do
-      business.monday_hours_from={'hour'=>"05", 'min'=>'12', 'ampm'=> 'am'}
-      business.monday_hours_from.should == Time.utc(1970, 1, 1, 5, 12)
+      business.monday_hours_from = {'hour'=>"05", 'min'=>'12', 'ampm'=> 'am'}
+      business.monday_hours_from.should == time_hm(5, 12)
     end
 
     it "can set closed on day" do
@@ -51,8 +51,8 @@ describe Business do
     let(:business) { Business.new }
 
     it "can set hours on day" do
-      business.monday_hours_from={'hour'=>"05", 'min'=>'12', 'ampm'=> 'am'}
-      business.monday_hours_from.should == Time.utc(1970, 1, 1, 5, 12)
+      business.monday_hours_from = {'hour'=>"05", 'min'=>'12', 'ampm'=> 'am'}
+      business.monday_hours_from.should == time_hm(5, 12)
     end
 
     it "can set closed on day" do
@@ -103,7 +103,7 @@ describe Business do
     business.set_default_hours
     business.save
     business.monday_hours_open.should == true
-    business.monday_hours_from.should == Time.utc(1970, 1, 1, 9, 0)
+    business.monday_hours_from.should == time_hm(9, 0)
     business.sunday_hours_open.should == false
   end
 end
