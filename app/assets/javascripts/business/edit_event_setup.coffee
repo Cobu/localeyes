@@ -56,12 +56,12 @@ $(document).ready( ->
     if (recur_value != "once")
       edit_type = if method == 'put' then 'Edit' else 'Delete'
       $('.affecting .text').html("This #{edit_type} will affect:")
+      console.log('opening affecting dialogue')
       $('.affecting').dialog(
         modal:true
         title: "Confirm #{edit_type}"
         resizable: false
         closeOnEscape: false
-        close: -> $('#affecting').dialog('destroy')
       )
       return false
   )

@@ -1,8 +1,5 @@
 $(document).ready( ->
 
-  # hide this affecting dialog to start
-  $('.affecting').hide()
-
   #set up date picker and button sets
   $('#event_start_date').datepicker({ minDate: new Date() })
   $('#event_end_date').datepicker({ minDate: new Date() })

@@ -32,9 +32,13 @@ $(document).ready( ->
         width:375,
         height:435,
         closeOnEscape: false,
-        # need to enable the select again after modal is closed
-        # this is should not be needed ...
-        close: -> $('select#business_id').attr( 'disabled', false)
+        close: ->
+          # hack .. can't seem to get rid of these '.affecting' dialogs/divs
+          # in the dialog close event.
+          $('.affecting').remove()
+          # hack ...need to enable the select again after modal is closed
+          # this is should not be needed ...
+          $('select#business_id').attr( 'disabled', false)
       })
     )
 

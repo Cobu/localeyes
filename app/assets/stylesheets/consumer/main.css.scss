@@ -43,7 +43,20 @@ a.ui-corner-all {
      display:inline-block;
      width:41%;
      div { margin-left:40px; display:inline-block; }
-     padding-bottom : 10px
+     padding-bottom: 10px;
+
+     .section {
+       margin-left:10px;
+       margin-top:5px;
+       width:100px;
+       .item {
+         margin:0px;
+         width:70%;
+       }
+     }
+     .two {
+       width:75px;
+     }
   }
 
   .search {

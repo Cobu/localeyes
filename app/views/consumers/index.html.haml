@@ -2,19 +2,20 @@
 #content.consumer
   .header
     .filter
-      %div
-        Cafe
+      .section
+        .item
+          Cafe
         =check_box_tag :service_type_cafe, 0
-        %br
-        Restaurant
+        .item
+          Restaurant
         =check_box_tag :service_type_restaurant, 1
-      %div
-        %br
-        Bar
+      .section.two
+        .item
+          Bar
         =check_box_tag :service_type_bar, 2
-        Retail
+        .item
+          Retail
         =check_box_tag :service_type_retail, 3
-        %br
         - if current_user
           Favorites
           =check_box_tag :filtering_favorites, false

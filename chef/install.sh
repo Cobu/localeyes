@@ -15,11 +15,11 @@ if ! test -f "$chef_binary"; then
 
     apt-get -y install build-essential g++ libruby1.8 ruby1.8 libreadline5-dev zlib1g-dev libssl-dev libxml2-dev libxslt1-dev &&
 
-    if ! test -f ruby-1.9.2-p290.tar.gz; then
-        wget http://ftp.ruby-lang.org/pub/ruby/1.9/ruby-1.9.2-p290.tar.gz
+    if ! test -f ruby-1.9.3-p0.tar.gz; then
+        wget http://ftp.ruby-lang.org/pub/ruby/1.9/ruby-1.9.3-p0.tar.gz
     fi &&
-    tar zxf ruby-1.9.2-p290.tar.gz &&
-    cd ruby-1.9.2-p290 &&
+    tar zxf ruby-1.9.3-p0.tar.gz &&
+    cd ruby-1.9.3-p0 &&
     ./configure --with-baseruby=/usr/bin/ruby1.8 &&
     make clean &&
     make &&

@@ -18,7 +18,8 @@ class ConsumersController < ApplicationController
     start_date = Time.zone.parse(params[:time])
     end_date = Time.now.utc + 7.days
     center = find_center
-    businesses = Business.where(:zip_code=>params[:zip_code])
+    zip_code = ZipCode.find(zip_code: params[:zip_code])
+    businesses = Business.near(zip_code)
     events = businesses.collect(&:events).flatten
     events = events.collect { |e| e.consumer_events(start_date, end_date) }.flatten
     favorites = current_user.try(:favorites) || []
