@@ -1,14 +1,48 @@
 @import 'mixins';
 @import 'shared';
 
+
 .ui-autocomplete-loading {
-  background: white url('ui-anim_basic_16x16.gif') right center no-repeat;
+  background: white url(<%= asset_path 'ui-anim_basic_16x16.gif' %>) right center no-repeat;
 }
 
 a.ui-corner-all {
   font-size:12px !important;
   font-family:Arial;
 }
+
+#wrapper.home {
+  background: url(<%= asset_path 'downtown_new_paltz.jpg' %>) no-repeat 50% 80% fixed;
+  width: 100%;
+  height:100%;
+  position: absolute;
+  top:0;
+  left:0;
+
+  #content.home {
+    position:relative;
+    z-index:1;
+    margin: 100px auto;
+    width:380px;
+    height:300px;
+    color:black;
+    text-align:center;
+    background-color: #cccccc;
+    border: 1px solid #666666;
+    @include rounded(10px);
+
+    .search {
+      margin-top:30px;
+      input {
+        height: 24px;
+        width:200px;
+      }
+    }
+  }
+
+}
+
+
 
 .event_list_header {
   @include text_inset;
@@ -28,7 +62,7 @@ a.ui-corner-all {
   -webkit-border-top-left-radius: 8px;
 }
 
-#content.consumer {
+#content.consumer_events {
   width:930px;
 
   .header {
@@ -57,25 +91,6 @@ a.ui-corner-all {
      .two {
        width:75px;
      }
-  }
-
-  .search {
-    vertical-align:bottom;
-    display:inline-block;
-    font-size:12px;
-    width:auto;
-    text-align:right;
-    padding-left:30px;
-
-    input#search_location {
-      @include rounded(12px);
-      height: 24px;
-      width:360px;
-
-      padding-left:25px;
-      background: url("data:image/png;charset=utf-8;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAK8AAACvABQqw0mAAAABx0RVh0U29mdHdhcmUAQWRvYmUgRmlyZXdvcmtzIENTM5jWRgMAAAFlSURBVCiRbY/NqqpgFIYfjxLiyEFCfyDZpElFRF5Pt1A3FN1BNyEqRATfSFAo+keCmuQn5PEMDsXZe59nuJ718q6lANxutzIMQ4QQ7HY7bNum1+vhui7ValXhH7Q0TcvlckkQBJ9hHMfEcczpdCJN09KyrE9IC8OQIAhot9uMRiM6nQ5JkrBarQjDkFqtxpcGIQQA4/EY13WpVCpYloWqqmy3W97+za/9fg/AYDDAMAx0XccwDPr9PgBv/wm0Wi0AoihC07S/tZpGFEUAvP0n0O12AfA8D9/3ybIM3/fxPA8Ax3G+/jAcDrler6zXa5Ik4TtCCO73e2mapgKgSCnLw+HAZrMhiiKOxyPNZhPHcRBCkKYp9Xqd2WyGaZqKAiClLLMsI89zXq8XmqahqiqPx4PFYsHlcqHRaDCdTtEAdF1XftwCPJ/PcjKZMJ/PkVIipeS/i2+KolDyPP99Pp8pigLbtvkDMDKl6nkCE08AAAAASUVORK5CYII=") 2% 60% no-repeat;
-      outline:none;
-    }
   }
 
 }

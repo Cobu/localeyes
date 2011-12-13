@@ -9,7 +9,6 @@ class Business < ActiveRecord::Base
   before_create :geocode, :unless => -> { lat.present? and lng.present? }
 
   before_validation :set_phone_number
-  before_save :check_open_hours
 
   before_create :set_default_hours
 
@@ -26,18 +25,13 @@ class Business < ActiveRecord::Base
 
   def set_default_hours
     return unless hours.blank?
+
     nine_am = Time.utc(1970, 1, 1, 9, 00)
     five_pm = Time.utc(1970, 1, 1, 17, 00)
     (1..6).each do |num|
       self.hours[num] = {:from=>nine_am, :to=>five_pm, :open=>true} # monday to saturday
     end
     self.hours[0] = {:from=>nil, :to=>nil, :open=>false} #HOURS_CLOSED.dup # sunday
-  end
-
-  def check_open_hours
-    Date::DAYNAMES.size.times do |day_index|
-      set_blank_hours(day_index) unless self.hours[day_index].try(:[], :open)
-    end
   end
 
   attr_writer :phone_first3, :phone_second3, :phone_last4

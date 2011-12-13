@@ -6,11 +6,15 @@ describe Business do
 
   describe "create" do
 
-
-    it "succeeds and takes you to calendar page" do
+    before do
       login_business_user user
       visit new_business_path
+    end
+
+    it "succeeds and takes you to calendar page" do
+
       b = Business.make(:oswego_cafe)
+
       within "form" do
         fill_in 'business_name', with: b.name
         fill_in 'business_description', with: b.description
@@ -26,7 +30,7 @@ describe Business do
         select "15", from: 'business_monday_hours_from_min'
         select "pm", from: 'business_monday_hours_from_ampm'
         select "2", from: 'business_saturday_hours_to_hour'
-        select "22", from: 'business_saturday_hours_to_min'
+        select "30", from: 'business_saturday_hours_to_min'
         select "am", from: 'business_saturday_hours_to_ampm'
         click_on "Create Business"
       end
@@ -42,7 +46,7 @@ describe Business do
       bnew.zip_code.should == b.zip_code
       bnew.phone.should == b.phone
       bnew.monday_hours[:from].should == Time.utc(1970, 1, 1, 17, 15)
-      bnew.saturday_hours[:to].should == Time.utc(1970, 1, 1, 2, 22)
+      bnew.saturday_hours[:to].should == Time.utc(1970, 1, 1, 2, 30)
       # the tuesday hours should have been set by default in controller new action
       bnew.tuesday_hours[:from].should == Time.utc(1970, 1, 1, 9, 0)
       bnew.tuesday_hours[:to].should == Time.utc(1970, 1, 1, 17, 0)
@@ -51,8 +55,7 @@ describe Business do
     end
 
     it "fails and keeps you on create page" do
-      login_business_user user
-      visit new_business_path
+
       b = Business.new(:name=>"yo cafe")
 
       within "form" do
@@ -66,26 +69,28 @@ describe Business do
 
   describe "edit" do
 
-    def login_business_user(business)
-      any_instance_of(ApplicationController, current_business_user: business.user, current_business: business )
-    end
+    #def login_business_user(business)
+    #  any_instance_of(ApplicationController, current_business_user: business.user, current_business: business )
+    #end
 
     let(:business) { Business.make!(:oswego_cafe) }
 
     before(:each) do
-      login_business_user(business)
-      visit edit_business_path(business)
+      login_business_user business.user
+      visit edit_business_path business
     end
 
     it "succeeds and takes you to calendar page" do
-      b = Business.make(:name=>"yo cafe",
-                        :description=>"fun cafe",
-                        :address=>"moo lane",
-                        :city=>"Westport",
-                        :state=>"CT",
-                        :zip_code=>"06880",
-                        :service_type=>2, # Bar
-                        :phone=>"9001112222")
+      b = business
+      p b
+      #Business.make!(:name=>"yo cafe",
+      #                  :description=>"fun cafe",
+      #                  :address=>"moo lane",
+      #                  :city=>"Westport",
+      #                  :state=>"CT",
+      #                  :zip_code=>"06880",
+      #                  :service_type=>2, # Bar
+      #                  :phone=>"9001112222")
 
       within "form.edit_business" do
         fill_in 'business_name', with: b.name
@@ -102,7 +107,7 @@ describe Business do
         select "15", from: 'business_monday_hours_from_min'
         select "pm", from: 'business_monday_hours_from_ampm'
         select "2", from: 'business_saturday_hours_to_hour'
-        select "22", from: 'business_saturday_hours_to_min'
+        select "45", from: 'business_saturday_hours_to_min'
         select "am", from: 'business_saturday_hours_to_ampm'
         uncheck "business_tuesday_hours_open" # change from open to closed
         click_on "Update Business"
@@ -119,7 +124,7 @@ describe Business do
       bnew.zip_code.should == b.zip_code
       bnew.phone.should == b.phone
       bnew.monday_hours[:from].should == Time.utc(1970, 1, 1, 17, 15)
-      bnew.saturday_hours[:to].should == Time.utc(1970, 1, 1, 2, 22)
+      bnew.saturday_hours[:to].should == Time.utc(1970, 1, 1, 2, 45)
       bnew.tuesday_hours[:open].should == false
       bnew.tuesday_hours[:from].should == nil
 

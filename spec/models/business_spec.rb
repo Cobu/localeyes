@@ -6,7 +6,7 @@ describe Business do
     Time.utc(1970, 1, 1, hour, min)
   end
 
-  let(:business) { Business.make(:oswego_cafe, :user=>nil) }
+  let(:business) { b = Business.make(:oswego_cafe, :user=>nil); b.set_default_hours; b }
   subject { business }
 
   it { should respond_to :sunday_hours }
@@ -98,12 +98,11 @@ describe Business do
     end
   end
 
-  it "sets default hours, saves and keeps the hours" do
-    business = Business.make(:oswego_cafe)
-    business.set_default_hours
-    business.save
+  it "before create sets default hours" do
+    business = Business.make!(:oswego_cafe)
     business.monday_hours_open.should == true
     business.monday_hours_from.should == time_hm(9, 0)
     business.sunday_hours_open.should == false
   end
+
 end

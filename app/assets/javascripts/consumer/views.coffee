@@ -48,10 +48,12 @@ $(document).ready( ->
 
   ############  Event view #############
   window.EventView = Backbone.View.extend(
-    template: Handlebars.compile($( '#event_template' ).html())
+    template: null
     tagName: 'li'
 
-    initialize: (@event)-> this.render()
+    initialize: (@event)->
+      @template = Handlebars.compile($( '#event_template' ).html())
+      this.render()
 
     showBusiness: ->
       elem = this.el
@@ -77,9 +79,10 @@ $(document).ready( ->
   ############  EventList view #############
   window.EventListView = Backbone.View.extend({
     el: $( '#event_list' )
-    day_header_template: Handlebars.compile($( '#day_header_template' ).html())
+    day_header_template: null
 
     initialize: (@event_list)->
+      @day_header_template= Handlebars.compile($( '#day_header_template' ).html())
       if @event_list
         this.render()
       else

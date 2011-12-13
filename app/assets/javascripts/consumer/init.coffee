@@ -1,4 +1,5 @@
 $(document).ready( ->
+  return unless $('#content.consumer_events')[0]
 
   window.business_list = new BusinessList([])
   window.event_list = new EventList([])

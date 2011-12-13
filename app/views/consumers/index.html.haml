@@ -1,5 +1,5 @@
 = render :partial => 'event_templates'
-#content.consumer
+#content.consumer_events
   .header
     .filter
       .section
@@ -22,7 +22,7 @@
         %br
     .search
       =label_tag "location", 'Location'
-      =text_field_tag :search_location, '', :placeholder=>'City, State, Zip or College'
+      =text_field_tag :location_search, '', :placeholder=>'City, State, Zip or College'
 
   #event_list_container
     .event_list_header

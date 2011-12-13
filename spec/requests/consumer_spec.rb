@@ -13,7 +13,7 @@ describe "Consumer User" do
     login_user(user)
     visit consumers_path
 
-    fill_in "search_location", :with=> 'Suny'
+    fill_in "location_search", :with=> 'Suny'
     find(:css, '.ui-menu-item .ui-corner-all:contains("SUNY College at Oswego Oswego, NY 13126")').should be_present
   end
 
@@ -35,7 +35,7 @@ describe "Consumer User" do
                   :end_time => now.change(:min => 0, :sec => 0).advance(:hours => utc_offset_hours + 2),
                   :title=>"one times")
 
-      fill_in "search_location", :with=> 'Oswego'
+      fill_in "location_search", :with=> 'Oswego'
 
       find(:css, '.ui-menu-item .ui-corner-all:contains("Oswego, NY 13126")').click
 

@@ -34,6 +34,7 @@ class window.MapView
 
   setMarkers: (map, markerBounds) ->
     _.each( @collection.models, (business) ->
+      business.clearMarker()
       if window.filter.match(business)
         business.setMarker(map, markerBounds)
     )

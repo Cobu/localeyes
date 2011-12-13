@@ -44,7 +44,7 @@
             .hours
               = f.select "#{hour_method}_#{type}_hour", (0..12).zip(('00'..'12')), {}, name: "business[#{hour_method}_#{type}[hour]]"
             .minutes
-              = f.select "#{hour_method}_#{type}_min", ('00'..'60'), {}, name: "business[#{hour_method}_#{type}[min]]"
+              = f.select "#{hour_method}_#{type}_min", ["00", "15", "30", "45"], {}, name: "business[#{hour_method}_#{type}[min]]"
             .ampm
               = f.select "#{hour_method}_#{type}_ampm", %w(am pm), {}, name: "business[#{hour_method}_#{type}[ampm]]"
             - if index == 0
