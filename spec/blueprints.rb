@@ -145,3 +145,24 @@ College.blueprint(:ithaca) {
   lat { 42.421081 }
   lng { -76.501278 }
 }
+
+
+#College.create(
+#  name: "Cornell University",
+#  address: "300 Day Hall",
+#  city: "Ithaca",
+#  state_short: "NY",
+#  zip_code: "14853",
+#  lat: 42.445448,
+#  lng: -76.482633
+#)
+#
+#College.create(
+#  name: "Ithaca College",
+#  address: "953 Danby Rd",
+#  city: "Ithaca",
+#  state_short: "NY",
+#  zip_code: "14850",
+#  lat: 42.421081,
+#  lng: -76.501278
+#)
