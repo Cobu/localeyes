@@ -22,14 +22,21 @@ $(document).ready( ->
   if $( "#college_search" )[0]
     $( "#college_search" ).autocomplete(
       source: (req,res)->
-        $.get('/consumers/search_college', {term: req.term}, (data)->
-          if _.isEmpty(data)
-            console.log('no data')
-          else
-            res(data)
+        $.get( '/consumers/search_college', {term: req.term}, (data)->
+          $( ".no_college_found" ).toggle(_.isEmpty(data))
+          res(data)
         )
       select: ( event, ui ) ->
         $( "#college_search" ).val( ui.item.label )
+
     )
 
+  $( '#notify_me' ).live( 'click', ->
+     email = $( '#notify_email' ).val()
+     college = $( '#college_search' ).val()
+     console.log( [email, college] )
+#    $.post('/consumers/notify', {email: email, college: college}, (data)->
+#
+#    )
+  )
 )

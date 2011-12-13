@@ -97,6 +97,15 @@ ZipCode.blueprint(:new_paltz) {
   lng { -74.087 }
 }
 
+ZipCode.blueprint(:ithaca) {
+  zip_code { "14853" }
+  city { "Ithaca" }
+  state { "New York" }
+  state_short { "NY" }
+  lat { 41.758 }
+  lng { -74.087 }
+}
+
 College.blueprint(:suny_oswego) {
   name { "SUNY College at Oswego" }
   address { "7060 State Route 104" }
@@ -115,4 +124,24 @@ College.blueprint(:suny_new_paltz) {
   zip_code { "12561" }
   lat { 41.738332 }
   lng { -74.090667 }
+}
+
+College.blueprint(:cornell) {
+  name { "Cornell University" }
+  address { "300 Day Hall" }
+  city { "Ithaca" }
+  state_short { "NY" }
+  zip_code { "14853" }
+  lat { 42.445448 }
+  lng { -76.482633 }
+}
+
+College.blueprint(:ithaca) {
+  name { "Ithaca College" }
+  address { "953 Danby Rd" }
+  city { "Ithaca" }
+  state_short { "NY" }
+  zip_code { "14850" }
+  lat { 42.421081 }
+  lng { -76.501278 }
 }

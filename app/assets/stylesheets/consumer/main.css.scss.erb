@@ -20,22 +20,42 @@ a.ui-corner-all {
   left:0;
 
   #content.home {
+    opacity:0.88;
     position:relative;
-    z-index:1;
     margin: 100px auto;
     width:380px;
     height:300px;
     color:black;
     text-align:center;
-    background-color: #cccccc;
+    background-color: black;
     border: 1px solid #666666;
     @include rounded(10px);
 
     .search {
       margin-top:30px;
       input {
+        background-color: white;
         height: 24px;
-        width:200px;
+        width:220px;
+      }
+    }
+
+    .no_college_found {
+      margin-top: 12px;
+      display:none;
+      color: white;
+      font-size:90%;
+
+      .text {
+        margin:4px auto;
+        width:310px;
+      }
+      #notify_email {
+        width:180px;
+        line-height:17px;
+      }
+      #notify_me {
+        line-height:17px;
       }
     }
   }

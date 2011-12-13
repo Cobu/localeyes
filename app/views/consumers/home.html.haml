@@ -1,6 +1,12 @@
 #wrapper.home
   #content.home
     .search
-      =text_field_tag :college_search, '', :placeholder=>'Search for your College'
-
+      =text_field_tag :college_search, '', :placeholder=>'Enter college name'
+    .no_college_found
+      .text
+        Can't find this college. Enter the full college name
+        and your email and we will notify you when the college is online.
+      %div
+        =text_field_tag :notify_email, '', :placeholder=>'Enter your email'
+        =button_tag('Notify Me',id: 'notify_me')
 
