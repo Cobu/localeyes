@@ -109,7 +109,7 @@ $(document).ready( ->
       )
   })
 
-
+  ############  Business view #############
   window.BusinessView = Backbone.View.extend(
     template: null
 
