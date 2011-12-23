@@ -7,5 +7,8 @@ $(document).ready( ->
   window.event_list_view = new EventListView( event_list )
   window.filter.setValues()
 
+  # if you are loading data while the page first shows
+  data = $('#content.consumer_events').data('events')
+  window.Events.refresh(data) if data and data.events
 )
 

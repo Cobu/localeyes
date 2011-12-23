@@ -4,4 +4,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-Cal::Application.load_tasks
+LocalEyes::Application.load_tasks

@@ -1,3 +1,5 @@
+%script{ src: "http://connect.facebook.net/en_US/all.js#appId=233282723386344&xfbml=1" }
+
 #wrapper.home
   #content.home
     .search
@@ -9,4 +11,10 @@
       %div
         =text_field_tag :notify_email, '', :placeholder=>'Enter your email'
         =button_tag('Notify Me',id: 'notify_me')
+    .college_found
+      .text
+        Sign in via facebook.
+      %div
+        #fb-root
+        %fb:registration{ :fields=> 'name,birthday,email', :'redirect-uri'=> "http://dev.localeyes.me/users/facebook_register" }
 

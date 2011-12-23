@@ -11,6 +11,92 @@ a.ui-corner-all {
   font-family:Arial;
 }
 
+#fbRegistrationWidgetTopmost { width:430px !important; }
+.fb_iframe_widget { width:430px !important; }
+iframe.fb_ltr { width:430px !important; }
+
+.location {
+  @extend .settings_div;
+
+  .search {
+    position:absolute;
+    top:0px;
+    left:110px;
+    z-index: 1000;
+    width: 420px;
+    display:none;
+
+    input {
+      background-color: white;
+      height: 24px;
+      width:340px;
+    }
+  }
+
+}
+
+.settings {
+  @extend .settings_div;
+
+  .filter {
+    position:absolute;
+    top:19px;
+    left:-18  px;
+    width:150px;
+    z-index: 1000;
+    border:1px solid gray;
+    background-color: #ccc;
+    padding:5px;
+    display:none;
+
+    div { display:inline-block; }
+
+    .group {
+      width:100%;
+      font-size:12px;
+      margin-top:5px;
+
+      .img {
+        vertical-align:middle;
+        img { width:18px; height:24px; }
+      }
+
+      .item {
+        text-align:left;
+        line-height:20px;
+        margin:2px 0px;
+        padding-left:10px;
+        width:51%;
+      }
+    }
+  }
+}
+
+.event_types {
+  @extend .settings_div;
+
+  .legend  {
+    position:absolute;
+    top:-35px;
+    left:-170px;
+    z-index: 1000;
+    width:350px;
+    font-size:12px;
+    display:none;
+
+    div { display:inline-block; }
+
+    .type {
+      margin: 0 10px;
+      .event_type, .special_type, .announcement_type {
+        width:15px;
+        height:15px;
+        border:1px solid black;
+      }
+    }
+  }
+}
+
 #wrapper.home {
   background: url(<%= asset_path 'downtown_new_paltz.jpg' %>) no-repeat 50% 80% fixed;
   width: 100%;
@@ -32,11 +118,11 @@ a.ui-corner-all {
     @include rounded(10px);
 
     .search {
-      margin-top:30px;
+      margin-top: 12px;
       input {
         background-color: white;
         height: 24px;
-        width:220px;
+        width:340px;
       }
     }
 
@@ -60,10 +146,17 @@ a.ui-corner-all {
         @include rounded(10px);
       }
     }
+
+    .college_found {
+      display:none;
+
+      .text {
+        color:white;
+      }
+    }
   }
 
 }
-
 
 
 .event_list_header {
@@ -84,37 +177,13 @@ a.ui-corner-all {
   -webkit-border-top-left-radius: 8px;
 }
 
+
 #content.consumer_events {
-  width:930px;
-
+  width:100%;
+  margin-top:20px;
   .header {
-    margin: 10px 0 20px 0;
-    border:1px sold black;
+    margin-left: 400px;
   }
-
-   .filter {
-     @include rounded(13px);
-     border:1px solid gray;
-     vertical-align:top;
-     display:inline-block;
-     width:41%;
-     div { margin-left:40px; display:inline-block; }
-     padding-bottom: 10px;
-
-     .section {
-       margin-left:10px;
-       margin-top:5px;
-       width:100px;
-       .item {
-         margin:0px;
-         width:70%;
-       }
-     }
-     .two {
-       width:80px;
-     }
-  }
-
 }
 
 .event_bar {
@@ -142,15 +211,17 @@ ul, li {
   width:375px;
   padding: 5px 0px 5px 5px;
 
-
   .info {
     width:67%;
     display:inline-block;
   }
 
-  .full {
-    width:100%;
+  .images {
+    cursor:pointer;
+    display:inline-block;
   }
+
+  .full { width:100%; }
 
   .description {
     display:none;
@@ -158,10 +229,6 @@ ul, li {
     width:90% !important;
   }
 
-  .images {
-    cursor:pointer;
-    display:inline-block;
-  }
 }
 
 #event_list_container {

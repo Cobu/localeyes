@@ -1,6 +1,8 @@
+
 User.blueprint {
   email { "u#{sn}@dude.com" }
   password { "moogoo" }
+  birthday { Date.parse("1980-10-29") }
 }
 
 User.blueprint(:dude) {
@@ -98,12 +100,12 @@ ZipCode.blueprint(:new_paltz) {
 }
 
 ZipCode.blueprint(:ithaca) {
-  zip_code { "14853" }
+  zip_code { "14850" }
   city { "Ithaca" }
   state { "New York" }
   state_short { "NY" }
-  lat { 41.758 }
-  lng { -74.087 }
+  lat { 42.48 }
+  lng { -76.47 }
 }
 
 College.blueprint(:suny_oswego) {
@@ -145,7 +147,6 @@ College.blueprint(:ithaca) {
   lat { 42.421081 }
   lng { -76.501278 }
 }
-
 
 #College.create(
 #  name: "Cornell University",

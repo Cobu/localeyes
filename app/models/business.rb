@@ -131,3 +131,4 @@ class Business < ActiveRecord::Base
     !!self.hours[day_index]
   end
 end
+

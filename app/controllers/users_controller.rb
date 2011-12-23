@@ -2,6 +2,7 @@ require Rails.root.join 'lib', 'facebook'
 
 class UsersController < ApplicationController
   before_filter :need_business_id, :only=>[:set_favorite, :unset_favorite]
+  skip_before_filter :verify_authenticity_token, :only => [:facebook_register]
 
   def login
     @user = User.new
@@ -22,9 +23,23 @@ class UsersController < ApplicationController
     head :ok
   end
 
-  def facebook
-    data = Facebook.decode_data(params[:signed_request])
-    Rails.logger.info data
+  def facebook_register
+    user_data = Facebook.decode_user_data(params[:signed_request])
+    p user_data
+    p session
+    head :error and return if user_data.blank? or session[:register_college].blank?
+    user_data[:college_id] = session.delete(:register_college)
+    user = User.find_by_email(user_data['email']) || User.create!(user_data)
+    p user
+    cookies.permanent.signed[:user] = user.id
+    session[:user_id] = user.id
+    redirect_to event_list_consumers_path
+  end
+
+  def register_college
+    college = College.find_by_name( params[:college] )
+    head :error and return unless college
+    session[:register_college] = college.id
     head :ok
   end
 

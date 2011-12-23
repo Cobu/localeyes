@@ -3,11 +3,15 @@ class Initial < ActiveRecord::Migration
     create_table "users", :force => true do |t|
       t.string :type
       t.string :email, :null => false
-      t.string :password_digest, :null => false
+      t.string :password_digest
       t.string :first_name
       t.string :last_name
+      t.date   :birthday
+      t.integer :college_id
       t.string :phone
     end
+
+    add_index "users", ["email"], :unique => true
 
     create_table "businesses", :force => true do |t|
       t.belongs_to :user, :null => false

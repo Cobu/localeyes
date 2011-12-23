@@ -56,13 +56,17 @@ ActiveRecord::Schema.define(:version => 20110813215827) do
   end
 
   create_table "users", :force => true do |t|
-    t.string "type"
-    t.string "email",           :null => false
-    t.string "password_digest", :null => false
-    t.string "first_name"
-    t.string "last_name"
-    t.string "phone"
+    t.integer "college_id"
+    t.string  "type"
+    t.string  "email",           :null => false
+    t.string  "password_digest"
+    t.string  "first_name"
+    t.string  "last_name"
+    t.date    "birthday"
+    t.string  "phone"
   end
+
+  add_index "users", ["email"], :name => "index_users_on_email", :unique => true
 
   create_table "zip_codes", :force => true do |t|
     t.string "city",                     :null => false

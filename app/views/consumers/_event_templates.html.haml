@@ -1,15 +1,15 @@
 - if current_user
   %script{:id=>"event_template", :type=>"text/x-handlebars-template"}
-    .event{ 'data-id'=>"{{attributes/id}}", :class=> "{{attributes/service_type}}" }
+    %li.event{ 'data-id'=>"{{attributes/id}}", :class=> "{{attributes/service_type}}" }
       .info
         %div
           {{businessName}}
         %div
           {{attributes/title}} {{startHour}}
-      .description
-        {{attributes/description}}
       .images
         {{{userFavoriteImage}}}
+      .description
+        {{attributes/description}}
 - else
   %script{:id=>"event_template", :type=>"text/x-handlebars-template"}
     %li.event{ 'data-id'=>"{{attributes/id}}", :class=> "{{attributes/service_type}}" }

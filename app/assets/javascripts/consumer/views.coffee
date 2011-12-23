@@ -65,9 +65,9 @@ $(document).ready( ->
           elem.find('.description').hide()
         )
         business_list.clearSelected() # to shrink the icon
-        return
-      business_list.setSelected(@event.business().get('id')) # to grow the icon
-      new BusinessView( this )
+      else
+        business_list.setSelected(@event.business().get('id')) # to grow the icon
+        new BusinessView( this )
 
     render: ->
       if @event != undefined
@@ -149,7 +149,8 @@ $(document).ready( ->
 
     setFilteringByFavorites : (bool)->
       Filter.filtering_favorites = bool
-      window.event_view.render()
+      window.event_list_view.render()
+      window.map_view.render()
 
     setFavorite : (business_id)->
       if _.include( Filter.userFavorites, business_id )
@@ -158,7 +159,7 @@ $(document).ready( ->
       else
         Filter.userFavorites.push(business_id)
         $.get('/users/set_favorite',{ b:business_id})
-      window.event_view.render()
+      window.event_list_view.render()
 
     match : (business)->
       if Filter.filtering_favorites then return false unless _.include( Filter.userFavorites, business.get('id') )
@@ -172,19 +173,4 @@ $(document).ready( ->
 
   window.filter = new window.Filter()
 
-
-  $('.filter input[name^=service_type]').live('click', (event)->
-    elem = $(event.currentTarget)
-    filter.setServiceType( elem.attr('id'), elem.prop('checked') )
-  )
-
-  $('input[name=filtering_favorites]').live('click', (event)->
-    elem = $(event.currentTarget)
-    filter.setFilteringByFavorites( elem.prop('checked') )
-  )
-
-  $('.images img[rel=favorite]').live('click', (event)->
-    elem = $(event.currentTarget)
-    filter.setFavorite( elem.data('busniess_id') )
-  )
 )

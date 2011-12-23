@@ -3,6 +3,26 @@ body {
 }
 
 
+#header {
+  height: 50px;
+  div { display:inline-block; }
+  .logo { width:70%; }
+}
+
+
+.settings_div {
+  position:relative;
+  display:inline-block;
+
+  .link {
+    cursor:pointer;
+    font-size:11px;
+    margin-left:20px;
+    text-decoration:underline;
+  }
+}
+
+
 /* for coloring the events of different type  */
 .event_type {
   background-color: #f2f2c8;
@@ -15,3 +35,4 @@ body {
 .announcement_type {
   background-color: #f2b8b8
 }
+

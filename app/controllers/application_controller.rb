@@ -31,4 +31,10 @@ class ApplicationController < ActionController::Base
     request.env["HTTP_USER_AGENT"] =~ /Mobil|webOS|BlackBerry/
   end
   helper_method :mobile_device?
+
+  def user_from_cookie
+    return if session[:user_id]
+    user_id = cookies.signed[:user] rescue nil
+    session[:user_id] = user_id
+  end
 end

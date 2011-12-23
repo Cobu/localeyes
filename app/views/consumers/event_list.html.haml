@@ -1,0 +1,71 @@
+= render :partial => 'event_templates'
+#content.consumer_events{ 'data-events'=> @data.to_json }
+
+  #event_list_container
+    .event_list_header
+      Upcoming Events
+      .event_types
+        .link
+          legend
+        .legend
+          .type
+            .event_type
+              &nbsp;
+            Events
+          .type
+            .announcement_type
+              &nbsp;
+            Announcements
+          .type
+            .special_type
+              &nbsp;
+            Specials
+
+      .settings
+        .link
+          filters
+        .filter
+          .group
+            .img
+              %img{ src: asset_path("/assets/cafe.png") }
+            .item
+              Cafe
+            =check_box_tag :service_type_cafe, 0
+          .group
+            .img
+              %img{ src: asset_path("/assets/restaurant.png") }
+            .item
+              Restaurant
+            =check_box_tag :service_type_restaurant, 1
+          .group
+            .img
+              %img{ src: asset_path("/assets/bar.png") }
+            .item
+              Bar
+            =check_box_tag :service_type_bar, 2
+          .group
+            .img
+            .item
+              Retail
+            =check_box_tag :service_type_retail, 3
+          - if current_user
+            .group
+              .img
+              .item
+                Favorites
+              =check_box_tag :filtering_favorites, false
+
+      .location
+        .link
+          location
+        .search
+          =text_field_tag :location_search, '', :placeholder=>'City, State, Zip or College'
+
+    #event_list_inner
+      #event_list
+
+  #map_canvas_container
+    #map_canvas
+
+
+

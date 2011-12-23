@@ -27,5 +27,8 @@ Event.make!(:daily, :business=>resto, :start_time => Time.utc(2011,now.month,1,1
 
 ZipCode.make!(:oswego)
 ZipCode.make!(:new_paltz)
+ZipCode.make!(:ithaca)
 College.make!(:suny_new_paltz)
 College.make!(:suny_oswego)
+College.make!(:ithaca)
+College.make!(:cornell)

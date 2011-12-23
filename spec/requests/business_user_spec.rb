@@ -4,8 +4,9 @@ describe "Business User" do
   let(:user) { BusinessUser.make }
 
   describe "creating profile" do
+    before {  visit new_business_user_path }
+
     it "with complete info takes you to create new busines page" do
-      visit new_business_user_path
       within "form" do
         fill_in 'business_user_email', with: user.email
         fill_in 'business_user_first_name', with: user.first_name
@@ -20,8 +21,6 @@ describe "Business User" do
     end
 
     it "with IN COMPLETE info keeps you on this page and shows errors" do
-      visit new_business_user_path
-
       within "form" do
         fill_in 'business_user_email', with: ''
         fill_in 'business_user_first_name', with: user.first_name

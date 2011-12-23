@@ -5,8 +5,8 @@ class College < ActiveRecord::Base
   before_create :geocode
 
   def full_address
-     [address, city, state_short, zip_code].compact.join(' ')
-   end
+    [address, city, state_short, zip_code].compact.join(' ')
+  end
 
   def as_json(options={})
     {label: "#{name} #{city}, #{state_short} #{zip_code}", zip_code: zip_code, type: :c, id: id}

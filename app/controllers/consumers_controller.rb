@@ -1,46 +1,44 @@
 class ConsumersController < ApplicationController
   layout  'consumer_application'
   #layout -> controller { mobile_device? ? false : 'consumer_application' }
+  before_filter :user_from_cookie, only: [:home, :events]
 
   def register
   end
 
-  def index
+  def event_list
+    @data = consumer_events(current_user.college) if current_user.try(:college)
   end
 
   def home
+    redirect_to event_list_consumers_path if current_user
   end
 
   def search_college
-    college_results = College.search(params[:term]).all
-    json = college_results.collect{|c| {label: c.name, id: c.id} }
-    render json: json
+    colleges = College.search(params[:term]).all
+    render json: colleges.collect{|c| {label: c.name, id: c.id} }
   end
 
   def search_location
-    college_results = College.search(params[:term]).all
-    zip_results = ZipCode.search(params[:term]).all
-    render :json => college_results + zip_results
+    colleges = College.search(params[:term]).all
+    zips = ZipCode.search(params[:term]).all
+    render json: colleges + zips
   end
 
   def events
-    start_date = Time.zone.parse(params[:time])
-    end_date = Time.now.utc + 7.days
-    center = find_center
-    zip_code = ZipCode.where(zip_code: params[:zip_code]).first
-    businesses = Business.near(zip_code)
-    events = businesses.collect(&:events).flatten
-    events = events.collect { |e| e.consumer_events(start_date, end_date) }.flatten
-    favorites = current_user.try(:favorites) || []
-    render :json=> { businesses: businesses, events: events, favorites: favorites, center: center }
+    center = (params[:t] == :z) ? ZipCode.find_by_id(params[:d]) : College.find_by_id(params[:d])
+    render :json=> consumer_events(center)
   end
 
   private
-  def find_center
-    if params[:t] == 'c'
-      College.get_center_info(params[:d])
-    else
-      ZipCode.get_center_info(params[:d])
-    end
+
+  def consumer_events(center)
+    start_date = Time.zone.parse(params[:time]) rescue Time.now.utc
+    end_date = Time.now.utc + 7.days
+    businesses = Business.near(center)
+    events = businesses.collect(&:events).flatten
+    events = events.collect { |e| e.consumer_events(start_date, end_date) }.flatten
+    favorites = current_user.try(:favorites) || []
+    { businesses: businesses, events: events, favorites: favorites, center: center.center_json }
   end
 end
