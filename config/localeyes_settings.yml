@@ -1,0 +1,11 @@
+test:
+  facebook_api_key:
+  facebook_secret:
+
+development:
+  facebook_api_key: '240287519364580'
+  facebook_secret: '8e5a81c5108c6d5502fe8a1f740ec3a1'
+
+staging:
+  facebook_api_key: '233282723386344'
+  facebook_secret: '9ae11cc1268aef75e9fe878c0d0b8fe3'

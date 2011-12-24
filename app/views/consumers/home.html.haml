@@ -1,7 +1,7 @@
 %script{ src: "http://connect.facebook.net/en_US/all.js#appId=233282723386344&xfbml=1" }
 
 #wrapper.home
-  #content.home
+  #content.home{ 'data-logged_in'=> current_user.present? }
     .search
       =text_field_tag :college_search, '', :placeholder=>'Enter college name'
     .no_college_found

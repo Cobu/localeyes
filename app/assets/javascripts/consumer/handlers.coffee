@@ -28,24 +28,38 @@ $(document).ready( ->
         return false
     )
 
+
   if $( "#college_search" )[0]
-    $( "#college_search" ).autocomplete(
-      source: (req,res)->
-        $.get( '/consumers/search_college', {term: req.term}, (data)->
-          $( ".no_college_found" ).toggle(_.isEmpty(data))
-          res(data)
-        )
-      select: ( event, ui ) ->
-        $( "#college_search" ).val( ui.item.label )
-        # register the college picked
-        $.ajax(
-          url: '/users/register_college',
-          type: 'post',
-          data: {college: ui.item.label},
-          success: (response)-> $( '.college_found' ).show(),
-          error: (response)-> alert('The college selected is not valid')
-        )
-    )
+    if $( '#content.home' ).data('logged_in')
+      $( "#college_search" ).autocomplete(
+        source: '/consumers/search_college'
+        select: ( event, ui ) ->
+          $( "#college_search" ).val( ui.item.label )
+          $.get(
+            url: '/consumers/event_list',
+            data: {college: ui.item.label},
+            success: (response)-> $( '.college_found' ).show(),
+            error: (response)-> alert('The college selected is not valid')
+          )
+      )
+    else
+      $( "#college_search" ).autocomplete(
+        source: (req,res)->
+          $.get( '/consumers/search_college', {term: req.term}, (data)->
+            $( ".no_college_found" ).toggle(_.isEmpty(data))
+            res(data)
+          )
+        select: ( event, ui ) ->
+          $( "#college_search" ).val( ui.item.label )
+          # register the college picked
+          $.ajax(
+            url: '/users/register_college',
+            type: 'post',
+            data: {college: ui.item.label},
+            success: (response)-> $( '.college_found' ).show(),
+            error: (response)-> alert('The college selected is not valid')
+          )
+      )
 
   $( '#notify_me' ).live( 'click', ->
     email = $( '#notify_email' ).val()
@@ -55,11 +69,11 @@ $(document).ready( ->
   )
 
   $( '.settings .link' ).live( 'click', (elem)->
-    $( '.settings .filter' ).toggle('slide', {direction: 'up'})
+    $( '.settings .filter' ).toggle('slide', {direction: 'left'})
   )
 
   $( '.location .link' ).live( 'click', (event)->
-    $( '.location .search' ).toggle('slide', {direction: 'left'})
+    $( '.location .search' ).toggle('slide', {direction: 'down'})
   )
 
  $( '.event_types .link' ).live( 'click', (event)->

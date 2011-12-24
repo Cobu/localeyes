@@ -22,6 +22,9 @@ gem 'geocoder'
 gem 'machinist', '>= 2.0.0.beta2'
 gem 'unicorn'
 gem 'draper'
+gem 'omniauth'
+gem 'omniauth-facebook'
+gem 'settingslogic'
 
 group :development, :test do
   gem "wirble"

@@ -18,19 +18,20 @@ LocalEyes::Application.routes.draw do
   end
   get :event_list, to: 'consumers#event_list', as: :event_list_consumers
 
-  resources :users, only: [:index,:new] do
+  resources :users, only: [:index, :new, :create] do
     collection do
-      get  :set_favorite
-      get  :unset_favorite
-       get  :register
-       post :facebook_register
-       post :register_college
-     end
+      get :set_favorite
+      get :unset_favorite
+      get :register
+      post :facebook_register
+      post :register_college
+    end
   end
+  match '/auth/:provider/callback', to: 'user#create'
 
-  resources :business_users, except: [:index,:show] do
+  resources :business_users, except: [:index, :show] do
     collection do
-      get  :login
+      get :login
       post :login_submit
     end
   end

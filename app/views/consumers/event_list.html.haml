@@ -1,6 +1,5 @@
 = render :partial => 'event_templates'
 #content.consumer_events{ 'data-events'=> @data.to_json }
-
   #event_list_container
     .event_list_header
       Upcoming Events
@@ -45,12 +44,14 @@
             =check_box_tag :service_type_bar, 2
           .group
             .img
+              %img{ src: asset_path("/assets/retail.png") }
             .item
               Retail
             =check_box_tag :service_type_retail, 3
           - if current_user
             .group
               .img
+                %img{ src: asset_path("/assets/empty.gif") }
               .item
                 Favorites
               =check_box_tag :filtering_favorites, false
@@ -63,6 +64,8 @@
 
     #event_list_inner
       #event_list
+
+  #center_div
 
   #map_canvas_container
     #map_canvas

@@ -53,7 +53,7 @@ window.Business = Backbone.Model.extend(
     scaleFactor = 1 if (scaleFactor == undefined)
     new google.maps.MarkerImage(
       "/assets/#{this.serviceName()}.png", null , null , null ,
-      new google.maps.Size(20*scaleFactor, 34*scaleFactor)
+      new google.maps.Size(20*scaleFactor, 30*scaleFactor)
     )
 )
 

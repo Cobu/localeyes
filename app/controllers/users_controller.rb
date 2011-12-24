@@ -23,10 +23,13 @@ class UsersController < ApplicationController
     head :ok
   end
 
+  def create
+
+  end
+
   def facebook_register
     user_data = Facebook.decode_user_data(params[:signed_request])
     p user_data
-    p session
     head :error and return if user_data.blank? or session[:register_college].blank?
     user_data[:college_id] = session.delete(:register_college)
     user = User.find_by_email(user_data['email']) || User.create!(user_data)
