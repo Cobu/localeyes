@@ -2,28 +2,6 @@
 @import 'shared';
 
 
-/*  Buttons */
-span.button, a.button, input.button{
-  color: white;
-  font-size:13px;
-  background-image: -webkit-gradient(
-    linear,
-    left bottom,
-    left top,
-    color-stop(0.34, rgb(10,75,136)),
-    color-stop(0.67, rgb(32,101,166))
-  );
-  background-image: -moz-linear-gradient(
-      center bottom,
-      rgb(32,101,166) 34%,
-      rgb(10,75,136) 67%
-  );
-  @include rounded(10px);
-  padding: 6px 10px;
-  text-align: center;
-  text-decoration:none;
-}
-
 .header {
   margin: 20px auto;
 }

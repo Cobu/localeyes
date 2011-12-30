@@ -7,11 +7,12 @@ class ConsumersController < ApplicationController
   end
 
   def event_list
-    @data = consumer_events(current_user.college) if current_user.try(:college)
+    if college = College.find_by_id(params[:college]) || current_user.try(:college)
+      @data = consumer_events(college)
+    end
   end
 
   def home
-    redirect_to event_list_consumers_path if current_user
   end
 
   def search_college
@@ -26,8 +27,13 @@ class ConsumersController < ApplicationController
   end
 
   def events
-    center = (params[:t] == :z) ? ZipCode.find_by_id(params[:d]) : College.find_by_id(params[:d])
+    center = (params[:t] == 'z') ? ZipCode.find_by_id(params[:d]) : College.find_by_id(params[:d])
     render :json=> consumer_events(center)
+  end
+
+  def notify
+    Notification.find_or_create_by_email_and_college(params[:email], params[:college])
+    head :ok
   end
 
   private

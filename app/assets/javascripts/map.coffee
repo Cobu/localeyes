@@ -13,8 +13,7 @@ class window.MapView
 
   constructor: (@collection, @center_point)->
     this.render()
-    map_view = this
-    @collection.bind('reset', -> map_view.render() )
+    @collection.bind('reset', => this.render() )
 
   prepareMap: ->
     return unless document.getElementById("map_canvas")

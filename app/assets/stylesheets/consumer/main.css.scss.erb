@@ -11,9 +11,18 @@ a.ui-corner-all {
   font-family:Arial;
 }
 
-#fbRegistrationWidgetTopmost { width:430px !important; }
-.fb_iframe_widget { width:430px !important; }
-iframe.fb_ltr { width:430px !important; }
+.facebook_login {
+  width:150px;
+  height:23px;
+  background: url(<%= asset_path 'facebook_signin.png' %>) 0 0;
+}
+
+.facebook_register { display:none; margin-top:10px }
+
+iframe.fb_ltr {
+  width:430px !important;
+  opacity:1;
+}
 
 .location {
   @extend .settings_div;
@@ -21,7 +30,7 @@ iframe.fb_ltr { width:430px !important; }
   .search {
     position:absolute;
     top:-40px;
-    left:105px;
+    left:100px;
     z-index: 1000;
     width: 420px;
     display:none;
@@ -111,7 +120,7 @@ iframe.fb_ltr { width:430px !important; }
     margin: 100px auto;
     width:450px;
     height:300px;
-    color:black;
+    color:red;
     text-align:center;
     background-color: black;
     border: 1px solid #666666;
@@ -149,9 +158,16 @@ iframe.fb_ltr { width:430px !important; }
 
     .college_found {
       display:none;
-
+      margin: 20px auto;
+      height: 30px;
       .text {
         color:white;
+      }
+      a.button { padding: 3px 10px; }
+      .link {
+        vertical-align:top;
+        display: inline-block;
+        margin: 0 10px !important;
       }
     }
   }
@@ -179,7 +195,7 @@ iframe.fb_ltr { width:430px !important; }
 
 
 #content.consumer_events {
-  width:84%;
+  width:85%;
   margin:20px auto;
   .header {
     margin-left: 400px;
@@ -232,15 +248,11 @@ ul, li {
 }
 
 #event_list_container {
+  margin-right:25px;
   width: 400px;
   height: 490px;
   vertical-align:top;
   display:inline-block;
-}
-
-#center_div {
-  display:inline-block;
-  width:20px;
 }
 
 #event_list {

@@ -1,4 +1,5 @@
-class Initial < ActiveRecord::Migration
+  class Initial < ActiveRecord::Migration
+
   def change
     create_table "users", :force => true do |t|
       t.string :type
@@ -7,8 +8,17 @@ class Initial < ActiveRecord::Migration
       t.string :first_name
       t.string :last_name
       t.date   :birthday
-      t.integer :college_id
       t.string :phone
+      t.integer :college_id
+      t.timestamps
+    end
+
+    create_table "authentications", :force => true do |t|
+      t.belongs_to :user, :null => false
+      t.string :provider, :null => false
+      t.string :auth_hash, :null => false
+      t.integer :uid, :null => false
+      t.datetime :created_at
     end
 
     add_index "users", ["email"], :unique => true
@@ -31,6 +41,7 @@ class Initial < ActiveRecord::Migration
       t.float :lat, :null => false
       t.float :lng, :null => false
       t.boolean :active
+      t.timestamps
     end
 
     create_table "events", :force => true do |t|
@@ -64,5 +75,11 @@ class Initial < ActiveRecord::Migration
     end
 
     add_index "zip_codes", ["zip_code"], :unique => true
+
+    create_table "notifications", :force => true do |t|
+      t.string :email, :null => false
+      t.string :college
+      t.datetime :created_at
+    end
   end
 end

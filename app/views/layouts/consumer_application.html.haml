@@ -7,6 +7,4 @@
     = javascript_include_tag "consumer/application"
     = csrf_meta_tags
   %body{:class=>"#{controller_name}_#{action_name}"}
-    #header
-      %img{ src: asset_path("localeyes_logo.png") }
     = yield

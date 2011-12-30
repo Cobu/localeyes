@@ -1,7 +1,8 @@
-%script{ src: "http://connect.facebook.net/en_US/all.js#appId=233282723386344&xfbml=1" }
+%script{ src: "http://connect.facebook.net/en_US/all.js#appId=#{LocalEyesSettings.facebook_api_key}&xfbml=1" }
 
 #wrapper.home
-  #content.home{ 'data-logged_in'=> current_user.present? }
+  = render :partial => 'layouts/header'
+  #content.home{ 'data-logged_in'=> current_user.present?.to_s }
     .search
       =text_field_tag :college_search, '', :placeholder=>'Enter college name'
     .no_college_found
@@ -10,11 +11,10 @@
         and your email and we will notify you when the college is online.
       %div
         =text_field_tag :notify_email, '', :placeholder=>'Enter your email'
-        =button_tag('Notify Me',id: 'notify_me')
+        =button_tag('Notify Me', id: 'notify_me')
     .college_found
-      .text
-        Sign in via facebook.
-      %div
+      .facebook_login.link
+      .facebook_register
         #fb-root
         %fb:registration{ :fields=> 'name,birthday,email', :'redirect-uri'=> "http://dev.localeyes.me/users/facebook_register" }
 

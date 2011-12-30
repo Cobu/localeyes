@@ -1,7 +1,9 @@
 %h1.inset User Sign in
 #content.users_login
-  = alert
   = form_for(@user, :url=> login_submit_users_path) do |f|
+    = f.error_messages :header_message => nil, :message=> "There were problems with the following fields highlighted below:"
+    %h2
+      Enter Your Login Information
     .field
       = f.label :email
       = f.text_field :email
@@ -9,4 +11,4 @@
       = f.label :password
       = f.password_field :password
 
-    = f.submit "Sign in", :id=>"log_in", :class=>"button"
+    = f.submit "Login", :id=>"log_in", :class=>"button"

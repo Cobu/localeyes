@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  belongs_to :college
 
   has_secure_password
   reset_callbacks(:validate)
@@ -10,7 +11,9 @@ class User < ActiveRecord::Base
   attr_writer :name
   before_create :split_name
 
-  belongs_to :college
+  def self.create_from_auth_info(info)
+
+  end
 
   def birthday=(birthday)
     # try parsing this format ( m/d/y ) to see if it works
