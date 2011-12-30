@@ -16,5 +16,5 @@
       .facebook_login.link
       .facebook_register
         #fb-root
-        %fb:registration{ :fields=> 'name,birthday,email', :'redirect-uri'=> "http://dev.localeyes.me/users/facebook_register" }
+        %fb:registration{ :fields=> 'name,birthday,email', :'redirect-uri'=> "http://#{request.host}/users/facebook_register" }
 
