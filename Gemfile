@@ -25,6 +25,7 @@ gem 'draper'
 gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'settingslogic'
+gem 'rvm'
 
 group :development, :test do
   gem "wirble"

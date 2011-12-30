@@ -2,6 +2,9 @@ set :default_stage, "staging"
 require 'capistrano/ext/multistage'
 require 'bundler/capistrano'
 
+require 'rvm/capistrano'
+set :rvm_ruby_string, 'ruby-1.9.3-p0@localeyes'
+
 set :application, "localeyes"
 set :repository,  "git@github.com:Cobu/localeyes.git"
 
