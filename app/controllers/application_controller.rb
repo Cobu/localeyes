@@ -35,6 +35,6 @@ class ApplicationController < ActionController::Base
   def user_from_cookie
     return if session[:user_id]
     user_id = cookies.signed[:user] rescue nil
-    session[:user_id] = user_id
+    session[:user_id] = user_id if user_id
   end
 end

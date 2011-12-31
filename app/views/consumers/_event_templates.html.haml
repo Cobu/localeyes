@@ -1,6 +1,8 @@
 - if current_user
   %script{:id=>"event_template", :type=>"text/x-handlebars-template"}
     %li.event{ 'data-id'=>"{{attributes/id}}", :class=> "{{attributes/service_type}}" }
+      .business_img
+        %img{ src: "{{businessImageName}}" }
       .info
         %div
           {{businessName}}
@@ -8,6 +10,8 @@
           {{attributes/title}} {{startHour}}
       .images
         {{{userFavoriteImage}}}
+        %img{ src: 'assets/thumbs-up.gif', width: '23px', 'data-id'=>"{{attributes/id}}", rel: 'vote', 'data-vote'=> "up"}
+        %img{ src: 'assets/thumbs-down.gif', width: '23px', 'data-id'=>"{{attributes/id}}", rel: 'vote', 'data-vote'=> "down" }
       .description
         {{attributes/description}}
 - else
@@ -16,6 +20,7 @@
       .info.full
         %div
           {{businessName}}
+          %img{ src: "{{businessImageName}}", width: '23px' }
         %div
           {{attributes/title}} {{startHour}}
       .description.full

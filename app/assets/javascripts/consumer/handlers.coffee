@@ -42,12 +42,14 @@ $(document).ready( ->
         source: (req,res)->
           $.get( '/consumers/search_college', {term: req.term}, (data)->
             $( ".no_college_found" ).toggle(_.isEmpty(data))
-            $( '.college_found' ).toggle(!_.isEmpty(data))
+            $( '.no_college_found .notice' ).html('')
+            $( '.college_found' ).hide()
             $( '.facebook_register' ).hide()
             res(data)
           )
         select: ( event, ui ) ->
           $( "#college_search" ).val( ui.item.label )
+          $( '.college_found' ).show()
           # register the college picked
           $.ajax(
             url: '/users/register_college',
@@ -61,7 +63,9 @@ $(document).ready( ->
   $( '#notify_me' ).live( 'click', ->
     email = $( '#notify_email' ).val()
     college = $( '#college_search' ).val()
-    $.post('/consumers/notify', {email: email, college: college} )
+    $.post('/consumers/notify', {email: email, college: college}, ->
+      $( '.notice' ).html("Done. When the college '#{college}' is available we will notify you at '#{email}'")
+    )
   )
 
   $( '.settings .link' ).live( 'click', (elem)->

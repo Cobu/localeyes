@@ -32,7 +32,9 @@ class ConsumersController < ApplicationController
   end
 
   def notify
-    Notification.find_or_create_by_email_and_college(params[:email], params[:college])
+    if params[:college].present? and params[:email].present?
+      Notification.find_or_create_by_email_and_college(params[:email], params[:college])
+    end
     head :ok
   end
 

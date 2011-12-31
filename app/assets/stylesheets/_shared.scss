@@ -4,14 +4,11 @@ body {
 }
 
 #header {
-  width:100%;
-  background-color:white;
+  width: 900;
   height: 50px;
+  margin: 0 auto;
+  background-color:white;
   div { display:inline-block; }
-  a { width:70% }
-  img.logo {
-    z-index:1000
-  }
 }
 
 .settings_div {
@@ -56,7 +53,7 @@ span.button, a.button, input.button{
 }
 
 .special_type {
-  background-color: #d9ddd9
+  background-color: #b6fab6
 }
 
 .announcement_type {

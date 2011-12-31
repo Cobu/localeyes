@@ -5,9 +5,16 @@ window.Event = Backbone.Model.extend({
   startHour: -> Date.parse(this.get('start')).toString("h:mm tt")
   business: -> business_list.get(this.get('business_id'))
   businessName: -> this.business().get('name')
+  businessImageName: -> this.business().imageName()
   userFavoriteImage: ->
     prefix = if _.include( Filter.userFavorites, this.get('business_id') ) then '' else 'un'
     "<img src='assets/fav_#{prefix}selected.gif' width='20px' data-busniess_id='#{this.get('business_id')}' rel='favorite'/>"
+  thunbsUpImage: ->
+#    prefix = if _.include( Filter.userFavorites, this.get('business_id') ) then '' else 'un'
+    "<img src='assets/thumbs-up.gif' width='23px' data-busniess_id='#{this.get('business_id')}' rel='vote'/>"
+  thunbsDownImage: ->
+#    prefix = if _.include( Filter.userFavorites, this.get('business_id') ) then '' else 'un'
+    "<img src='assets/thumbs-down.gif' width='23px' data-busniess_id='#{this.get('business_id')}' rel='vote'/>"
 })
 
 ############  EventList Collection #############
@@ -26,6 +33,8 @@ window.Business = Backbone.Model.extend(
   serviceName: ->
     return '' unless _.isNumber(this.get('service_type'))
     @service_type_names[this.get('service_type')].toLowerCase()
+
+  imageName: -> "/assets/#{this.serviceName()}.png"
 
   renderHours: (item)-> window.hours_template(item)
 
@@ -52,7 +61,7 @@ window.Business = Backbone.Model.extend(
   makeIcon: (scaleFactor)->
     scaleFactor = 1 if (scaleFactor == undefined)
     new google.maps.MarkerImage(
-      "/assets/#{this.serviceName()}.png", null , null , null ,
+      this.imageName(), null , null , null ,
       new google.maps.Size(20*scaleFactor, 30*scaleFactor)
     )
 )

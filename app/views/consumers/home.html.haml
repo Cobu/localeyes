@@ -1,10 +1,12 @@
 %script{ src: "http://connect.facebook.net/en_US/all.js#appId=#{LocalEyesSettings.facebook_api_key}&xfbml=1" }
 
 #wrapper.home
-  = render :partial => 'layouts/header'
   #content.home{ 'data-logged_in'=> current_user.present?.to_s }
+    .top_blurb
+      Welcome to LocalEyes
     .search
-      =text_field_tag :college_search, '', :placeholder=>'Enter college name'
+      .text
+      =text_field_tag :college_search, '', :placeholder=>'Enter college name and search for your college'
     .no_college_found
       .text
         Can't find this college. Enter the full college name
@@ -12,7 +14,9 @@
       %div
         =text_field_tag :notify_email, '', :placeholder=>'Enter your email'
         =button_tag('Notify Me', id: 'notify_me')
+      .notice
     .college_found
+      Log in using your Facebook account.
       .facebook_login.link
       .facebook_register
         #fb-root
