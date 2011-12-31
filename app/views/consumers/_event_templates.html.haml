@@ -17,10 +17,11 @@
 - else
   %script{:id=>"event_template", :type=>"text/x-handlebars-template"}
     %li.event{ 'data-id'=>"{{attributes/id}}", :class=> "{{attributes/service_type}}" }
+      .business_img
+        %img{ src: "{{businessImageName}}" }
       .info.full
         %div
           {{businessName}}
-          %img{ src: "{{businessImageName}}", width: '23px' }
         %div
           {{attributes/title}} {{startHour}}
       .description.full
