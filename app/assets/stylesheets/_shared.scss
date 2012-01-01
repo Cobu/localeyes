@@ -46,17 +46,33 @@ span.button, a.button, input.button{
   text-decoration:none;
 }
 
+input.button {
+  padding: 4px 10px;
+}
 
 /* for coloring the events of different type  */
+$event_color: #f2f2c8;
+$special_color: #b6fab6;
+$announcement_color: #f2b8b8;
+
 .event_type {
-  background-color: #f2f2c8;
+  background-color: $event_color;
+  span, div {
+    background-color: $event_color;
+  }
 }
 
 .special_type {
-  background-color: #b6fab6
+  background-color: $special_color;
+  span, div {
+    background-color: $special_color;
+  }
 }
 
 .announcement_type {
-  background-color: #f2b8b8
+  background-color: $announcement_color;
+  span, div {
+    background-color: $announcement_color
+  }
 }
 

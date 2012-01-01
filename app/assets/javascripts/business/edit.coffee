@@ -4,7 +4,9 @@ $(document).ready( ->
   business_json = $('#business_data').data('info')
   business = new window.Business(business_json)
   window.map_view = new SingleZoomMapView(business)
-  window.map_view.render() if business.get('id')
+  if business.get('id')
+    window.map_view.render()
+    $('#geo_lookup_button').hide()
 
   resetCoordinates = (geo_lookup_type)->
     address_arr = _.compact(_.map(['address', 'city', 'state', 'zip_code'], (field)->
@@ -13,7 +15,7 @@ $(document).ready( ->
 
     unless address_arr.length == 4
       alert( "need to have a full address set first")
-      return
+      return false
 
     geo_lookup_type = $('#geo_lookup_id').val()
     address = address_arr.join(' ')
@@ -26,5 +28,5 @@ $(document).ready( ->
     )
 
   $('#geo_lookup_id').live('change', -> resetCoordinates() )
-  $('#geo_lookup_button').live('click', -> resetCoordinates() )
+  $('#geo_lookup_button').live('click', -> $(this).hide() if resetCoordinates() )
 )

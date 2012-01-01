@@ -1,4 +1,4 @@
-#wrapper
+#wrapper.business_edit
   = form_for(@business) do |f|
     .error_messages
       = f.error_messages if @business.errors
@@ -9,7 +9,7 @@
       .field
         = f.select :service_type, Business::SERVICE_TYPE_NAMES.zip(Business::SERVICE_TYPES)
       .field
-        = f.text_field :description
+        = f.text_field :description, :placeholder => 'Business Description'
     %div
       .field
         = f.text_field :address, :placeholder => 'Street Address'
@@ -28,12 +28,7 @@
         -
         = f.text_field :phone_last4
       .field
-        = f.text_field :url, placeholder: 'home page'
-      %br
-      .field
-        Map Location with:
-        = select(:geo_lookup, :id, [:google, :yahoo,  :geocoder_ca].collect{|l| [l.to_s, l]}, :selected=> Geocoder::Configuration.lookup)
-        = button_tag :go, type: :button, id: :geo_lookup_button
+        = f.text_field :url, placeholder: 'Home Page Url'
     .open_times
       - Date::DAYNAMES.each_with_index do |dayname,day_index|
         - hour_method = "#{dayname.downcase}_hours"
@@ -52,11 +47,15 @@
             - else
               = f.check_box "#{hour_method}_open", name: "business[#{hour_method}_open]"
               Open
-    %br
-    %center
-      = f.submit
+    .buttons
+      = f.submit 'Save', class: :button
+      = link_to 'Cancel', business_path(current_business), class: :button
 
   #map_canvas_container
+    .field.map_location
+      Map Location with:
+      = select(:geo_lookup, :id, [:google, :yahoo,  :geocoder_ca].collect{|l| [l.to_s, l]}, :selected=> Geocoder::Configuration.lookup)
+      = button_tag :go, type: :button, id: :geo_lookup_button
     #map_canvas
 
 

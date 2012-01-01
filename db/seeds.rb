@@ -33,18 +33,3 @@ College.make!(:suny_oswego)
 College.make!(:ithaca)
 College.make!(:cornell)
 
-
-
-
-#Oswego Sub Shop
-#Free Cheeseburger Subs! 5:00 PM
-#Bring a receipt from Greene's and get a Free Cheeseburger Sub with your order over $10
-#
-# service_type: 1
-# address: "106 West Bridge Street",
-# city: "Oswego", state: "NY", zip_code: "13126", phone: "3153431233",
-#  hours: [{:from=>1970-01-01 11:00:00 UTC, :to=>1970-01-01 22:00:00 UTC, :open=>true},
-#    {:from=>1970-01-01 11:00:00 UTC, :to=>1970-01-01 02:00:00 UTC, :open=>true},
-#    {:from=>1970-01-01 11:00:00 UTC, :to=>1970-01-01 02:00:00 UTC, :open=>true},
-#    {:from=>1970-01-01 11:00:00 UTC, :to=>1970-01-01 02:00:00 UTC, :open=>true}, {:from=>1970-01-01 11:00:00 UTC, :to=>1970-01-01 02:00:00 UTC, :open=>true}, {:from=>1970-01-01 11:00:00 UTC, :to=>1970-01-01 03:00:00 UTC, :open=>true}, {:from=>1970-01-01 11:00:00 UTC, :to=>1970-01-01 03:00:00 UTC, :open=>true}],
-#    lat: 43.4542, lng: -76.5187, active: nil

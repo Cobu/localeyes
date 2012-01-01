@@ -1,28 +1,29 @@
-.header
-  %center
+#wrapper.business_show
+  .header
     - if current_business_user.businesses.size > 1
       = select(:business, :id, current_business_user.businesses.collect{|b| [b.name, b.id]}, :selected=>current_business.id)
     - else
       = current_business.name
-    = link_to 'edit', edit_business_path(current_business)
-    &nbsp;&nbsp;&nbsp;
-    = link_to 'create new business', new_business_path
+    .link
+      = link_to 'Edit', edit_business_path(current_business), class: :button
+    .link
+      = link_to 'Create New Business', new_business_path, class: :button
 
-.calendar_content
-  #event_pop_up
-  #calendar_container
+  .calendar_content
+    #event_pop_up
+    #calendar_container
 
-  :javascript
-    $(document).ready( function() {
-      $('#calendar_container').fullCalendar({
-        weekMode : window.CalendarOptions.mode,
-        header: window.CalendarOptions.header,
-        events: window.CalendarOptions.events_url,
-        lazyFetching: false,
-        eventClick: function(event) { return window.eventClickHandler(event) },
-        loading: function(bool) { return window.loadingCalendarHandler(bool) },
-        dayClick: function(date, allDay, jsEvent, view) { return window.calendarDayClickHandler(date, allDay, jsEvent, view) }
-       })
-    })
+    :javascript
+      $(document).ready( function() {
+        $('#calendar_container').fullCalendar({
+          weekMode : window.CalendarOptions.mode,
+          header: window.CalendarOptions.header,
+          events: window.CalendarOptions.events_url,
+          lazyFetching: false,
+          eventClick: function(event) { return window.eventClickHandler(event) },
+          loading: function(bool) { return window.loadingCalendarHandler(bool) },
+          dayClick: function(date, allDay, jsEvent, view) { return window.calendarDayClickHandler(date, allDay, jsEvent, view) }
+         })
+      })
 
 

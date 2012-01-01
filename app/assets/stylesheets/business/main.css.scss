@@ -7,16 +7,17 @@
 
 #calendar_container {
   width: 900px;
-  margin: auto
+  margin: auto;
+  .fc-event-inner { color:black; }
 }
 
 #wrapper {
+  width:900px;
   margin: auto;
 }
 
 #wrapper.business_users_login {
   width:310px;
-  /*div { border: 1px solid blue}*/
   #content {
     .field {
       font-size: 17px;
@@ -29,11 +30,26 @@
 
 }
 
+#wrapper.business_show {
+  .header{
+    font-size:16px;
+    text-align: right;
+    select{
+      background-color: inherit;
+      font-size:100%;
+    }
+    .link {
+      display:inline-block;
+      margin-left: 10px;
+      a.button{ padding: 4px 10px }
+    }
+  }
+}
+
 form.new_business, form.edit_business{
-  width:50%;
+  width:440px;
+  margin-top:20px;
   display:inline-block;
-  padding-top:10px;
-  padding-left:10px;
 
   .open_times {
     margin-top:15px;
@@ -63,36 +79,23 @@ form.new_business, form.edit_business{
     input { width:100px; }
   }
 
+  .buttons {
+    margin-top: 15px;
+    text-align:center;
+    .button { margin: 0 8px }
+  }
 }
 
 #map_canvas_container {
-  display:inline-block;
+  width:430px;
   margin:20px 0px;
+  display:inline-block;
   vertical-align:top;
-  width:40%;
+  .field.map_location { margin-bottom: 15px}
+
   #map_canvas {
     width: 430px;
     height: 380px;
     border: 1px solid #666666;
-  }
-}
-
-
-/* for coloring the events of different type  */
-.event_type {
-  span, div {
-    background-color: red;
-  }
-}
-
-.special_type {
-  span, div {
-    background-color: blue
-  }
-}
-
-.announcement_type {
-  span, div {
-    background-color: brown
   }
 }
