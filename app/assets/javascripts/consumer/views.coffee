@@ -64,7 +64,6 @@ $(document).ready(->
         bview = new BusinessView({event_view: this})
         business_list.setSelected(@event.business().get('id'), bview )
 
-
     render: ->
       if @event != undefined
         this.el = $(this.template(@event))

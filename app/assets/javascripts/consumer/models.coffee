@@ -81,7 +81,6 @@ window.BusinessList = Backbone.Collection.extend(
     this.get( @selected_id ).setMarkerIcon() if @selected_id # shrink icon
     this.get( business_id ).setMarkerIcon(1.3) # bigger icon
     @selected_id = business_id
-#    console.log(business_view.el)
     @selected_view = business_view
 )
 
