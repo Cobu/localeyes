@@ -56,19 +56,14 @@ $(document).ready(->
       this.render()
 
     showBusiness: ->
-      elem = this.el
-      elem.find('.description').show()
-      business_elem = elem.next('.business')
-      if business_elem[0]
-        business_elem.slideUp('slow', ->
-            business_elem.remove()
-            elem.find('.description').hide()
-        )
-        business_list.clearSelected() # to shrink the icon
+      this.el.find('.description').show()
+      if ( this.cid ==  (business_list.selected_view.event_view.cid if business_list.selected_view) )
+        business_list.clearSelected()
       else
-        business_list.setSelected(@event.business().get('id'))
-        # to grow the icon
-        new BusinessView(this)
+        business_list.clearSelected()
+        bview = new BusinessView({event_view: this})
+        business_list.setSelected(@event.business().get('id'), bview )
+
 
     render: ->
       if @event != undefined
@@ -113,25 +108,32 @@ $(document).ready(->
   ############  Business view #############
   window.BusinessView = Backbone.View.extend(
     template: null
+    event_view: null
 
-    initialize: (@event_view)->
+    initialize: (options)->
+      @event_view = options.event_view
       @template = Handlebars.compile($('#business_info_template').html())
       this.render()
 
     render: ->
-      business_elem = $(@template(@event_view.event.business()))
+      this.el = $(@template( @event_view.event.business()) )
       elem_event_class = @event_view.el.attr('class').match(/\w+_type/)[0]
-      business_elem.addClass(elem_event_class)
-      @event_view.el.after(business_elem)
-      business_elem.slideDown('slow')
+      this.el.addClass(elem_event_class)
+      @event_view.el.after(this.el)
+      this.el.slideDown('slow' )
+
+    close: -> this.el.slideUp('slow', =>
+      @event_view.el.find('.description').hide()
+      this.el.remove()
+    )
   )
 
 
   class window.Filter
     service_type_constants = {
-    service_type_cafe: 0
-    service_type_restaurant: 1
-    service_type_bar: 2
+      service_type_cafe: 0
+      service_type_restaurant: 1
+      service_type_bar: 2
     }
     @service_type_cafe = true
     @service_type_restaurant = true

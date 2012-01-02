@@ -64,7 +64,7 @@ window.Business = Backbone.Model.extend(
 window.BusinessList = Backbone.Collection.extend(
   model: Business
   selected_id: null
-
+  selected_view: null
   # override rest to clear the business markers in old collection before
   # the new collection takes its place
   reset: (collection)->
@@ -74,11 +74,15 @@ window.BusinessList = Backbone.Collection.extend(
   clearSelected: ->
     this.get( @selected_id ).setMarkerIcon() if @selected_id
     @selected_id = null
+    @selected_view.close() if @selected_view
+    @selected_view = null
 
-  setSelected: (business_id)->
+  setSelected: (business_id, business_view)->
     this.get( @selected_id ).setMarkerIcon() if @selected_id # shrink icon
     this.get( business_id ).setMarkerIcon(1.3) # bigger icon
     @selected_id = business_id
+#    console.log(business_view.el)
+    @selected_view = business_view
 )
 
 
