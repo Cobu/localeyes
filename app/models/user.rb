@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+  include Mongo::Voter
+
   belongs_to :college
 
   has_secure_password
@@ -10,10 +12,6 @@ class User < ActiveRecord::Base
 
   attr_writer :name
   before_create :split_name
-
-  def self.create_from_auth_info(info)
-
-  end
 
   def birthday=(birthday)
     # try parsing this format ( m/d/y ) to see if it works
@@ -35,6 +33,15 @@ class User < ActiveRecord::Base
 
   def remove_favorite(business_id)
     EventVote.db.collection('favorites').update( {user_id: id}, {'$pull'=> {businesses: business_id}}, {upsert: true})
+  end
+
+  def vote_for_event(event_id, vote)
+    return unless %w(up down).include? vote
+    past_vote = EventVote.past_vote(event_id, id)
+    return if vote == past_vote
+    hash = {votee_id: event_id, voter_id: id, value: vote}
+    hash[:revote] = true if past_vote
+    EventVote.vote(hash)
   end
 
   def favorites

@@ -2,33 +2,49 @@
   = form_for(@business) do |f|
     .error_messages
       = f.error_messages if @business.errors
-    #business_data{:'data-info' => @business.to_json}
-    %div
-      .field
-        = f.text_field :name, :placeholder => 'Business Name'
-      .field
-        = f.select :service_type, Business::SERVICE_TYPE_NAMES.zip(Business::SERVICE_TYPES)
-      .field
-        = f.text_field :description, :placeholder => 'Business Description'
-    %div
-      .field
-        = f.text_field :address, :placeholder => 'Street Address'
-      .field
-        = f.text_field :address2, :placeholder => 'Street Address2'
-      .field
-        = f.text_field :city, :placeholder => 'City'
-        = f.select :state, Carmen::state_codes('US')
-      .field.zip
-        = f.text_field :zip_code, :placeholder => 'Zip Code'
-      .field.phone
-        = f.label :phone
-        = f.text_field :phone_first3, placeholder: :area_code
-        -
-        = f.text_field :phone_second3
-        -
-        = f.text_field :phone_last4
-      .field
-        = f.text_field :url, placeholder: 'Home Page Url'
+    #business_data{ 'data-info' => @business.to_json}
+    = f.hidden_field :lat
+    = f.hidden_field :lng
+    = f.hidden_field :geocoded_by
+    .wrapper_panel
+      .buiz_panel
+        %div
+          .field
+            = f.text_field :name, :placeholder => 'Business Name'
+          .field
+            = f.select :service_type, Business::SERVICE_TYPE_NAMES.zip(Business::SERVICE_TYPES)
+          .field
+            = f.text_field :description, :placeholder => 'Business Description'
+        %div
+          .field
+            = f.text_field :address, :placeholder => 'Street Address'
+          .field
+            = f.text_field :address2, :placeholder => 'Street Address2'
+          .field
+            = f.text_field :city, :placeholder => 'City'
+          .field.state.zip
+            = f.select :state, Carmen::state_codes('US')
+            = f.text_field :zip_code, :placeholder => 'Zip Code'
+          .field.phone
+            = f.label :phone
+            = f.text_field :phone_first3, placeholder: :area_code
+            -
+            = f.text_field :phone_second3
+            -
+            = f.text_field :phone_last4
+          .field
+            = f.text_field :url, placeholder: 'Home Page Url'
+      .auth_panel{ 'data-auth'=> @business.user.authentications.to_json(only: :provider) }
+        .auth_section.facebook
+          .text
+            You are connected to facebook
+          .link
+            =link_to 'faceboook connect', '/auth/facebook', class: 'button popup', 'data-width'=> 400, 'data-height'=> 400
+        .auth_section.twitter
+          .text
+            You are connected to twitter
+          .link
+            =link_to 'twitter connect', '/auth/twitter', class: 'button popup', 'data-width'=> 400, 'data-height'=> 400
     .open_times
       - Date::DAYNAMES.each_with_index do |dayname,day_index|
         - hour_method = "#{dayname.downcase}_hours"
@@ -54,7 +70,7 @@
   #map_canvas_container
     .field.map_location
       Map Location with:
-      = select(:geo_lookup, :id, [:google, :yahoo,  :geocoder_ca].collect{|l| [l.to_s, l]}, :selected=> Geocoder::Configuration.lookup)
+      = select(:geo_lookup, :id, [:google, :yahoo,  :geocoder_ca].collect{|l| [l.to_s, l]}, :selected=> @business.geocoded_by || Geocoder::Configuration.lookup)
       = button_tag :go, type: :button, id: :geo_lookup_button
     #map_canvas
 

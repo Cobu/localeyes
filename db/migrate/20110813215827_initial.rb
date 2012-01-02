@@ -40,6 +40,7 @@
       t.binary :image
       t.float :lat, :null => false
       t.float :lng, :null => false
+      t.string :geocoded_by
       t.boolean :active
       t.timestamps
     end

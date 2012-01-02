@@ -9,9 +9,14 @@
         %div
           {{attributes/title}} {{startHour}}
       .images
-        {{{userFavoriteImage}}}
-        %img{ src: 'assets/thumbs-up.gif', width: '23px', 'data-id'=>"{{attributes/id}}", rel: 'vote', 'data-vote'=> "up"}
-        %img{ src: 'assets/thumbs-down.gif', width: '23px', 'data-id'=>"{{attributes/id}}", rel: 'vote', 'data-vote'=> "down" }
+        .fave
+          {{{userFavoriteImage}}}
+        .vote.up
+          %img{ src: 'assets/thumbs-up.gif', rel: 'vote', 'data-id'=>"{{attributes/id}}", 'data-vote'=> "up"}
+          .number
+        .vote.down
+          %img{ src: 'assets/thumbs-down.gif', rel: 'vote', 'data-id'=>"{{attributes/id}}", 'data-vote'=> "down" }
+          .number
       .description
         {{attributes/description}}
 - else

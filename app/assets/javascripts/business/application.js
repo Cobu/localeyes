@@ -14,3 +14,4 @@
 //= require business/edit
 //= require map
 //= require consumer/models
+//= require common

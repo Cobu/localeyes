@@ -14,6 +14,10 @@ class UsersController < ApplicationController
     @user = User.new
   end
 
+  def event_vote
+    render json: current_user.vote_for_event(params[:event].to_i, params[:vote].to_s)
+  end
+
   def unset_favorite
     current_user.remove_favorite(params[:b].to_i)
     head :ok
@@ -31,14 +35,6 @@ class UsersController < ApplicationController
     #else
     #  render :new, status: 500
     #end
-  end
-
-  def oauth_create
-    head :error and return if auth_info.blank? or session[:register_college].blank?
-    college_id = session.delete(:register_college)
-    user = User.find_by_email(auth_info['info']['email']) || User.create_from_auth(auth_info, college_id)
-    cookies.permanent.signed[:user] = user.id
-    session[:user_id] = user.id
   end
 
   def facebook_register

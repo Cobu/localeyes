@@ -228,6 +228,7 @@ ul, li {
 }
 
 .event {
+  /*div { border: 1px solid #8a2be2 }*/
   @extend .event_bar;
   width:375px;
   padding: 5px 0px 5px 5px;
@@ -235,7 +236,7 @@ ul, li {
   .business_img {
     width:20px;
     display:inline-block;
-    img { width:17px;height:24px; }
+    img { width:17px; height:24px; }
   }
 
   .info {
@@ -246,7 +247,21 @@ ul, li {
   .images {
     width:28%;
     display:inline-block;
-    img { cursor:pointer; margin-right:10px; }
+    font-size:9px;
+    text-align:center;
+    vertical-align:top;
+
+    .vote, .fave {
+      display: inline-block;
+      width:23px;
+      vertical-align:top;
+    }
+
+    img {
+      cursor:pointer;
+      margin-right:10px;
+      width: 21px;
+    }
   }
 
   .full { width:90%; }

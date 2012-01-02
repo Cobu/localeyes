@@ -5,8 +5,15 @@ class EventVote
   # set points for each vote
   voteable self, :up => +1, :down => -1
 
-  #def self.votes_for_events(event_ids)
-  #  $db.collection('votes').find({:event_id => {"$in"=>event_ids}}).each do
-  #  end
-  #end
+  def self.votes_for_events(event_ids)
+    any_in(_id: event_ids).only('votes.down_count', 'votes.up_count')
+  end
+
+  def self.past_vote(event_id, user_id)
+    event_vote = where(_id: event_id).only('votes.down', 'votes.up').first
+    return nil unless event_vote
+    return 'up' if event_vote.votes.try(:[],'up').include? user_id
+    return 'down' if event_vote.votes.try(:[],'down').include? user_id
+    nil
+  end
 end

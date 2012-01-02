@@ -47,9 +47,44 @@
 }
 
 form.new_business, form.edit_business{
-  width:440px;
-  margin-top:20px;
+  width: 440px;
+  margin-top: 20px;
   display:inline-block;
+  /*div { border: 1px solid blue }*/
+
+  .wrapper_panel {
+    .buiz_panel {
+      width: 50%;
+      display:inline-block;
+    }
+    .auth_panel {
+      vertical-align: top;
+      display:inline-block; 
+      .auth_section { margin-bottom: 20px; display: none; }
+    }
+  }
+
+  .field.phone {
+    input { margin-right: 3px; }
+    input#business_phone_first3 { width:30px; }
+    input#business_phone_second3 { width:30px; }
+    input#business_phone_last4 { width:40px; }
+  }
+
+  .field.zip {
+    input { width:60px; margin-left: 59px }
+  }
+
+  .field.position {
+    margin:10px 0px;
+    input { width:100px; }
+  }
+
+  .buttons {
+    margin-top: 15px;
+    text-align:center;
+    .button { margin: 0 8px }
+  }
 
   .open_times {
     margin-top:15px;
@@ -63,27 +98,6 @@ form.new_business, form.edit_business{
     }
   }
 
-  .field.phone {
-    input { margin-right: 3px; }
-    input#business_phone_first3 { width:30px; }
-    input#business_phone_second3 { width:30px; }
-    input#business_phone_last4 { width:40px; }
-  }
-
-  .field.zip {
-    input { width:60px; }
-  }
-
-  .field.position {
-    margin:10px 0px;
-    input { width:100px; }
-  }
-
-  .buttons {
-    margin-top: 15px;
-    text-align:center;
-    .button { margin: 0 8px }
-  }
 }
 
 #map_canvas_container {

@@ -6,6 +6,7 @@ class Event < ActiveRecord::Base
   before_update  :edit_schedule
   before_update  :set_time_attributes, :if => :one_time_event?
   before_create  :set_time_attributes, :create_schedule
+  after_create :init_event_vote
 
   EVENT = 0
   SPECIAL = 1
@@ -198,5 +199,9 @@ class Event < ActiveRecord::Base
     end
 
     OpenStruct.new(atts)
+  end
+
+  def init_event_vote
+    EventVote.collection.save(_id:id)
   end
 end

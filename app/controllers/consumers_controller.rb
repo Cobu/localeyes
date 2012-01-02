@@ -47,6 +47,12 @@ class ConsumersController < ApplicationController
     events = businesses.collect(&:events).flatten
     events = events.collect { |e| e.consumer_events(start_date, end_date) }.flatten
     favorites = current_user.try(:favorites) || []
-    { businesses: businesses, events: events, favorites: favorites, center: center.center_json }
+    {
+      businesses: businesses,
+      events: events,
+      favorites: favorites,
+      center: center.center_json,
+      votes: EventVote.votes_for_events(events.collect{ |h| h[:id].to_i }.uniq)
+    }
   end
 end

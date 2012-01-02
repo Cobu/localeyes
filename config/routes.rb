@@ -21,14 +21,17 @@ LocalEyes::Application.routes.draw do
 
   resources :users, only: [:index, :new, :create] do
     collection do
-      get :set_favorite
-      get :unset_favorite
+      post :set_favorite
+      post :unset_favorite
+      post :event_vote
       post :oauth_create
       post :facebook_register
       post :register_college
     end
   end
-  match '/auth/:provider/callback', to: 'users#create'
+
+  resources :authentications, only: [:create]
+  match '/auth/:provider/callback', to: 'authentications#create'
 
   resources :business_users, except: [:index, :show] do
     collection do

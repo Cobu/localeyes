@@ -38,6 +38,7 @@ ActiveRecord::Schema.define(:version => 20110813215827) do
     t.binary   "image"
     t.float    "lat",                                                    :null => false
     t.float    "lng",                                                    :null => false
+    t.string   "geocoded_by"
     t.boolean  "active"
     t.datetime "created_at"
     t.datetime "updated_at"
