@@ -5,8 +5,8 @@ window.Events.refresh = (data)->
   window.Filter.userFavorites = data.favorites
   window.filter.setValues()
   window.business_list.reset( data.businesses )
+  window.votes.setVotes( data.votes )
   window.event_list.reset( data.events )
-  window.votes.setVotes(data.votes)
   $( "#location_search" ).val( data.center.title.replace("\n",' ') )
 
 $(document).ready( ->

@@ -95,6 +95,7 @@ $(document).ready(->
         days_events = _.select(events[date.toString("yyyy-MM-dd")], (event)-> window.filter.match(event.business()))
         continue unless _.any(days_events)
         this.buildEventsForDay(date, days_events)
+      window.votes.show()
 
     buildEventsForDay: (date, events)->
       this.el.append(this.day_header_template({'date': date}))
@@ -182,18 +183,15 @@ $(document).ready(->
   class window.Votes
     votes: []
 
-    setVotes: (votes)->
-      @votes = votes
-      this.show()
+    setVotes: (votes)-> @votes = votes
 
-    show: ()->
-      _.each(@votes, (info)=> this.showNumbers(info))
+    show: ()-> _.each( @votes, (info)=> this.showNumbers(info) )
 
     resetVotes: (data)->
-      _.each(@votes, (info)=>
+      _.each(@votes, (info, index)=>
           if (info._id == data._id)
-            info = data
-            this.showNumbers(info)
+            @votes[index] = data
+            this.showNumbers(data)
       )
 
     showNumbers: (info)->
