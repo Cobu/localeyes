@@ -8,13 +8,7 @@ window.Event = Backbone.Model.extend({
   businessImageName: -> this.business().imageName()
   userFavoriteImage: ->
     prefix = if _.include( Filter.userFavorites, this.get('business_id') ) then '' else 'un'
-    "<img src='assets/fav_#{prefix}selected.gif' width='20px' data-busniess_id='#{this.get('business_id')}' rel='favorite'/>"
-  thunbsUpImage: ->
-#    prefix = if _.include( Filter.userFavorites, this.get('business_id') ) then '' else 'un'
-    "<img src='assets/thumbs-up.gif' width='23px' data-busniess_id='#{this.get('business_id')}' rel='vote'/>"
-  thunbsDownImage: ->
-#    prefix = if _.include( Filter.userFavorites, this.get('business_id') ) then '' else 'un'
-    "<img src='assets/thumbs-down.gif' width='23px' data-busniess_id='#{this.get('business_id')}' rel='vote'/>"
+    "<img src='assets/fav_#{prefix}selected.gif' width='20px' data-business_id='#{this.get('business_id')}' rel='favorite'/>"
 })
 
 ############  EventList Collection #############

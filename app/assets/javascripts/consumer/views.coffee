@@ -154,13 +154,17 @@ $(document).ready(->
       window.map_view.render()
 
     setFavorite: (business_id)->
+      prefix = ''
       if _.include(Filter.userFavorites, business_id)
         $.post('/users/unset_favorite', { b: business_id})
         Filter.userFavorites = _.without(Filter.userFavorites, business_id)
+        prefix = 'un'
       else
         Filter.userFavorites.push(business_id)
         $.post('/users/set_favorite', { b: business_id})
-      window.event_list_view.render()
+      img = $("img[data-business_id='#{business_id}']")
+      img.attr({src:"assets/fav_#{prefix}selected.gif"})
+
 
     match: (business)->
       if Filter.filtering_favorites then return false unless _.include(Filter.userFavorites, business.get('id'))

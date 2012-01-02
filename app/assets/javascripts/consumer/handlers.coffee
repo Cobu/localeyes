@@ -95,7 +95,7 @@ $(document).ready( ->
 
   $('.images img[rel=favorite]').live('click', (event)->
     elem = $(event.currentTarget)
-    filter.setFavorite( elem.data('busniess_id') )
+    filter.setFavorite( elem.data('business_id') )
   )
 
   $('.facebook_login.link').live('click', (e)->

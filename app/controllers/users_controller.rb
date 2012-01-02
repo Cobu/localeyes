@@ -15,7 +15,8 @@ class UsersController < ApplicationController
   end
 
   def event_vote
-    render json: current_user.vote_for_event(params[:event].to_i, params[:vote].to_s)
+    json = current_user.vote_for_event(params[:event].to_i, params[:vote].to_s)
+    render json: json
   end
 
   def unset_favorite

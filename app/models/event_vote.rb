@@ -5,9 +5,8 @@ class EventVote
   # set points for each vote
   voteable self, :up => +1, :down => -1
 
-  def self.votes_for_events(event_ids)
-    any_in(_id: event_ids).only('votes.down_count', 'votes.up_count')
-  end
+  scope :votes_for_event, -> event_id { where(_id: event_id).only('votes.down_count', 'votes.up_count') }
+  scope :votes_for_events, -> event_ids { any_in(_id: event_ids).only('votes.down_count', 'votes.up_count') }
 
   def self.past_vote(event_id, user_id)
     event_vote = where(_id: event_id).only('votes.down', 'votes.up').first
