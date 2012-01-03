@@ -30,12 +30,12 @@ class UsersController < ApplicationController
   end
 
   def create
-    #@user = User.new(params[:user])
-    #if @user.save
+    @user = User.new(params[:user])
+    if @user.save
       head :ok
-    #else
-    #  render :new, status: 500
-    #end
+    else
+      render :new, status: 500
+    end
   end
 
   def facebook_register
@@ -46,6 +46,9 @@ class UsersController < ApplicationController
     cookies.permanent.signed[:user] = user.id
     session[:user_id] = user.id
     redirect_to event_list_consumers_path
+  rescue => e
+    p e
+    p e.backtrace
   end
 
   def register_college

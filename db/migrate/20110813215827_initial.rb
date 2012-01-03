@@ -16,7 +16,7 @@
     create_table "authentications", :force => true do |t|
       t.belongs_to :user, :null => false
       t.string :provider, :null => false
-      t.string :auth_hash, :null => false
+      t.text :auth_hash, :null => false
       t.integer :uid, :null => false
       t.datetime :created_at
     end

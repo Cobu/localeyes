@@ -37,8 +37,9 @@ class User < ActiveRecord::Base
 
   def vote_for_event(event_id, vote)
     return unless %w(up down).include? vote
-    past_vote = EventVote.past_vote(event_id, id)
-    return EventVote.votes_for_event(event_id).first if vote == past_vote
+    event_vote = EventVote.where(_id: event_id).first
+    past_vote = event_vote.vote_value(id).to_s
+    return event_vote if vote == past_vote
     hash = {votee_id: event_id, voter_id: id, value: vote}
     hash[:revote] = true if past_vote
     EventVote.vote(hash)

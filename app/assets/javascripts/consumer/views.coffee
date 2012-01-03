@@ -77,7 +77,7 @@ $(document).ready(->
     day_header_template: null
 
     initialize: (@event_list)->
-      @day_header_template = Handlebars.compile($('#day_header_template').html())
+      @day_header_template = Handlebars.compile( $('#day_header_template').html() )
       if @event_list
         this.render()
       else
@@ -196,8 +196,8 @@ $(document).ready(->
 
     showNumbers: (info)->
       elem = $(".event[data-id='#{info._id}']")
-      elem.find(".vote.up .number").html(info.votes["up_count"])
-      elem.find(".vote.down .number").html(info.votes["down_count"])
+      elem.find(".vote.up .number").html(info.votes["up_count"] || 0)
+      elem.find(".vote.down .number").html(info.votes["down_count"] || 0)
 
   window.votes = new window.Votes()
 )

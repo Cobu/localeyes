@@ -58,9 +58,16 @@ form.new_business, form.edit_business{
       display:inline-block;
     }
     .auth_panel {
+      margin-top: 10px;
       vertical-align: top;
       display:inline-block; 
-      .auth_section { margin-bottom: 20px; display: none; }
+      .auth_section {
+        margin-bottom: 30px;
+        .connection {
+          width: 200px;
+          padding-bottom: 10px;
+        }
+      }
     }
   }
 

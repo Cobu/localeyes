@@ -3,7 +3,7 @@
 gem 'rails', '3.1.1'
 gem 'bcrypt-ruby'
 gem 'mysql2'
-gem "arel", "2.2.1"
+gem 'arel', "2.2.1"
 gem 'sass-rails', "~> 3.1.0"
 gem 'jquery-rails'
 gem 'haml-rails'
@@ -24,14 +24,16 @@ gem 'unicorn'
 gem 'draper'
 gem 'omniauth'
 gem 'omniauth-facebook'
+gem 'omniauth-twitter'
+gem 'koala'
 gem 'settingslogic'
 gem 'rvm'
 
 group :development, :test do
-  gem "wirble"
-  gem "pry"
-  gem "hirb"
-  gem "capistrano"
+  gem 'wirble'
+  gem 'pry'
+  gem 'hirb'
+  gem 'capistrano'
   gem 'capistrano-ext'
   gem 'rb-fsevent', :require => false
   gem 'guard-livereload'
@@ -47,7 +49,7 @@ group :test do
   gem 'launchy'
   gem 'rspec'
   gem 'rr'
-  gem "rspec-rails"
+  gem 'rspec-rails'
   gem 'database_cleaner'
   gem 'timecop'
 end
