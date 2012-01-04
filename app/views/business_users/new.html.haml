@@ -1,22 +1,25 @@
-= form_for(@user, :validate=>true) do |f|
-  = f.error_messages
-  .field
-    = f.label :email
-    = f.email_field :email
-  .field
-    = f.label :first_name
-    = f.text_field :first_name
-  .field
-    = f.label :last_name
-    = f.text_field :last_name
-  .field
-    = f.label :phone
-    = f.text_field :phone
-  .field
-    = f.label :password
-    = f.password_field :password
-  .field
-    = f.label :password_confirmation
-    = f.password_field :password_confirmation
+#wrapper.business_users_register
+  %h1.inset Business User Registration
+  #content
+    = form_for(@user, :validate=>true) do |f|
+      = f.error_messages
+      .field
+        = f.label :email
+        = f.email_field :email
+      .field
+        = f.label :first_name
+        = f.text_field :first_name
+      .field
+        = f.label :last_name
+        = f.text_field :last_name
+      .field
+        = f.label :phone
+        = f.text_field :phone
+      .field
+        = f.label :password
+        = f.password_field :password
+      .field
+        = f.label :password_confirmation
+        = f.password_field :password_confirmation
 
-  = f.submit
+      = f.submit 'Save', class: "button"

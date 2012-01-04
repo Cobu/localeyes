@@ -16,19 +16,19 @@
   margin: auto;
 }
 
-#wrapper.business_users_login {
-  width:310px;
+#wrapper.business_users_login, #wrapper.business_users_register {
+  width:410px;
   #content {
     .field {
       font-size: 17px;
       padding: 7px 0px;
-      label{ display:inline-block;  width: 80px; text-align:right }
+      label{ display:inline-block;  width: 90px; text-align:right }
       input{ width: 200px; font-size: 17px;margin:0 10px }
     }
     input.button { margin: 20px 0 0 107px }
   }
-
 }
+
 
 #wrapper.business_show {
   .header{
