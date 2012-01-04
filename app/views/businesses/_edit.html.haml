@@ -51,7 +51,7 @@
           .link
             =link_to 'twitter connect', '/auth/twitter', class: 'button popup', 'data-width'=> 600, 'data-height'=> 400
         .connections
-          Connections:
+          Current connections:
     .open_times
       - Date::DAYNAMES.each_with_index do |dayname,day_index|
         - hour_method = "#{dayname.downcase}_hours"

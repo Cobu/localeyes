@@ -1,9 +1,6 @@
 @import 'mixins';
 @import 'shared';
 
-.header {
-  margin: 20px auto;
-}
 
 #calendar_container {
   width: 900px;
@@ -33,6 +30,7 @@
 
 #wrapper.business_show {
   .header{
+    margin-bottom: 20px;
     font-size:16px;
     text-align: right;
     select{

@@ -13,6 +13,7 @@ class ConsumersController < ApplicationController
   end
 
   def home
+    redirect_to event_list_consumers_path if current_user
   end
 
   def search_college
