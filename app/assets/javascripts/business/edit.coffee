@@ -7,11 +7,9 @@ $(document).ready(->
       showAuthConnections: (auth_info)->
         auth_info = JSON.parse(auth_info) if _.isString(auth_info)
 
-        _.each(auth_info, (info)=>
-            connections = $(".auth_section.#{info.provider} .connections")
-            connections.empty()
-            connections.append(@template(info))
-        )
+        connections = $(".auth_panel .connections")
+        connections.find('connection').empty()
+        _.each(auth_info, (info)=> connections.append(@template(info)) )
 
     window.business_edit = new BusinessEdit()
 
@@ -28,6 +26,10 @@ $(document).ready(->
       window.map_view.render()
       $('#geo_lookup_button').hide()
 
+  $('#business_service_type').live('change', (event)->
+    business.set({ service_type: $(this).val() })
+    window.map_view.render()
+  )
 
   ################# geocoder handlers #################
   resetCoordinates = (geo_lookup_type)->

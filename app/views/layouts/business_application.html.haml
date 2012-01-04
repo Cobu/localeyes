@@ -7,7 +7,11 @@
     = javascript_include_tag "business/application"
     = csrf_meta_tags
   %body{:class=>"#{controller_name}_#{action_name}"}
-    = render :partial => 'layouts/header'
+    #header
+      %a{ href: '/' }
+        %img.logo{ src: asset_path("localeyes_logo.png") }
+      %div
+        %h1.inset Businesses
     = yield
 
 

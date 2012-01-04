@@ -1,6 +1,8 @@
 test:
   facebook_api_key:
   facebook_secret:
+  twitter_api_key:
+  twitter_secret:
 
 development:
   facebook_api_key: '240287519364580'

@@ -25,7 +25,7 @@ window.Business = Backbone.Model.extend(
   map_tooltip_template: Handlebars.compile("{{name}}\n{{address}}\n{{city}},{{state}}")
 
   serviceName: ->
-    return '' unless _.isNumber(this.get('service_type'))
+    return '' unless _.isNumber(parseInt(this.get('service_type')))
     @service_type_names[this.get('service_type')].toLowerCase()
 
   imageName: -> "/assets/#{this.serviceName()}.png"
