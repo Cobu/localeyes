@@ -4,7 +4,7 @@
     .text
       account: {{name}}
     .close
-      %a{ href: '#' }
+      %a.close{ href: '#', 'data-id'=> "{{id}}" }
         %img.ui-icon.ui-icon-close
 
 #wrapper.business_edit
@@ -43,7 +43,7 @@
             = f.text_field :phone_last4
           .field
             = f.text_field :url, placeholder: 'Home Page Url'
-      .auth_panel{ 'data-auth'=> @business.user.authentications.to_json(only: [:provider], methods: [:name]) }
+      .auth_panel{ 'data-auth'=> @business.user.authentications.to_json(only: [:provider, :id], methods: [:name]) }
         .auth_section.facebook
           .link
             =link_to 'faceboook connect', '/auth/facebook', class: 'button popup', 'data-width'=> 400, 'data-height'=> 400

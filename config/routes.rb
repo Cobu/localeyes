@@ -30,7 +30,7 @@ LocalEyes::Application.routes.draw do
     end
   end
 
-  resources :authentications, only: [:create]
+  resources :authentications, only: [:create, :destroy]
   match '/auth/:provider/callback', to: 'authentications#create'
 
   resources :business_users, except: [:index, :show] do

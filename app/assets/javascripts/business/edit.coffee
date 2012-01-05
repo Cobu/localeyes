@@ -1,4 +1,9 @@
 $(document).ready(->
+
+  $.ajaxSetup({
+    headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')}
+  })
+
   ############## authentications ###################
   if $('#wrapper.business_edit')[0]
     class window.BusinessEdit
@@ -16,6 +21,16 @@ $(document).ready(->
     auth_info = $('.auth_panel').data('auth')
     business_edit.showAuthConnections(auth_info)
 
+    $('.connection a.close').live('click', ->
+      elem = $(this)
+      $.ajax(
+        url: "/authentications/#{elem.data('id')}",
+        type: 'post',
+        data: {_method: 'delete'},
+        success: (response)-> elem.closest('.connection').remove(),
+        error: (response)-> alert('Cound not remove that authentication')
+      )
+    )
 
   ################ map the business ############
   if $("#map_canvas")[0]
