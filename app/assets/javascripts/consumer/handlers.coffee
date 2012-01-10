@@ -70,15 +70,15 @@ $(document).ready( ->
   )
 
   $( '.settings .link' ).live( 'click', (elem)->
-    $( '.settings .filter' ).toggle('slide', {direction: 'left'})
+    $( '.filter' ).toggle('slide', {direction: 'left'})
   )
 
   $( '.location .link' ).live( 'click', (event)->
-    $( '.location .search' ).toggle('slide', {direction: 'down'})
+    $( '.search' ).toggle('slide', {direction: 'down'})
   )
 
  $( '.event_types .link' ).live( 'click', (event)->
-    $( '.event_types .legend' ).toggle('slide', {direction: 'down'})
+    $( '.legend' ).toggle('slide', {direction: 'down'})
   )
 
 
