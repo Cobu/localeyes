@@ -41,7 +41,7 @@ class User < ActiveRecord::Base
     past_vote = event_vote.vote_value(id).to_s
     return event_vote if vote == past_vote
     hash = {votee_id: event_id, voter_id: id, value: vote}
-    hash[:revote] = true if past_vote
+    hash[:revote] = true if past_vote.present?
     EventVote.vote(hash)
   end
 
