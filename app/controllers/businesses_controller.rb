@@ -21,8 +21,7 @@ class BusinessesController < ApplicationController
   end
 
   def index
-    businesses = Business.where(:id=>params[:business_ids])
-    render :json => businesses
+    render :home
   end
 
   def new

@@ -1,6 +1,6 @@
 LocalEyes::Application.routes.draw do
   resources :events, except: [:index]
-  resources :businesses, except: [:index] do
+  resources :businesses do
     collection do
       get :events
       get :geocode

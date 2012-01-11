@@ -1,7 +1,8 @@
 #wrapper.business_users_login
   #content.business_users_login
     %h1.inset Sign in
-    = alert
+    .alert
+      = alert
     = form_for(@user, :url=> login_submit_business_users_path) do |f|
       .field
         = f.label :email

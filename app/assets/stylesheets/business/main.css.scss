@@ -9,14 +9,25 @@
 }
 
 #wrapper {
-  width:900px;
+  width: 100%;
+  min-width: 900px;
   margin: auto;
+}
+
+#wrapper.home {
+
 }
 
 #wrapper.business_users_login, #wrapper.business_users_register {
   h1 { margin: 20px 0 10px 107px }
-  width:410px;
   #content {
+    width:30%;
+    .alert {
+      text-align: center;
+      font-size: 110%;
+      margin-bottom: 10px;
+    }
+    margin: 0 auto;
     .field {
       font-size: 17px;
       padding: 7px 0px;
@@ -31,6 +42,7 @@
 #wrapper.business_show {
   .header{
     margin-bottom: 20px;
+    margin-right: 8%;
     font-size:16px;
     text-align: right;
     select{
@@ -49,7 +61,6 @@ form.new_business, form.edit_business{
   width: 440px;
   margin-top: 15px;
   display:inline-block;
-  /*div { border: 1px solid blue }*/
 
   .wrapper_panel {
     width: 100%;

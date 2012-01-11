@@ -158,8 +158,9 @@ class Event < ActiveRecord::Base
           IceCube::Rule.monthly
       end
       until_date = Time.strptime(@recur_until_date,"%m/%d/%Y") rescue nil
-      rule.until(until_date)
+      rule.until(until_date) if until_date
       schedule.add_recurrence_rule(rule)
+
       self.schedule = schedule
     end
     true

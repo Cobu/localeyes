@@ -117,8 +117,8 @@ $(document).ready(->
 
     render: ->
       this.el = $(@template( @event_view.event.business()) )
-      elem_event_class = @event_view.el.attr('class').match(/\w+_type/)[0]
-      this.el.addClass(elem_event_class)
+#      elem_event_class = @event_view.el.attr('class').match(/\w+_type/)[0]
+#      this.el.addClass(elem_event_class)
       @event_view.el.after(this.el)
       this.el.slideDown('slow' )
 

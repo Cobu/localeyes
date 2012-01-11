@@ -1,8 +1,8 @@
 #wrapper.business_users_register
   #content
     %h1.inset User Registration
-    = form_for(@user, :validate=>true) do |f|
-      = f.error_messages
+    = form_for( @user ) do |f|
+      = f.error_messages :header_message => nil, :message=> "There were problems with the following fields:"
       .field
         = f.label :email
         = f.email_field :email

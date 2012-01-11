@@ -1,7 +1,9 @@
 %script{ src: "http://connect.facebook.net/en_US/all.js#appId=#{LocalEyesSettings.facebook_api_key}&xfbml=1" }
 
 #wrapper.home
-  #content.home{ 'data-logged_in'=> current_user.present?.to_s }
+  #logo
+    %img.logo{ src: asset_path("localeyes_logo_large.png") }
+  #content{ 'data-logged_in'=> current_user.present?.to_s }
     .top_blurb
       Welcome to LocalEyes
     .search
@@ -22,4 +24,5 @@
       .facebook_register
         #fb-root
         %fb:registration{ :fields=> 'name,birthday,email', :'redirect-uri'=> "http://#{request.host}/users/facebook_register" }
-
+    .business_users
+      =link_to 'business users', businesses_path
