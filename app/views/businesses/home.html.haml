@@ -1,4 +1,21 @@
-#content.home
-  %center
-    =link_to 'Sign in', login_business_users_path, class: :button
-    =link_to 'Register', new_business_user_path, class: :button
+#wrapper.home
+  #logo
+    .wrapper
+      .img
+        %img.logo{ src: asset_path("localeyes_logo_large.jpg") }
+      .text== Businesses
+  .home_opener
+  #content.home
+    .top_section
+      .login
+        .alert
+          = alert
+        = form_for(@new_user, :url=> login_submit_business_users_path, remote: true) do |f|
+          %h1== Sign In
+          .field
+            = f.text_field :email, placeholder: '    email address'
+          .field
+            = f.password_field :password, placeholder: '       password'
+          = f.submit "Sign in", :id=>"log_in", :class=>"button"
+      .register
+        hi rob

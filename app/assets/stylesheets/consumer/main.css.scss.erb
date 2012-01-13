@@ -1,7 +1,6 @@
 @import 'mixins';
 @import 'shared';
 
-
 .ui-autocomplete-loading {
   background: white url(<%= asset_path 'ui-anim_basic_16x16.gif' %>) right center no-repeat;
 }
@@ -32,7 +31,7 @@ iframe.fb_ltr {
 .legend  {
   position:absolute;
   top: -35px;
-  left: -110px;
+  left: -155px;
   z-index: 1000;
   width: 350px;
   font-size:12px;
@@ -59,6 +58,7 @@ iframe.fb_ltr {
   top:0;
   left:0;
 
+
   #logo {
     opacity:0.88;
     margin: 40px auto;
@@ -76,7 +76,7 @@ iframe.fb_ltr {
   }
 
   #content {
-    a { text-decoration: none }
+    a { color: white; }
     opacity:0.88;
     position:relative;
     margin: 40px auto;
@@ -162,19 +162,30 @@ iframe.fb_ltr {
 .event_list_header {
   @include text_inset;
   width:96%;
-  text-align:center;
-  font-size:140%;
-  color:white;
+  min-width: 400px;
+  text-align: left;
+  font-size: 140%;
+  color: white;
   background-color: black;
   border: 1px solid #666666;
-  height:20px;
-  padding:5px 0px;
+  height: 20px;
+  padding: 5px 0px 5px 15px;
   border-top-right-radius: 8px;
   -moz-border-radius-topright: 8px;
   -webkit-border-top-right-radius: 8px;
   border-top-left-radius: 8px;
   -moz-border-radius-topleft: 8px;
   -webkit-border-top-left-radius: 8px;
+
+  .title {
+    display: inline-block;
+    width: 30%
+  }
+  .link_div {
+    text-align: right;
+    display: inline-block;
+    width: 60%;
+  }
 }
 
 #event_list_container {
@@ -188,6 +199,7 @@ iframe.fb_ltr {
 
 #event_list_inner {
   width: 100%;
+
   #event_list {
     width: 100%;
 	  height: 470px;
@@ -216,65 +228,76 @@ ul, li {
   list-style-type: none;
 }
 
+.event_type_bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 3%;
+  border-right: 1px solid #666666;
+}
+
 .event {
+  position: relative;
   @extend .event_bar;
   width:99%;
-  height: 39px;
 
-  .event_type_bar {
+  .wrapper {
     display: inline-block;
-    border-right: 1px solid #666666;
-    width: 3%;
-    height: 100%;
-    vertical-align: top;
-    padding: 0px 0px;
-  }
+    width: 95%;
 
-  .business_img {
-    width: 5%;
-    display: inline-block;
-    img { width:17px; height:24px; }
-  }
+    .info_bar {
+      width: 100%;
+      margin: 5px 0px 4px 23px;
 
-  .info {
-    margin-top: 4px;
-    margin-bottom: 3px;
-    width: 58%;
-    display:inline-block;
-  }
+      .business_img {
+        width: 5%;
+        display: inline-block;
+        img { width:17px; height:24px; }
+      }
 
-  .images {
-    width:28%;
-    display: inline-block;
-    font-size: 9px;
-    text-align: center;
-    vertical-align: top;
-    margin-top: 4px;
+      .info {
+        margin-top: 4px;
+        margin-bottom: 3px;
+        width: 58%;
+        display:inline-block;
+      }
 
-    .vote, .fave {
-      display: inline-block;
-      width: 23px;
-      vertical-align: top;
+      .images {
+        width:28%;
+        display: inline-block;
+        font-size: 9px;
+        text-align: center;
+        vertical-align: top;
+        margin-top: 4px;
+
+        .vote, .fave {
+          display: inline-block;
+          width: 23px;
+          vertical-align: top;
+        }
+        .fave { margin-right: 8%; }
+
+        img {
+          cursor: pointer;
+          margin-right: 10px;
+          width: 21px;
+        }
+      }
     }
-    .fave { margin-right: 8%; }
 
-    img {
-      cursor: pointer;
-      margin-right: 10px;
-      width: 21px;
+    .description {
+      width: 100%;
+      display: none;
+      margin: 6px 0px 7px 23px;
     }
-  }
 
-  .full { width:90%; }
-
-  .description {
-    display: none;
-    margin: 6px 0 0 23px;
-    width: 90% !important;
   }
 
 }
 
+
+.full { width:90%; }
 
 #map_canvas_container {
   width: 48%;
@@ -336,12 +359,11 @@ ul, li {
   }
 }
 
-
 .business {
-  padding: 10px 10px 0 10px;
+  padding: 10px 0px 0px 5%;
   border-right: 1px solid #666666;
   border-left: 1px solid #666666;
-  width: 98%;
+  width: 94%;
 
   .info {
     width:48%;

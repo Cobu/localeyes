@@ -10,5 +10,8 @@ $(document).ready( ->
   # if you are loading data while the page first shows
   data = $('#content.consumer_events').data('events')
   window.Events.refresh(data) if data and data.events
+
+  $( '.legend' ).toggle('slide', {direction: 'down'})
+  $( '.search' ).toggle('slide', {direction: 'down'})
 )
 

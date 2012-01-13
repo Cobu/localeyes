@@ -7,7 +7,6 @@
     = javascript_include_tag "business/application"
     = csrf_meta_tags
   %body{:class=>"#{controller_name}_#{action_name}"}
-    = render :partial => 'layouts/business_header'
     = yield
 
 

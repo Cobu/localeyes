@@ -20,3 +20,9 @@ guard 'livereload' do
   watch(%r{(app/assets/.+\.js)\.coffee}) { |m| m[1] }
   watch(%r{config/locales/.+\.yml})
 end
+
+guard 'jasmine', :all_on_start => false, :all_after_pass => false do
+  #watch(%r{app/assets/javascripts/(.+)\.(js\.coffee|js)}) { |m| "spec/javascripts/#{m[1]}_spec.#{m[2]}" }
+  #watch(%r{spec/javascripts/(.+)_spec\.(js\.coffee|js)})  { |m| "spec/javascripts/#{m[1]}_spec.#{m[2]}" }
+  watch(%r{spec/javascripts/spec\.(js\.coffee|js)})       { "spec/javascripts" }
+end

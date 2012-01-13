@@ -8,10 +8,10 @@
 //= require support/date
 //= require support/has_class_plugin
 //= require support/fullcalendar
-//= require rails.validations
 //= require business/edit_event_setup
 //= require business/event_calendar
 //= require business/edit
+//= require business/home
 //= require map
 //= require consumer/models
 //= require common

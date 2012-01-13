@@ -1,8 +1,6 @@
 class Event < ActiveRecord::Base
   belongs_to :business
 
-  serialize :schedule, IceCube::Schedule
-
   before_update  :edit_schedule
   before_update  :set_time_attributes, :if => :one_time_event?
   before_create  :set_time_attributes, :create_schedule
@@ -19,6 +17,8 @@ class Event < ActiveRecord::Base
   WEEKLY = 'week'
   MONTHLY = 'month'
   RECUR_TYPES = [ONCE,DAILY,WEEKLY,MONTHLY]
+
+  serialize :schedule, IceCube::Schedule
 
   attr_writer :start_date, :start_time_hour, :start_time_minute, :start_time_am_pm,
               :end_date, :end_time_hour, :end_time_minute, :end_time_am_pm,

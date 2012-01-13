@@ -15,13 +15,95 @@
 }
 
 #wrapper.home {
+  background: url(<%= asset_path 'downtown_new_paltz.jpg' %>) no-repeat 50% 80% fixed;
+  width: 100%;
+  height:100%;
+  position: absolute;
+  top:0;
+  left:0;
 
+  #logo {
+    opacity:0.88;
+    margin: 40px auto;
+    width:65%;
+    min-width: 700px;
+    height:100px;
+    background-color: white;
+    border: 1px solid #666666;
+    @include rounded(20px);
+    div {display: inline-block;}
+
+    .wrapper {
+      width: 100%;
+      .img {
+        width:60%;
+        text-align: right;
+        img.logo {
+          margin: 10px 15px;
+          width:400px;
+          height:80px;
+        }
+      }
+
+      .text {
+        line-height: 110px;
+        font-size: 280%;
+        font-weight: bold;
+        vertical-align: top;
+      }
+    }
+  }
+
+  #content {
+    a { text-decoration: none }
+    opacity:0.88;
+    position:relative;
+    margin: 0px auto;
+    width:65%;
+    height:300px;
+    color:white;
+    font-size:12px;
+    text-align:center;
+    background-color: black;
+    border: 1px solid #666666;
+    @include rounded(10px);
+
+    .top_section {
+      margin-top: 10px;
+      width: 100%;
+
+      .login {
+        display: inline-block;
+        width: 30%;
+
+        .field {
+          padding: 7px 0px;
+          input{
+            width: 200px;
+            font-size: 18px;
+            padding-left:10px;
+            margin:0 10px;
+            @include rounded(20px);
+          }
+        }
+        h1 { margin: 3px auto; font-size: 21px; font-weight: normal;}
+        input.button { margin: 5px auto }
+      }
+
+      .register {
+        width: 69%;
+        display: inline-block;
+      }
+
+    }
+
+  }
 }
 
 #wrapper.business_users_login, #wrapper.business_users_register {
   h1 { margin: 20px 0 10px 107px }
   #content {
-    width:30%;
+    width:34%;
     .alert {
       text-align: center;
       font-size: 110%;

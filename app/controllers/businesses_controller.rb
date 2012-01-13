@@ -21,7 +21,8 @@ class BusinessesController < ApplicationController
   end
 
   def index
-    render :home
+    @new_user = BusinessUser.new
+    render :home, layout: 'business_application_home'
   end
 
   def new
@@ -36,7 +37,7 @@ class BusinessesController < ApplicationController
   def create
     @business = current_business_user.businesses.create(params[:business])
     if @business.valid?
-      session[:business_id]=@business.id
+      session[:business_id] = @business.id
       redirect_to business_path(@business), :message=>"Business created"
     else
       render :new

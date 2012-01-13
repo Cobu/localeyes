@@ -11,11 +11,6 @@ class ZipCode < ActiveRecord::Base
     {:label=> "#{city}, #{state_short} #{zip_code}", :zip_code=> zip_code, :type=>:z, id: id}
   end
 
-  def self.get_center_info(id)
-    zip = find(id) rescue nil
-    zip.center_json if zip
-  end
-
   def center_json
     {:title=> "#{city}, #{state_short}, #{zip_code}", :lat=>lat, lng: lng}
   end

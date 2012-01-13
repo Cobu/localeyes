@@ -15,8 +15,4 @@ class College < ActiveRecord::Base
   def center_json
     {title: "#{name}\n#{city}, #{state_short}, #{zip_code}", lat: lat, lng: lng}
   end
-
-  def self.get_center_info(id)
-    find_by_id(id).try(:center_json)
-  end
 end

@@ -72,7 +72,8 @@
               Open
     .buttons
       = f.submit 'Save', class: :button
-      = link_to 'Cancel', business_path(current_business), class: :button
+      - if current_business
+        = link_to 'Cancel', business_path(current_business), class: :button
 
   #map_canvas_container
     .field.map_location

@@ -3,36 +3,44 @@
     %li.event{ 'data-id'=>"{{attributes/id}}" }
       .event_type_bar{ :class=> "{{attributes/service_type}}" }
         &nbsp;
-      .business_img
-        %img{ src: "{{businessImageName}}" }
-      .info
-        %div
-          {{businessName}}
-        %div
-          {{attributes/title}} {{startHour}}
-      .images
-        .fave
-          {{{userFavoriteImage}}}
-        .vote.up
-          %img{ src: 'assets/thumbs-up.gif', rel: 'vote', 'data-id'=>"{{attributes/id}}", 'data-vote'=> "up"}
-          .number
-        .vote.down
-          %img{ src: 'assets/thumbs-down.gif', rel: 'vote', 'data-id'=>"{{attributes/id}}", 'data-vote'=> "down" }
-          .number
-      .description
-        {{attributes/description}}
+      .wrapper
+        .info_bar
+          .business_img
+            %img{ src: "{{businessImageName}}" }
+          .info
+            %div
+              {{businessName}}
+            %div
+              {{attributes/title}} {{startHour}}
+          .images
+            .fave
+              {{{userFavoriteImage}}}
+            .vote.up
+              %img{ src: 'assets/thumbs-up.gif', rel: 'vote', 'data-id'=>"{{attributes/id}}", 'data-vote'=> "up"}
+              .number
+            .vote.down
+              %img{ src: 'assets/thumbs-down.gif', rel: 'vote', 'data-id'=>"{{attributes/id}}", 'data-vote'=> "down" }
+              .number
+        .description
+          {{attributes/description}}
+
 - else
   %script{:id=>"event_template", :type=>"text/x-handlebars-template"}
-    %li.event{ 'data-id'=>"{{attributes/id}}", :class=> "{{attributes/service_type}}" }
-      .business_img
-        %img{ src: "{{businessImageName}}" }
-      .info.full
-        %div
-          {{businessName}}
-        %div
-          {{attributes/title}} {{startHour}}
-      .description.full
-        {{attributes/description}}
+    %li.event{ 'data-id'=>"{{attributes/id}}" }
+      .event_type_bar{ :class=> "{{attributes/service_type}}" }
+        &nbsp;
+      .wrapper
+        .info_bar
+          .business_img
+            %img{ src: "{{businessImageName}}" }
+          .info.full
+            %div
+              {{businessName}}
+            %div
+              {{attributes/title}} {{startHour}}
+        .description
+          {{attributes/description}}
+
 
 %script{:id=>"day_header_template", :type=>"text/x-handlebars-template"}
   %li.day_header{:'data-role'=>"list-divider"}

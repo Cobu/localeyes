@@ -1,12 +1,12 @@
 require 'spec_helper'
 
 describe "Business User" do
-  let(:user) { BusinessUser.make }
+  let(:user) { build(:business_user) }
 
   describe "creating profile" do
-    before {  visit new_business_user_path }
+    before { visit new_business_user_path }
 
-    it "with complete info takes you to create new busines page" do
+    it "with complete info takes you to create new business page" do
       within "form" do
         fill_in 'business_user_email', with: user.email
         fill_in 'business_user_first_name', with: user.first_name
@@ -14,13 +14,13 @@ describe "Business User" do
         fill_in 'business_user_phone', with: user.phone
         fill_in 'business_user_password', with: "password"
         fill_in 'business_user_password_confirmation', with: "password"
-        click_on "Create"
+        click_on "Save"
       end
 
       page.current_path.should == new_business_path
     end
 
-    it "with IN COMPLETE info keeps you on this page and shows errors" do
+    it "with INCOMPLETE info keeps you on this page and shows errors" do
       within "form" do
         fill_in 'business_user_email', with: ''
         fill_in 'business_user_first_name', with: user.first_name
@@ -28,7 +28,7 @@ describe "Business User" do
         fill_in 'business_user_phone', with: user.phone
         fill_in 'business_user_password', with: "password"
         fill_in 'business_user_password_confirmation', with: "password"
-        click_on "Create"
+        click_on "Save"
       end
 
       page.current_path.should == business_users_path
@@ -40,7 +40,7 @@ describe "Business User" do
 
     it "with correct password logs in existing user" do
       user.save
-      b = Business.make!(:oswego_restaurant, user: user)
+      b = create(:oswego_restaurant, user: user)
 
       visit login_business_users_path
 
@@ -64,7 +64,7 @@ describe "Business User" do
       end
 
       page.current_path.should == login_business_users_path
-      page.has_content?("Wrong username/password").should == true
+      page.has_content?("Invalid username/password").should == true
     end
 
     it "with email / password for non existing user keeps user on login page" do
@@ -77,7 +77,7 @@ describe "Business User" do
       end
 
       page.current_path.should == login_business_users_path
-      page.has_content?("Wrong username/password").should == true
+      page.has_content?("Invalid username/password").should == true
     end
   end
 end

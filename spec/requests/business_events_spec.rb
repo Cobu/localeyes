@@ -2,18 +2,18 @@ require 'spec_helper'
 
 describe "Business Events" do
 
-  let(:user) { BusinessUser.make! }
-  let(:business) { Business.make!(:oswego_restaurant, :user=>user) }
-  let(:once_event) {Event.make!(:once, :start_time=>Time.now.utc.change(:min=>15), :end_time=>Time.now+1.hour, :business=> business)}
-  let(:daily_event) {Event.make!(:daily, :start_time=>Time.now.utc.change(:min=>15), :end_time=>Time.now+1.hour, :business=> business)}
+  let(:user) { create(:business_user) }
+  let(:business) { create(:oswego_restaurant, :user=>user) }
+  let(:once_event) {create(:once_event, :start_time=>Time.now.utc.change(:min=>15), :end_time=>Time.now+1.hour, :business=> business)}
+  let(:daily_event) {create(:daily_event, :start_time=>Time.now.utc.change(:min=>15), :end_time=>Time.now+1.hour, :business=> business)}
 
-  before { login_business_user user }
+  before { login_business_user(user, business) }
 
   describe "edits" do
 
     it "a one time event", :js=>true do
       start_time = Time.now.utc.change(:hour=>1, :min=>15, :sec=>0)
-      e = Event.make!(:once, :start_time=>start_time, :business=> business)
+      event = create(:once_event, start_time: start_time, end_time: start_time+4.hours, business: business)
 
       visit business_path(business)
 
@@ -23,20 +23,21 @@ describe "Business Events" do
       new_title = Time.now.to_i.to_s
 
       within('.edit_event') do
-        fill_in 'event_title', :with=> new_title
-        select new_start_time.hour.to_s, :from => 'event_start_time_hour'
-        select new_start_time.strftime("%M"), :from => 'event_start_time_minute'
-        select new_start_time.strftime("%P"), :from => 'event_start_time_am_pm'
+        fill_in 'event_title', with: new_title
+        select new_start_time.hour.to_s, from: 'event_start_time_hour'
+        select new_start_time.strftime("%M"), from: 'event_start_time_minute'
+        select new_start_time.strftime("%P"), from: 'event_start_time_am_pm'
         click_on 'Update'
       end
 
-      e.reload
-      e.title.should == new_title
-      e.start_time.should == new_start_time
+      sleep 0.5
+      event.reload
+      event.title.should == new_title
+      event.start_time.should == new_start_time
     end
 
     it "a daily event", :js=>true do
-      e = daily_event
+      event = daily_event
       new_title = Time.now.to_i.to_s
       until_date = (Time.now + 1.day).to_date
 
@@ -56,9 +57,9 @@ describe "Business Events" do
       end
       sleep(0.5)
 
-      e.reload
-      e.title.should == new_title
-      e.schedule.rrules.first.until_date.to_date.should == until_date
+      event.reload
+      event.title.should == new_title
+      event.schedule.rrules.first.until_date.to_date.should == until_date
     end
   end
 
@@ -75,12 +76,12 @@ describe "Business Events" do
       within('.edit_event') do
         click_on 'Delete'
       end
-
+      sleep 0.5
       Event.count.should == 0
     end
 
     it "a daily event, just one day", :js=>true do
-      e = daily_event
+      event = daily_event
 
       login_business_user user
       visit business_path(business)
@@ -95,8 +96,9 @@ describe "Business Events" do
         find(:css , "input#edit_affects_one").click
       end
 
-      e.reload
-      e.schedule.exdates.size.should == 1
+      sleep 0.5
+      event.reload
+      event.schedule.exdates.size.should == 1
     end
 
   end

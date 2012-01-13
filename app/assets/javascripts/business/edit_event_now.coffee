@@ -5,6 +5,8 @@ $(document).ready( ->
   $('#event_end_date').datepicker({ minDate: new Date() })
   $('#event_recur_until_date').datepicker({ minDate: new Date() })
   $(".event_type_radio, .recurrence_radio, .choices_radio" ).buttonset()
+#  console.log($("label[for^='event_event_type_']"))
+#  $("label[for^='event_event_type_']").removeClass('ui-state-hover ui-state-focus')
 
   ######### edit events ################
   if $('.edit_event')[0]

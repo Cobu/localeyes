@@ -8,14 +8,17 @@ Spork.prefork do
   require 'rspec/rails'
   require 'capybara/rspec'
   require 'capybara/rails'
-  require 'machinist/active_record'
-  require 'blueprints'
+  require 'factory_girl_rails'
   require 'database_cleaner'
 
   Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 
   RSpec.configure do |config|
     config.mock_with :rr
+    config.include FactoryGirl::Syntax::Methods
+    config.include FixtureBuilder
+    config.include LoginHelpers
+    config.include TimeHelpers
 
     config.before(:suite) do
         DatabaseCleaner.strategy = :truncation
@@ -42,7 +45,7 @@ Spork.each_run do
   Dir["#{Rails.root}/app/**/*.rb"].each { |f| load f }
   load "#{Rails.root}/config/routes.rb"
   Dir["#{Rails.root}/config/initializers/*.rb"].each { |f| load f }
-  load "#{Rails.root}/spec/blueprints.rb"
+  FactoryGirl.reload
   Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| load f }
 end
 

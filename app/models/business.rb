@@ -6,10 +6,9 @@ class Business < ActiveRecord::Base
   validates :name, :phone, :city, :state, :zip_code, :presence => true
 
   geocoded_by :full_address, latitude: :lat, longitude: :lng
-  before_create :geocode, :unless => -> { lat.present? and lng.present? }
 
   before_validation :set_phone_number
-
+  before_create :geocode, :unless => -> { lat.present? and lng.present? }
   before_create :set_default_hours
 
   # day order is  [sun, mon, tues, wed , thu, fri, sat]

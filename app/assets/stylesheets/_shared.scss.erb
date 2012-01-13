@@ -5,40 +5,41 @@ body {
 }
 
 #header {
-  width: 900;
+  width: 100%;
   height: 50px;
-  margin: 0 0 20px 10%;
-  background-color:white;
-  a { text-decoration:none }
-  div {
-    display:inline-block;
-    height: 40px;
-    vertical-align:top;
-   h1 { line-height: 20px }
+  margin: 0 0 20px 0;
+  background-color: white;
+  a { text-decoration: none; padding-left: 10px }
+  h1 {
+    display: inline-block;
+    vertical-align: top;
+    line-height: 37px;
+    font-weight: bold;
+    font-size: 20px
   }
 }
 
 .settings_div {
-  position:relative;
-  display:inline-block;
+  position: relative;
+  display: inline-block;
 
   .link {
-    cursor:pointer;
-    font-size:73%;
-    margin-left:20px;
+    cursor: pointer;
+    font-size: 73%;
+    margin-left: 20px;
   }
 }
 
 .field_with_errors{
-  display:inline-block;
-  color:red;
+  display: inline-block;
+  color: red;
   font-size: 90%;
 }
 
 /*  Buttons */
 span.button, a.button, input.button{
-  color: white;
-  font-size:13px;
+  color:  white;
+  font-size: 13px;
   background-image: -webkit-gradient(
     linear,
     left bottom,
@@ -54,17 +55,19 @@ span.button, a.button, input.button{
   @include rounded(10px);
   padding: 6px 10px;
   text-align: center;
-  text-decoration:none;
+  text-decoration: none;
 }
 
 input.button {
   padding: 4px 10px;
 }
 
+
 /* for coloring the events of different type  */
-$event_color: #f2f2c8;
-$special_color: #b6fab6;
-$announcement_color: #f2b8b8;
+/*div { color: blue; }*/
+$event_color: #a8d3ff;
+$special_color: #fff846;
+$announcement_color: #ff9234;
 
 .event_type {
   background-color: $event_color;

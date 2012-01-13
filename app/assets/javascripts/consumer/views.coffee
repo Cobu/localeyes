@@ -56,7 +56,6 @@ $(document).ready(->
       this.render()
 
     showBusiness: ->
-      this.el.find('.description').show()
       if ( this.cid ==  (business_list.selected_view.event_view.cid if business_list.selected_view) )
         business_list.clearSelected()
       else
@@ -67,7 +66,7 @@ $(document).ready(->
     render: ->
       if @event != undefined
         this.el = $(this.template(@event))
-        this.el.find('.info, .description').bind('click', => this.showBusiness())
+        this.el.find('.wrapper .info_bar .info, .description').bind('click', => this.showBusiness())
       this
   )
 
@@ -117,13 +116,15 @@ $(document).ready(->
 
     render: ->
       this.el = $(@template( @event_view.event.business()) )
-#      elem_event_class = @event_view.el.attr('class').match(/\w+_type/)[0]
-#      this.el.addClass(elem_event_class)
+
       @event_view.el.after(this.el)
-      this.el.slideDown('slow' )
+      @event_view.el.find('.description').show()
+      @event_view.el.addClass('open')
+      this.el.slideDown('slow')
 
     close: -> this.el.slideUp('slow', =>
       @event_view.el.find('.description').hide()
+      @event_view.el.removeClass('open')
       this.el.remove()
     )
   )

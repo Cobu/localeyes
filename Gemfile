@@ -20,6 +20,7 @@ gem 'voteable_mongo'
 gem 'bson_ext'
 gem 'geocoder'
 gem 'machinist', '>= 2.0.0.beta2'
+gem 'factory_girl_rails'
 gem 'unicorn'
 gem 'draper'
 gem 'omniauth'
@@ -39,6 +40,7 @@ group :development, :test do
   gem 'guard-livereload'
   gem 'guard-spork'
   gem 'guard-bundler'
+  gem 'guard-jasmine'
 end
 
 group :test do
