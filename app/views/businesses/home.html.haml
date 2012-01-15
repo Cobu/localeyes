@@ -13,9 +13,9 @@
           .message
             &nbsp;
           .field
-            = f.text_field :email, placeholder: '    email address'
+            = f.text_field :email, placeholder: '       email address'
           .field
-            = f.password_field :password, placeholder: '       password'
+            = f.password_field :password, placeholder: '          password'
           .sign_in_button_wrapper
             .sign_in_button
               = f.submit "Sign in", :id=>"sign_in_button", :class=>"button"
@@ -28,14 +28,14 @@
             &nbsp;
           .row
             .field
-              = f.text_field :email, placeholder: '    email address'
+              = f.text_field :email, placeholder: '       email address'
             .field
-              = f.password_field :password, placeholder: '       password'
+              = f.password_field :password, placeholder: '         password'
           .row
             .field
-              = f.text_field :name, placeholder: '   full name '
+              = f.text_field :name, placeholder: '          full name'
             .field
-              = f.password_field :password_confirmation, placeholder: '  confirm password'
+              = f.password_field :password_confirmation, placeholder: '    confirm password'
           .register_button_wrapper
             .register_button
               = f.submit "Register", :id=>"register_button", :class=>"button"

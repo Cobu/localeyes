@@ -37,10 +37,13 @@
           .business_img
             %img{ src: "{{businessImageName}}" }
           .info.full
-            %div
-              {{businessName}}
-            %div
-              {{attributes/title}} {{startHour}}
+            .business_name_wrapper
+              .business_name
+                {{businessName}}
+              .start_hour== {{startHour}}
+              .am_pm== {{startAmPm}}
+            .title
+              {{attributes/title}}
         .description
           {{attributes/description}}
 

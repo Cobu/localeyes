@@ -21,7 +21,6 @@ class User < ActiveRecord::Base
   end
 
   def split_name
-    p "split name"
     self.first_name, self.last_name = @name.split if @name
   end
 

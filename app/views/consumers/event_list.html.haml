@@ -33,12 +33,13 @@
               filters
 
         .sort_div
-          .link{ 'data-type'=> 'popular' }
-            popular
           .link.selected_link{ 'data-type'=> 'recent' }
             time
           .link{ 'data-type'=> 'title' }
             title
+          - if current_user
+            .link{ 'data-type'=> 'popular' }
+              popular
     #event_list_inner
       #event_list
 
