@@ -11,7 +11,11 @@ $(document).ready(->
     )
     .bind('ajax:success', (event, data)->
       url = "/businesses/"
-      url += data.business if data.business
+      if data.business
+        url += data.business
+      else
+        url += 'new'
+      console.log(url)
       window.location.href = url
     )
     .bind('ajax:complete', (event, data)->

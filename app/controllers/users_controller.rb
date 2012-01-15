@@ -32,6 +32,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(params[:user])
     if @user.save
+      reset_session
       head :ok
     else
       render :new, status: 500
@@ -43,6 +44,7 @@ class UsersController < ApplicationController
     head :error and return if user_data.blank? or session[:register_college].blank?
     user_data[:college_id] = session.delete(:register_college)
     user = User.find_by_email(user_data['email']) || User.create!(user_data)
+    reset_session
     cookies.permanent.signed[:user] = user.id
     session[:user_id] = user.id
     redirect_to event_list_consumers_path

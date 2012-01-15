@@ -9,6 +9,7 @@ class BusinessUsersController < ApplicationController
     @user = BusinessUser.authenticate(params[:business_user][:email],params[:business_user][:password])
     render(text: 'Invalid username/password', status: 404) and return unless @user
 
+    reset_session
     session[:business_user_id] = @user.id
     business = @user.businesses.first
 
