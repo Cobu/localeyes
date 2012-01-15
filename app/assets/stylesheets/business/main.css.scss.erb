@@ -9,8 +9,7 @@
 }
 
 #wrapper {
-  width: 100%;
-  min-width: 900px;
+  @extend .body_size;
   margin: auto;
 }
 
@@ -147,9 +146,15 @@
   }
 }
 
+#wrapper.business_edit {
+  width: 75%;
+  min-width: 800px;
+  margin: auto;
+  border-color: yellow;
+}
 
 form.new_business, form.edit_business{
-  width: 440px;
+  width: 58%;
   margin-top: 15px;
   display:inline-block;
 
@@ -218,15 +223,16 @@ form.new_business, form.edit_business{
 }
 
 #map_canvas_container {
-  width:430px;
+  width:40%;
+  min-width:330px;
   margin:20px 0px;
   display:inline-block;
   vertical-align:top;
   .field.map_location { margin-bottom: 15px}
 
   #map_canvas {
-    width: 430px;
-    height: 380px;
+    width: 330px;
+    height: 300px;
     border: 1px solid #666666;
   }
 }

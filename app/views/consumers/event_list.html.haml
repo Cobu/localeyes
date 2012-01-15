@@ -8,7 +8,7 @@
       .wrapper_links
         .link_div
           .event_types
-            .link{ 'data-type'=> 'legend', 'data-direction'=> 'down'}
+            .link.invisible{ 'data-type'=> 'legend', 'data-direction'=> 'down' }
               legend
             .legend
               .type
@@ -24,18 +24,18 @@
                   &nbsp;
                 Specials
 
+          .location
+            .link.invisible{ 'data-type'=> 'search', 'data-direction'=> 'down' }
+              location
+
           .settings
             .link{ 'data-type'=> 'filter', 'data-direction'=> 'left' }
               filters
 
-          .location
-            .link{ 'data-type'=> 'search', 'data-direction'=> 'down' }
-              location
-
         .sort_div
           .link{ 'data-type'=> 'popular' }
             popular
-          .link{ 'data-type'=> 'recent' }
+          .link.selected_link{ 'data-type'=> 'recent' }
             recent
           .link{ 'data-type'=> 'title' }
             title

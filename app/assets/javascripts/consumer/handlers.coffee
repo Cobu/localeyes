@@ -78,6 +78,7 @@ $(document).ready( ->
     elem = $(event.currentTarget)
     type = elem.data('type')
     direction = elem.data('direction')
+    elem.toggleClass('selected_link')
     $( ".#{type}" ).toggle('slide', {direction: direction})
   )
 
@@ -113,6 +114,8 @@ $(document).ready( ->
   $( '.sort_div .link' ).live( 'click', (event)->
     elem = $(event.currentTarget)
     type = elem.data('type')
+    $('.sort_div .link').removeClass('selected_link')
+    elem.addClass('selected_link')
     window.sorter.setSortType(type)
   )
 

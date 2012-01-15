@@ -26,7 +26,7 @@ class BusinessesController < ApplicationController
   end
 
   def new
-    @business = current_business_user.businesses.new
+    @business = BusinessDecorator.new(current_business_user.businesses.new)
     @business.set_default_hours
   end
 
@@ -41,6 +41,7 @@ class BusinessesController < ApplicationController
       session[:business_id] = @business.id
       redirect_to business_path(@business), :message=>"Business created"
     else
+      @business = BusinessDecorator.new @business
       render :new
     end
   end
@@ -50,6 +51,7 @@ class BusinessesController < ApplicationController
     if @business.update_attributes(params[:business])
       redirect_to business_path(@business), :message=>"Business updated"
     else
+      @business = BusinessDecorator.new @business
       render :edit
     end
   end

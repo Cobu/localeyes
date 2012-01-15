@@ -23,15 +23,19 @@ iframe.fb_ltr {
   opacity:1;
 }
 
+.settings, .location, .event_types {
+  @extend .settings_div;
+  width: 30%;
+}
 
-.settings, .location, .event_types, .sort_div {
+.sort_div {
   @extend .settings_div;
 }
 
 .legend  {
   position:absolute;
   top: -29px;
-  left: -160px;
+  left: -100px;
   width: 300px;
   font-size:12px;
   display: none;

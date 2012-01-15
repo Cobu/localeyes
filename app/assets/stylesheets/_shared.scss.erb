@@ -2,18 +2,24 @@
 body {
   font: normal normal normal 13.34px/normal helvetica, arial, freesans, clean, sans-serif;
   /*div, li, span { border: 1px solid #8a2be2 }*/
+  width: 90%;
+  min-width: 900px;
 }
 
 .body_size {
-  width: 90%;
-  min-width: 900px;
-  margin: auto;
+  /*width: 80%;*/
+  /*min-width: 900px;*/
+  /*margin: auto;*/
 }
 
 .invisible { visibility: hidden; }
+.hidden { display: none !important; }
+.selected_link { font-weight: bold }
 
 #header {
-  @extend .body_size;
+  width: 80%;
+  min-width: 800px;
+  margin: auto;
   height: 50px;
   margin: 10px auto;
   background-color: white;
@@ -33,6 +39,7 @@ body {
 
   .link {
     display: inline-block;
+    margin-right: 2px;
     cursor: pointer;
     font-size: 73%;
     margin-left: 20px;
