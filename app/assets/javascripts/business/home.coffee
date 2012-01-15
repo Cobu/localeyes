@@ -7,7 +7,7 @@ $(document).ready(->
     .bind('ajax:beforeSend', (event, data)->
       form = $(this)
       form.find('#sign_in_button').prop("disabled", true)
-      $('.sign_in_spinner_elem').removeClass('invisible')
+      form.find('.spinner_elem').removeClass('invisible')
     )
     .bind('ajax:success', (event, data)->
       url = "/businesses/"
@@ -15,12 +15,11 @@ $(document).ready(->
         url += data.business
       else
         url += 'new'
-      console.log(url)
       window.location.href = url
     )
     .bind('ajax:complete', (event, data)->
       form = $(this)
-      $('.sign_in_spinner_elem').addClass('invisible')
+      form.find('.spinner_elem').addClass('invisible')
       form.find('#sign_in_button').prop("disabled", false)
     )
     .bind('ajax:error', (xhr, status, error)->
