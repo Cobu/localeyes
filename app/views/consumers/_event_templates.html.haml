@@ -8,10 +8,13 @@
           .business_img
             %img{ src: "{{businessImageName}}" }
           .info
-            %div
-              {{businessName}}
-            %div
-              {{attributes/title}} {{startHour}}
+            .business_name_wrapper
+              .business_name
+                {{businessName}}
+              .start_hour== {{startHour}}
+              .am_pm== {{startAmPm}}
+            .title
+              {{attributes/title}}
           .images
             .fave
               {{{userFavoriteImage}}}

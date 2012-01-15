@@ -1,4 +1,5 @@
-class EventDecorator < PresenterBase
+class EventDecorator < ApplicationDecorator
+  decorates :event
 
   def start_date
     start_time.strftime("%m/%d/%Y")
@@ -31,4 +32,5 @@ class EventDecorator < PresenterBase
   def end_time_am_pm
     end_time.strftime("%P")
   end
+
 end

@@ -6,6 +6,7 @@ class EventsController < ApplicationController
 
   def new
     @event = current_business.events.new(:start_time=>params[:start_time],:end_time=>params[:end_time])
+    @event = EventDecorator.new(@event)
     render :edit, :layout => "events"
   end
 
@@ -56,6 +57,6 @@ class EventsController < ApplicationController
   private
 
   def find_event
-    @event = current_business.events.find(params[:id])
+    @event = EventDecorator.new( current_business.events.find_by_id(params[:id]) )
   end
 end

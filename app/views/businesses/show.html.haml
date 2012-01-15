@@ -2,10 +2,12 @@
   .header
     - if current_business_user.businesses.size > 1
       = select(:business, :id, current_business_user.businesses.collect{|b| [b.name, b.id]}, :selected=>current_business.id)
-    - else
+    - if current_business_user.businesses.size == 1
       = current_business.name
-    .link
-      = link_to 'Edit', edit_business_path(current_business), class: :button
+    - if current_business_user.businesses.size > 0
+      .link
+        = link_to 'Edit', edit_business_path(current_business), class: :button
+
     .link
       = link_to 'Create New Business', new_business_path, class: :button
 

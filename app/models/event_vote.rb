@@ -5,6 +5,7 @@ class EventVote
   # set points for each vote
   voteable self, :up => +1, :down => -1
 
-  scope :votes_for_event, -> event_id { where(_id: event_id).only('votes.down_count', 'votes.up_count') }
-  scope :votes_for_events, -> event_ids { any_in(_id: event_ids).only('votes.down_count', 'votes.up_count') }
+  scope :tally_fields, only('votes.down_count', 'votes.up_count', 'votes.point')
+  scope :votes_for_event, -> event_id { where(_id: event_id).tally_fields }
+  scope :votes_for_events, -> event_ids { any_in(_id: event_ids).tally_fields }
 end

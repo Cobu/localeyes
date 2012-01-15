@@ -43,18 +43,6 @@ class Business < ActiveRecord::Base
     self.phone = [@phone_first3, @phone_second3, @phone_last4].join if @phone_first3
   end
 
-  def phone_first3
-    read_attribute(:phone)[0..2] if read_attribute(:phone)
-  end
-
-  def phone_second3
-    read_attribute(:phone)[3..5] if read_attribute(:phone)
-  end
-
-  def phone_last4
-    read_attribute(:phone)[6..9] if read_attribute(:phone)
-  end
-
   CAFE = 0
   RESTAURANT = 1
   BAR = 2

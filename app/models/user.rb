@@ -6,12 +6,13 @@ class User < ActiveRecord::Base
   has_secure_password
   reset_callbacks(:validate)
 
+  before_validation :split_name
+
   validates :email, presence: true
   validates :email, uniqueness: true, format: {with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i}, allow_nil: true
   #validates :password, confirmation: true, on: :create, length: {minimum: 6} , if: -> {password.present?}
 
-  attr_writer :name
-  before_create :split_name
+  attr_accessor :name
 
   def birthday=(birthday)
     # try parsing this format ( m/d/y ) to see if it works
@@ -20,6 +21,7 @@ class User < ActiveRecord::Base
   end
 
   def split_name
+    p "split name"
     self.first_name, self.last_name = @name.split if @name
   end
 
@@ -28,7 +30,7 @@ class User < ActiveRecord::Base
   end
 
   def add_favorite(business_id)
-    EventVote.db.collection('favorites').update( {user_id: id}, {"$addToSet"=> {businesses: business_id}}, {upsert: true})
+    EventVote.db.collection('favorites').update( {user_id: id}, {'$addToSet'=> {businesses: business_id}}, {upsert: true})
   end
 
   def remove_favorite(business_id)

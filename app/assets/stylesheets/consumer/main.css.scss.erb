@@ -24,16 +24,15 @@ iframe.fb_ltr {
 }
 
 
-.settings, .location, .event_types {
+.settings, .location, .event_types, .sort_div {
   @extend .settings_div;
 }
 
 .legend  {
   position:absolute;
-  top: -35px;
-  left: -170px;
-  z-index: 1000;
-  width: 350px;
+  top: -29px;
+  left: -160px;
+  width: 300px;
   font-size:12px;
   display: none;
 
@@ -154,8 +153,7 @@ iframe.fb_ltr {
 
 
 #content.consumer_events {
-  width: 90%;
-  min-width: 900px;
+  @extend .body_size;
   margin: 30px auto;
 }
 
@@ -164,12 +162,11 @@ iframe.fb_ltr {
   width:96%;
   min-width: 400px;
   text-align: left;
-  font-size: 140%;
   color: white;
   background-color: black;
   border: 1px solid #666666;
-  height: 20px;
-  padding: 5px 0px 5px 15px;
+  height: 30px;
+  padding: 3px 0px 5px 15px;
   border-top-right-radius: 8px;
   -moz-border-radius-topright: 8px;
   -webkit-border-top-right-radius: 8px;
@@ -179,13 +176,25 @@ iframe.fb_ltr {
 
   .title {
     display: inline-block;
-    width: 30%
+    width: 30%;
+    font-size: 140%;
+    line-height: 35px;
   }
-  .link_div {
-    text-align: right;
+
+  .wrapper_links {
+    vertical-align: top;
     display: inline-block;
     width: 60%;
+    margin: 0;
+    padding: 0;
+    .link_div {
+      text-align: right;
+    }
+    .sort_div {
+
+    }
   }
+
 }
 
 #event_list_container {
@@ -215,13 +224,13 @@ iframe.fb_ltr {
 
 .day_header {
   width:99%;
-  height: 25px;
+  height: 22px;
   font-size: 120%;
   @extend .event_bar;
   background-color: #cccccc;
   text-align: center;
   vertical-align: middle;
-  padding: 10px 0px 0px 0px;
+  padding: 6px 0px 3px 0px;
 }
 
 ul, li {
@@ -243,12 +252,13 @@ ul, li {
   width:99%;
 
   .wrapper {
+    position:relative;
     display: inline-block;
     width: 95%;
 
     .info_bar {
       width: 100%;
-      margin: 5px 0px 4px 23px;
+      margin: 4px 0px 4px 18px;
 
       .business_img {
         width: 5%;
@@ -257,14 +267,28 @@ ul, li {
       }
 
       .info {
-        margin-top: 4px;
+        margin-top: 3px;
         margin-bottom: 3px;
-        width: 58%;
+        width: 69%;
         display:inline-block;
+        .business_name_wrapper {
+          .business_name {
+            display: inline-block;
+            width: 78%;
+          }
+          .start_hour {
+            display: inline;
+            width: 23%;
+          }
+          .am_pm { display: inline; font-size: 80% }
+        }
+        .title {
+          font-weight: bold;
+        }
       }
 
       .images {
-        width:28%;
+        width:22%;
         display: inline-block;
         font-size: 9px;
         text-align: center;

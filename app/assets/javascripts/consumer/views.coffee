@@ -89,6 +89,7 @@ $(document).ready(->
     render: ->
       this.el.empty()
       events = _(@event_list.models).groupBy((event)-> event.startDate())
+
       for num in [0..13]
         date = Date.today().addDays(num)
         days_events = _.select(events[date.toString("yyyy-MM-dd")], (event)-> window.filter.match(event.business()))
@@ -183,8 +184,11 @@ $(document).ready(->
 
   class window.Votes
     votes: []
+    votes_hash: {}
 
-    setVotes: (votes)-> @votes = votes
+    setVotes: (votes)->
+      @votes = votes
+      _.each(votes, (vote)=> @votes_hash[vote._id] = vote )
 
     show: ()-> _.each( @votes, (info)=> this.showNumbers(info) )
 
@@ -201,4 +205,21 @@ $(document).ready(->
       elem.find(".vote.down .number").html(info.votes["down_count"] || 0)
 
   window.votes = new window.Votes()
+
+
+  class window.Sort
+    sort_type: 'recent'
+    sorts: {
+      recent: (event)-> event.get('start')
+      popular: (event)-> -window.votes.votes_hash[event.id].votes['point']
+      title: (event)-> event.get('title')
+    }
+
+    setSortType: (type)->
+      @sort_type = type
+      window.event_list.comparator = this.sorts[type]
+      window.event_list.sort()
+
+  window.sorter = new window.Sort()
+
 )

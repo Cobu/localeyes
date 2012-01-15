@@ -2,7 +2,8 @@
 #..hack..###########  Event model #############
 window.Event = Backbone.Model.extend({
   startDate: -> Date.parse(this.get('start')).toString("yyyy-MM-dd")
-  startHour: -> Date.parse(this.get('start')).toString("h:mm tt")
+  startHour: -> Date.parse(this.get('start')).toString("h:mm")
+  startAmPm: -> Date.parse(this.get('start')).toString("tt")
   business: -> business_list.get(this.get('business_id'))
   businessName: -> this.business().get('name')
   businessImageName: -> this.business().imageName()
@@ -15,6 +16,7 @@ window.Event = Backbone.Model.extend({
 window.EventList = Backbone.Collection.extend({
   url: '/consumers/events'
   model: Event
+  comparator: (event)-> event.get('start')
 })
 
 

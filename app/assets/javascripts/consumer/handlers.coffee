@@ -15,6 +15,10 @@ $(document).ready( ->
     headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')}
   })
 
+  $('.facebook_login.link').live('click', (e)->
+    $('.facebook_register').show()
+  )
+
   if $( "#location_search" )[0]
     $( "#location_search" ).autocomplete(
       source: '/consumers/search_location'
@@ -69,16 +73,12 @@ $(document).ready( ->
     )
   )
 
-  $( '.settings .link' ).live( 'click', (elem)->
-    $( '.filter' ).toggle('slide', {direction: 'left'})
-  )
-
-  $( '.location .link' ).live( 'click', (event)->
-    $( '.search' ).toggle('slide', {direction: 'down'})
-  )
-
- $( '.event_types .link' ).live( 'click', (event)->
-    $( '.legend' ).toggle('slide', {direction: 'down'})
+  ##################  viewing settings handlers #####################
+  $( '.link_div .link' ).live( 'click', (event)->
+    elem = $(event.currentTarget)
+    type = elem.data('type')
+    direction = elem.data('direction')
+    $( ".#{type}" ).toggle('slide', {direction: direction})
   )
 
 
@@ -98,9 +98,6 @@ $(document).ready( ->
     filter.setFavorite( elem.data('business_id') )
   )
 
-  $('.facebook_login.link').live('click', (e)->
-    $('.facebook_register').show()
-  )
 
   ################ voting handlers #############
   $('.images img[rel=vote]').live('click', (event)->
@@ -110,6 +107,13 @@ $(document).ready( ->
     $.post('/users/event_vote',{ event:event_id, vote:vote }, (data)->
       window.votes.resetVotes(data) if data
     )
+  )
+
+  ##################  sorting  handlers #####################
+  $( '.sort_div .link' ).live( 'click', (event)->
+    elem = $(event.currentTarget)
+    type = elem.data('type')
+    window.sorter.setSortType(type)
   )
 
 )

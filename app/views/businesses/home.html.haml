@@ -8,14 +8,36 @@
   #content.home
     .top_section
       .login
-        .alert
-          = alert
         = form_for(@new_user, :url=> login_submit_business_users_path, remote: true) do |f|
           %h1== Sign In
+          .message
+            &nbsp;
           .field
             = f.text_field :email, placeholder: '    email address'
           .field
             = f.password_field :password, placeholder: '       password'
-          = f.submit "Sign in", :id=>"log_in", :class=>"button"
+          .sign_in_button_wrapper
+            .sign_in_button
+              = f.submit "Sign in", :id=>"sign_in_button", :class=>"button"
+            .spinner_elem.invisible
+              %img{ src: asset_path('ui-anim_basic_16x16.gif') }
       .register
-        hi rob
+        = form_for(@new_user, :url=> business_users_path, remote: true) do |f|
+          %h1== New Business User
+          .message
+            &nbsp;
+          .row
+            .field
+              = f.text_field :email, placeholder: '    email address'
+            .field
+              = f.password_field :password, placeholder: '       password'
+          .row
+            .field
+              = f.text_field :name, placeholder: '   full name '
+            .field
+              = f.password_field :password_confirmation, placeholder: '  confirm password'
+          .register_button_wrapper
+            .register_button
+              = f.submit "Register", :id=>"register_button", :class=>"button"
+            .spinner_elem.invisible
+              %img{ src: asset_path('ui-anim_basic_16x16.gif') }

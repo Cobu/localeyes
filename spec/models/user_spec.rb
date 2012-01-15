@@ -1,10 +1,16 @@
 require 'spec_helper'
 
 describe BusinessUser do
+
   it "can own business" do
     bu = build(:business_user)
     b = create(:oswego_restaurant, :user=>bu)
     Business.find(b.id).user.should be_instance_of BusinessUser
+  end
+
+  it "can set name" do
+    b = BusinessUser.create(name: 'dude man', email: 'dano@man.com', password: 'whatsup')
+    b.valid?.should be_true
   end
 end
 

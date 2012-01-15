@@ -32,6 +32,7 @@ class BusinessesController < ApplicationController
 
   def edit
     @business = current_business_user.businesses.find(params[:id])
+    @business = BusinessDecorator.new @business
   end
 
   def create

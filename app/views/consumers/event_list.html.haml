@@ -5,32 +5,40 @@
     .event_list_header
       .title
         The Feed
-      .link_div
-        .event_types
-          .link
-            legend
-          .legend
-            .type
-              .event_type
-                &nbsp;
-              Events
-            .type
-              .announcement_type
-                &nbsp;
-              Announcements
-            .type
-              .special_type
-                &nbsp;
-              Specials
+      .wrapper_links
+        .link_div
+          .event_types
+            .link{ 'data-type'=> 'legend', 'data-direction'=> 'down'}
+              legend
+            .legend
+              .type
+                .event_type
+                  &nbsp;
+                Events
+              .type
+                .announcement_type
+                  &nbsp;
+                Announcements
+              .type
+                .special_type
+                  &nbsp;
+                Specials
 
-        .settings
-          .link
-            filters
+          .settings
+            .link{ 'data-type'=> 'filter', 'data-direction'=> 'left' }
+              filters
 
-        .location
-          .link
-            location
+          .location
+            .link{ 'data-type'=> 'search', 'data-direction'=> 'down' }
+              location
 
+        .sort_div
+          .link{ 'data-type'=> 'popular' }
+            popular
+          .link{ 'data-type'=> 'recent' }
+            recent
+          .link{ 'data-type'=> 'title' }
+            title
     #event_list_inner
       #event_list
 
