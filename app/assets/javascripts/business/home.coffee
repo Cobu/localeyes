@@ -2,10 +2,11 @@ $(document).ready(->
 
   return unless $('#wrapper.home')[0]
 
-  ######  handle ajax login  ########
+  ###############  login callbacks  ################
   $(".login form")
     .bind('ajax:beforeSend', (event, data)->
       form = $(this)
+      form.find('.message').html('&nbsp;')
       form.find('#sign_in_button').prop("disabled", true)
       form.find('.spinner_elem').removeClass('invisible')
     )
@@ -27,10 +28,11 @@ $(document).ready(->
       form.find('.message').html(status.responseText)
     )
 
-  ######  handle registration  ########
+  ###############  registration callbacks ############
   $(".register form")
     .bind('ajax:beforeSend', (event, data)->
       form = $(this)
+      form.find('.message').html('&nbsp;')
       form.find('#register_button').prop("disabled", true)
       form.find('.spinner_elem').removeClass('invisible')
     )
@@ -46,16 +48,5 @@ $(document).ready(->
       form = $(this)
       form.find('.message').html(status.responseText)
     )
-
-  #  $( '.sign_in' ).click( ->
-  #    $('.home_opener').load( 'business_users/login', ->
-  #      $('.home_opener').dialog(
-  #          modal: true
-  #          title: "Sign in"
-  #          resizable: false
-  #      )
-  #    )
-  #    return false
-  #  )
 
 )
