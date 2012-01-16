@@ -4,35 +4,32 @@ describe "Business User" do
   let(:user) { build(:business_user) }
 
   describe "creating profile" do
-    before { visit new_business_user_path }
+    before { visit businesses_path }
 
-    it "with complete info takes you to create new business page" do
-      within "form" do
+    it "with complete info takes you to create new business page", js: true do
+      within ".register form" do
         fill_in 'business_user_email', with: user.email
-        fill_in 'business_user_first_name', with: user.first_name
-        fill_in 'business_user_last_name', with: user.last_name
-        fill_in 'business_user_phone', with: user.phone
+        fill_in 'business_user_name', with: user.full_name
         fill_in 'business_user_password', with: "password"
         fill_in 'business_user_password_confirmation', with: "password"
-        click_on "Save"
+        click_on "Register"
       end
 
+      page.has_selector?('#wrapper.business_edit')
       page.current_path.should == new_business_path
     end
 
-    it "with INCOMPLETE info keeps you on this page and shows errors" do
-      within "form" do
+    it "with INCOMPLETE info keeps you on this page and shows errors", js: true do
+      within ".register form" do
         fill_in 'business_user_email', with: ''
-        fill_in 'business_user_first_name', with: user.first_name
-        fill_in 'business_user_last_name', with: user.last_name
-        fill_in 'business_user_phone', with: user.phone
+        fill_in 'business_user_name', with: user.full_name
         fill_in 'business_user_password', with: "password"
         fill_in 'business_user_password_confirmation', with: "password"
-        click_on "Save"
+        click_on "Register"
       end
 
-      page.current_path.should == business_users_path
-      page.has_content?("Email can't be blank").should == true
+      page.has_content?("Invalid details").should == true
+      page.current_path.should == businesses_path
     end
   end
 
@@ -40,7 +37,7 @@ describe "Business User" do
 
     def sign_in( email, password )
       visit businesses_path
-      within "form" do
+      within ".login form" do
         fill_in "business_user_email", with: email
         fill_in "business_user_password", with: password
         click_on "Sign in"

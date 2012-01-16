@@ -1,10 +1,11 @@
 class Event < ActiveRecord::Base
   belongs_to :business
 
+  before_save    :limit_title
   before_update  :edit_schedule
   before_update  :set_time_attributes, :if => :one_time_event?
   before_create  :set_time_attributes, :create_schedule
-  after_create :init_event_vote
+  after_create   :init_event_vote
 
   EVENT = 0
   SPECIAL = 1
@@ -24,38 +25,6 @@ class Event < ActiveRecord::Base
               :end_date, :end_time_hour, :end_time_minute, :end_time_am_pm,
               :recur_value, :recur_until_date, :edit_affects
 
-  #def start_date
-  #  start_time.strftime("%m/%d/%Y")
-  #end
-  #
-  #def start_time_hour
-  #  start_time.strftime("%I")
-  #end
-  #
-  #def start_time_minute
-  #  start_time.strftime("%M")
-  #end
-  #
-  #def start_time_am_pm
-  #  start_time.strftime("%P")
-  #end
-  #
-  #def end_date
-  #  end_time.strftime("%m/%d/%Y")
-  #end
-  #
-  #def end_time_hour
-  #  end_time.strftime("%I")
-  #end
-  #
-  #def end_time_minute
-  #  end_time.strftime("%M")
-  #end
-  #
-  #def end_time_am_pm
-  #  end_time.strftime("%P")
-  #end
-  #
   def recurring?
     schedule.present?
   end
@@ -200,6 +169,10 @@ class Event < ActiveRecord::Base
     end
 
     OpenStruct.new(atts)
+  end
+
+  def limit_title
+    self.title = title.slice(0,34)
   end
 
   def init_event_vote

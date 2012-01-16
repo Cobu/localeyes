@@ -212,7 +212,7 @@ $(document).ready(->
     sorts: {
       recent: (event)-> event.get('start')
       popular: (event)-> -window.votes.votes_hash[event.id].votes['point']
-      title: (event)-> event.get('title')
+      business: (event)-> event.businessName()
     }
 
     setSortType: (type)->

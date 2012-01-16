@@ -13,7 +13,7 @@ describe Business do
 
     it "succeeds and takes you to calendar page" do
 
-      b = build(:oswego_cafe)
+      b = BusinessDecorator.new(build(:oswego_cafe))
 
       within "form" do
         fill_in 'business_name', with: b.name
@@ -72,23 +72,25 @@ describe Business do
     let(:business) { create(:oswego_cafe) }
 
     before(:each) do
+      business
       login_business_user business.user
       visit edit_business_path business
     end
 
     it "succeeds and takes you to calendar page" do
+      bnew = BusinessDecorator.new create(:oswego_restaurant, phone: '1234567890')
 
       within "form.edit_business" do
-        fill_in 'business_name', with: business.name
-        fill_in 'business_description', with: business.description
-        select business.service_name, from: 'business_service_type'
-        fill_in 'business_address', with: business.address
-        fill_in 'business_city', with: business.city
-        select business.state, from: 'business_state'
-        fill_in 'business_zip_code', with: business.zip_code
-        fill_in 'business_phone_first3', with: business.phone_first3
-        fill_in 'business_phone_second3', with: business.phone_second3
-        fill_in 'business_phone_last4', with: business.phone_last4
+        fill_in 'business_name', with: bnew.name
+        fill_in 'business_description', with: bnew.description
+        select bnew.service_name, from: 'business_service_type'
+        fill_in 'business_address', with: bnew.address
+        fill_in 'business_city', with: bnew.city
+        select bnew.state, from: 'business_state'
+        fill_in 'business_zip_code', with: bnew.zip_code
+        fill_in 'business_phone_first3', with: bnew.phone_first3
+        fill_in 'business_phone_second3', with: bnew.phone_second3
+        fill_in 'business_phone_last4', with: bnew.phone_last4
         select "5", from: 'business_monday_hours_from_hour'
         select "15", from: 'business_monday_hours_from_min'
         select "pm", from: 'business_monday_hours_from_ampm'
@@ -99,22 +101,22 @@ describe Business do
         click_on "Save"
       end
 
-      bnew = Business.first
+      bedited = business.reload
 
-      bnew.name.should == business.name
-      bnew.description.should == business.description
-      bnew.service_type.should == business.service_type
-      bnew.address.should == business.address
-      bnew.city.should == business.city
-      bnew.state.should == business.state
-      bnew.zip_code.should == business.zip_code
-      bnew.phone.should == business.phone
-      bnew.monday_hours[:from].should == Time.utc(1970, 1, 1, 17, 15)
-      bnew.saturday_hours[:to].should == Time.utc(1970, 1, 1, 2, 45)
-      bnew.tuesday_hours[:open].should == false
-      bnew.tuesday_hours[:from].should == nil
+      bedited.name.should == bnew.name
+      bedited.description.should == bnew.description
+      bedited.service_type.should == bnew.service_type
+      bedited.address.should == bnew.address
+      bedited.city.should == bnew.city
+      bedited.state.should == bnew.state
+      bedited.zip_code.should == bnew.zip_code
+      bedited.phone.should == bnew.phone
+      bedited.monday_hours[:from].should == Time.utc(1970, 1, 1, 17, 15)
+      bedited.saturday_hours[:to].should == Time.utc(1970, 1, 1, 2, 45)
+      bedited.tuesday_hours[:open].should == false
+      bedited.tuesday_hours[:from].should == nil
 
-      page.current_path.should == business_path(bnew)
+      page.current_path.should == business_path(business)
     end
 
     it "fails and keeps you on edit page" do

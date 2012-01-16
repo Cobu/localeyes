@@ -1,11 +1,11 @@
 class EventsController < ApplicationController
-  before_filter :find_event, :only => [:show, :edit, :update, :destroy]
+  before_filter :find_event, :only => [:show, :edit, :update]
 
   def show
   end
 
   def new
-    @event = current_business.events.new(:start_time=>params[:start_time],:end_time=>params[:end_time])
+    @event = current_business.events.new(start_time: params[:start_time], end_time: params[:end_time])
     @event = EventDecorator.new(@event)
     render :edit, :layout => "events"
   end
@@ -42,6 +42,7 @@ class EventsController < ApplicationController
   end
 
   def destroy
+    @event = current_business.events.find_by_id(params[:id])
     case  params[:edit_affects_type]
       when 'all_series', '' then
         @event.destroy

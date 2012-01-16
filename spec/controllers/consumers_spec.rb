@@ -7,7 +7,6 @@ describe ConsumersController do
     let(:user_id) { 1 }
 
     it "user with session goes to event page" do
-      p create :business_user
       session[:user_id] = user_id
       mock(User).find(user_id) { build(:dude) }
       get :home
@@ -15,7 +14,9 @@ describe ConsumersController do
     end
 
     it "user with cookie goes to events page" do
-      request.cookies[:user] = user_id
+      jar = ActionDispatch::Cookies::CookieJar.build(request)
+      jar.signed[:user] = 1
+      request.cookies[:user] = jar[:user]
       mock(User).find(user_id) { build(:dude) }
       get :home
       should redirect_to event_list_consumers_path

@@ -20,6 +20,10 @@ class User < ActiveRecord::Base
     write_attribute(:birthday, (date.to_s || birthday))
   end
 
+  def full_name
+    [first_name,last_name].join(' ')
+  end
+
   def split_name
     self.first_name, self.last_name = @name.split if @name
   end

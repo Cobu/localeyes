@@ -1,6 +1,6 @@
 = form_for(@event, :remote=>true) do |f|
   = hidden_field_tag :edit_affects_type
-  = hidden_field_tag :edit_start_time, params[:start_time]
+  = hidden_field_tag :edit_start_time, @event.start_time_str
   = hidden_field_tag :start_end_date_diff, @event.start_end_date_diff
 
   .event_type_radio
@@ -12,23 +12,23 @@
     = f.label :event_type_2
 
   .field
-    = f.label :title, :class=>:title
+    = f.label :title, class: :title
+    %span.small== ( 34 characters max )
     %div
-      = f.text_field :title, :size=>54, :value=>@event.title
+      = f.text_field :title, size: 44, maxlength: 34, value: @event.title
   .field
     = f.label :description
-    %span.small
-      ( 160 Chars or less )
+    %span.small== ( 160 characters max )
     = f.text_area :description
   .time_field
     = f.label :start_time
-    = f.text_field :start_date, :class=> :datepicker
+    = f.text_field :start_date, class: :datepicker
     = f.select :start_time_hour, (0..12).zip(('00'..'12'))
     = f.select :start_time_minute, ["00", "15", "30", "45"]
     = f.select :start_time_am_pm, ['am', 'pm']
   .time_field
     = f.label :end_time
-    = f.text_field :end_date, :class=> :datepicker
+    = f.text_field :end_date, class: :datepicker
     = f.select :end_time_hour, (0..12).zip(('00'..'12'))
     = f.select :end_time_minute, ["00", "15", "30", "45"]
     = f.select :end_time_am_pm, ['am', 'pm']
@@ -49,16 +49,16 @@
   .affecting
     .text
     .choices_radio
-      %input{ :type=>:radio, :id=>'edit_affects_one', :name=>:edit_affects, :value=>'one' }
+      %input{ type: :radio, id: 'edit_affects_one', :name=>:edit_affects, :value=>'one' }
       %label{ :for=>'edit_affects_one'} This One
-      %input{ :type=>:radio, :id=>'edit_affects_all_series', :name=>:edit_affects, :value=>'all_series' }
+      %input{ type: :radio, id: 'edit_affects_all_series', :name=>:edit_affects, :value=>'all_series' }
       %label{ :for=>'edit_affects_all_series'} Entire Series
-      %input{ :type=>:radio, :id=>'edit_affects_cancel', :name=>:edit_affects, :value=>'none' }
+      %input{ type: :radio, id: 'edit_affects_cancel', :name=>:edit_affects, :value=>'none' }
       %label{ :for=>'edit_affects_cancel'} Cancel
 
   .ends
     = f.label :recur_until_date
-    = f.text_field :recur_until_date, :class=> :datepicker
+    = f.text_field :recur_until_date, class: :datepicker
 
   .submit_buttons
     = f.submit :class=>:button, 'data-method'=>'put'

@@ -4,6 +4,11 @@ describe Event do
 
   let(:business) { build(:oswego_restaurant) }
 
+  it "can limit title to 34 chars" do
+    event = create(:once_event, title: ('e'*35), business: business)
+    event.title.should ==  ('e'*34)
+  end
+
   describe "one day" do
 
     let(:event) do
