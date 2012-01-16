@@ -44,7 +44,7 @@ class User < ActiveRecord::Base
     return unless %w(up down).include? vote
     event_vote = EventVote.where(_id: event_id).first
     past_vote = event_vote.vote_value(id).to_s
-    return event_vote if vote == past_vote
+    return nil if vote == past_vote
     hash = {votee_id: event_id, voter_id: id, value: vote}
     hash[:revote] = true if past_vote.present?
     EventVote.vote(hash)

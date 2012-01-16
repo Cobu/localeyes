@@ -106,6 +106,7 @@ $(document).ready( ->
     event_id = elem.data('id')
     vote = elem.data('vote')
     $.post('/users/event_vote',{ event:event_id, vote:vote }, (data)->
+      # returns null if already voted .. TODO  might want to show a message for this case
       window.votes.resetVotes(data) if data
     )
   )
