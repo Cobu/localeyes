@@ -193,11 +193,13 @@ $(document).ready(->
     show: ()-> _.each( @votes, (info)=> this.showNumbers(info) )
 
     resetVotes: (data)->
+      @votes_hash[data._id] = data
       _.each(@votes, (info, index)=>
           if (info._id == data._id)
             @votes[index] = data
             this.showNumbers(data)
       )
+      window.event_list.sort() if window.sorter.sort_type == 'popular'
 
     showNumbers: (info)->
       elem = $(".event[data-id='#{info._id}']")
