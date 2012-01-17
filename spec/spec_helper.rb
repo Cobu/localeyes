@@ -39,11 +39,16 @@ end
 
 Spork.each_run do
   $rspec_start_time = Time.now
-  Dir["#{Rails.root}/app/**/*.rb"].each { |f| load f }
-  load "#{Rails.root}/config/routes.rb"
-  Dir["#{Rails.root}/config/initializers/*.rb"].each { |f| load f }
+
   FactoryGirl.reload
-  Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| load f }
+
+  # reload files to capture changes
+  Dir[
+    Rails.root.join("app/**/*.rb"),
+    Rails.root.join("spec/support/**/*.rb"),
+    Rails.root.join("config/initializers/*.rb"),
+    Rails.root.join("config/routes.rb")
+  ].each { |f| load f }
 end
 
 

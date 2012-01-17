@@ -11,7 +11,7 @@
   = form_for(@business) do |f|
     .error_messages
       = f.error_messages if @business.errors
-    #business_data{ 'data-info' => @business.to_json}
+    #business_data{ 'data-info' => @business.model.to_json }
     = f.hidden_field :lat
     = f.hidden_field :lng
     = f.hidden_field :geocoded_by
