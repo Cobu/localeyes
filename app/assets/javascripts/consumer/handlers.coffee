@@ -120,4 +120,8 @@ $(document).ready( ->
     window.sorter.setSortType(type)
   )
 
+  $('.event .info, .description').live('hover', ->
+    $(this).closest('.event').toggleClass('hover')
+  )
+
 )
