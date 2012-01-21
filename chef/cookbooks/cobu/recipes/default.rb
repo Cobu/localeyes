@@ -85,9 +85,9 @@ end
   cookbook_file "/#{location}/.ssh/known_hosts"
 end
 
-bash "make deploy app directory (var/www/conu)" do
+bash "make deploy app directory (var/www/localeyes)" do
   user "root"
-  code "mkdir -p /var/www/cobu && chown -R deploy:deploy /var/www/cobu"
+  code "mkdir -p /var/www/localeyes && chown -R deploy:deploy /var/www/localeyes"
 end
 
 bash "install bundler gem" do
