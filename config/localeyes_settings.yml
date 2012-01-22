@@ -17,7 +17,7 @@ staging:
   twitter_secret: 'gu9IjUxfKSQ4eUr4i0CS20ok3IpVvw4yQcCv7wTews'
 
 production:
-  facebook_api_key: ''
-  facebook_secret: ''
-  twitter_api_key: ''
-  twitter_secret: ''
+  facebook_api_key: '166674080101830'
+  facebook_secret: '22701ed4855723b10e5394c4c1aded5d'
+  twitter_api_key: 'iao1vqqkiC6u7fQgRkyYQ'
+  twitter_secret: 'TfWlANYCfdokD1rrzC4cFICWNqlKwdPGSVtAiaAuik'
