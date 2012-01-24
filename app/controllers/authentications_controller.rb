@@ -16,7 +16,7 @@ class AuthenticationsController < ApplicationController
   end
 
   def destroy
-    #current_business_user.authentications.find_by_id(params[:id]).destroy
+    current_business_user.authentications.find_by_id(params[:id]).destroy
     head :ok
   rescue => e
     head :error

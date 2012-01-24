@@ -10,7 +10,7 @@
 #wrapper.business_edit
   = form_for(@business) do |f|
     .error_messages
-      = f.error_messages if @business.errors
+      = f.error_messages(header_message: '') if @business.errors
     #business_data{ 'data-info' => @business.model.to_json }
     = f.hidden_field :lat
     = f.hidden_field :lng

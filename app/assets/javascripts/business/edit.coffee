@@ -13,7 +13,7 @@ $(document).ready(->
         auth_info = JSON.parse(auth_info) if _.isString(auth_info)
 
         connections = $(".auth_panel .connections")
-        connections.find('connection').empty()
+        connections.find('.connection').empty()
         _.each(auth_info, (info)=> connections.append(@template(info)) )
 
     window.business_edit = new BusinessEdit()
