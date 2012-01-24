@@ -43,4 +43,3 @@ module LocalEyes
     config.assets.enabled = true
   end
 end
-
