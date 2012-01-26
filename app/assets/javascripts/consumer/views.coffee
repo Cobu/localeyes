@@ -9,6 +9,10 @@ Handlebars.registerHelper("hour", (string)->
     if date then date.toString('h:mm tt') else ''
 )
 
+Handlebars.registerHelper("format_ymd_date", (date)->
+    if date then date.toString('yyyy-MM-dd') else ''
+)
+
 Handlebars.registerHelper("phone_format", (phone) ->
     return if _.isEmpty(phone)
     phone = phone.toString()
@@ -23,6 +27,7 @@ Handlebars.registerHelper("each_hour", (array, fn)->
       item = array[num]
       # add the day_name property onto the hours
       item.day_name = short_dayname[num]
+      item.day_num = num
       if (item.open == true)
         item.hour_value = window.hours_template(item)
       else
@@ -48,35 +53,51 @@ $(document).ready(->
 
   ############  Event view #############
   window.EventView = Backbone.View.extend(
-    template: null
     tagName: 'li'
+    className: 'event'
 
-    initialize: (@event)->
-      @template = Handlebars.compile($('#event_template').html())
-      this.render()
+    events:
+      'click .wrapper .info_bar .info, .description': 'showBusiness'
+
+    initialize: (options)->
+      @date = options.date
+      @template = Handlebars.compile( $('#event_template').html() )
+      @render()
 
     showBusiness: ->
-      if ( this.cid ==  (business_list.selected_view.event_view.cid if business_list.selected_view) )
+      if ( @cid ==  (business_list.selected_view.event_view.cid if business_list.selected_view) )
         business_list.clearSelected()
       else
         business_list.clearSelected()
-        bview = new BusinessView({event_view: this})
-        business_list.setSelected(@event.business().get('id'), bview )
+        bview = new BusinessView( event_view: this )
+        business_list.setSelected( @model.business().get('id'), bview )
 
     render: ->
-      if @event != undefined
-        this.el = $(this.template(@event))
-        this.el.find('.wrapper .info_bar .info, .description').bind('click', => this.showBusiness())
+      if @model
+        @elem = $(@el).html( @template(@model) )
+        @elem.attr('data-id', @model.get('id') )
       this
   )
+
+  ############ day header view #############
+  window.EventDayHeaderView = Backbone.View.extend
+    tagName: 'li'
+    className: 'day_header'
+    template: Handlebars.compile "{{header date}}"
+
+    initialize: (options)->
+      @date = options.date
+      @render()
+
+    render: ->
+      $(@el).html( @template(date:@date) )
+
 
   ############  EventList view #############
   window.EventListView = Backbone.View.extend({
     el: $('#event_list')
-    day_header_template: null
 
     initialize: (@event_list)->
-      @day_header_template = Handlebars.compile( $('#day_header_template').html() )
       if @event_list
         this.render()
       else
@@ -98,36 +119,41 @@ $(document).ready(->
       window.votes.show()
 
     buildEventsForDay: (date, events)->
-      this.el.append(this.day_header_template({'date': date}))
+      this.el.append( new EventDayHeaderView( 'date': date) )
       _.each(events, (event)->
-          event_view = new EventView(event)
-          event_list_view.el.append(event_view.el)
+          event_view = new EventView( model: event, date : date )
+          event_list_view.el.append( event_view.elem )
       )
   })
 
   ############  Business view #############
   window.BusinessView = Backbone.View.extend(
-    template: null
     event_view: null
+    tagName: 'li'
+    className: 'business'
 
     initialize: (options)->
       @event_view = options.event_view
-      @template = Handlebars.compile($('#business_info_template').html())
-      this.render()
+      @template = Handlebars.compile( $('#business_info_template').html() )
+      @render()
 
     render: ->
-      this.el = $(@template( @event_view.event.business()) )
+      @elem = $(@el).html( @template(@event_view.model.business()) ).hide()
+      @event_view.elem.after( @elem )
+      @event_view.elem.find('.description').addClass('open').show()
+      @elem.slideDown('slow', =>
+        # bold the day of the week on the hours list
+        day_number =  @event_view.date.getDay()
+        @$(".line[data-day_num=#{day_number}]").addClass('bold')
+      )
 
-      @event_view.el.after(this.el)
-      @event_view.el.find('.description').show()
-      @event_view.el.addClass('open')
-      this.el.slideDown('slow')
 
-    close: -> this.el.slideUp('slow', =>
-      @event_view.el.find('.description').hide()
-      @event_view.el.removeClass('open')
-      this.el.remove()
-    )
+    close: ->
+      @elem.slideUp('slow', =>
+        @event_view.elem.find('.description').hide()
+        @event_view.elem.removeClass('open')
+        @elem.remove()
+      )
   )
 
 

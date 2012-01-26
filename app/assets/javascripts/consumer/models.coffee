@@ -1,16 +1,13 @@
-
 #..hack..###########  Event model #############
-window.Event = Backbone.Model.extend({
-  startDate: -> Date.parse(this.get('start')).toString("yyyy-MM-dd")
-  startHour: -> Date.parse(this.get('start')).toString("h:mm")
-  startAmPm: -> Date.parse(this.get('start')).toString("tt")
-  business: -> business_list.get(this.get('business_id'))
+window.Event = Backbone.Model.extend(
+  startDate: -> Date.parse( this.get('start') ).toString("yyyy-MM-dd")
+  startHour: -> Date.parse( this.get('start') ).toString("h:mm")
+  startAmPm: -> Date.parse( this.get('start') ).toString("tt")
+  business: -> business_list.get( this.get('business_id') )
   businessName: -> this.business().get('name')
   businessImageName: -> this.business().imageName()
-  userFavoriteImage: ->
-    prefix = if _.include( Filter.userFavorites, this.get('business_id') ) then '' else 'un'
-    "<img src='assets/fav_#{prefix}selected.gif' width='20px' data-business_id='#{this.get('business_id')}' rel='favorite'/>"
-})
+  userFavoritePrefix: -> 'un' unless _.include( Filter.userFavorites, this.get('business_id') )
+)
 
 ############  EventList Collection #############
 window.EventList = Backbone.Collection.extend({
@@ -32,33 +29,31 @@ window.Business = Backbone.Model.extend(
 
   imageName: -> "/assets/#{this.serviceName()}.png"
 
-  renderHours: (item)-> window.hours_template(item)
-
   clearMarker: ->
     if @marker
       @marker.setMap(null)
       @marker = null
 
   setMarker: (map, markerBounds)->
-    @point = new google.maps.LatLng(this.get('lat'),this.get('lng'))
+    @point = new google.maps.LatLng(this.get('lat'), this.get('lng'))
     @marker = this.makeMarker(map)
     markerBounds.extend(@point) if markerBounds
 
-  setMarkerIcon: (scaleFactor)-> @marker.setIcon( this.makeIcon(scaleFactor) )
+  setMarkerIcon: (scaleFactor)-> @marker.setIcon(this.makeIcon(scaleFactor))
 
   makeMarker: (map)->
     new google.maps.Marker({
-      position: @point
-      map: map
-      title: this.map_tooltip_template(this.attributes)
-      icon: this.makeIcon()
+    position: @point
+    map: map
+    title: this.map_tooltip_template(this.attributes)
+    icon: this.makeIcon()
     })
 
   makeIcon: (scaleFactor)->
     scaleFactor = 1 if (scaleFactor == undefined)
     new google.maps.MarkerImage(
-      this.imageName(), null , null , null ,
-      new google.maps.Size(20*scaleFactor, 30*scaleFactor)
+      this.imageName(), null, null, null,
+      new google.maps.Size(20 * scaleFactor, 30 * scaleFactor)
     )
 )
 
@@ -70,18 +65,20 @@ window.BusinessList = Backbone.Collection.extend(
   # override rest to clear the business markers in old collection before
   # the new collection takes its place
   reset: (collection)->
-    _.each( @models, (business)-> business.clearMarker() )
+    @each((business)-> business.clearMarker())
     Backbone.Collection.prototype.reset.call(this, collection)
 
   clearSelected: ->
-    this.get( @selected_id ).setMarkerIcon() if @selected_id
+    this.get(@selected_id).setMarkerIcon() if @selected_id
     @selected_id = null
     @selected_view.close() if @selected_view
     @selected_view = null
 
   setSelected: (business_id, business_view)->
-    this.get( @selected_id ).setMarkerIcon() if @selected_id # shrink icon
-    this.get( business_id ).setMarkerIcon(1.3) # bigger icon
+    this.get(@selected_id).setMarkerIcon() if @selected_id
+    # shrink icon
+    this.get(business_id).setMarkerIcon(1.3)
+    # bigger icon
     @selected_id = business_id
     @selected_view = business_view
 )

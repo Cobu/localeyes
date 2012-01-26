@@ -1,75 +1,72 @@
 - if current_user
   %script{:id=>"event_template", :type=>"text/x-handlebars-template"}
-    %li.event{ 'data-id'=>"{{attributes/id}}" }
-      .event_type_bar{ :class=> "{{attributes/service_type}}" }
-        &nbsp;
-      .wrapper
-        .info_bar
-          .business_img
-            %img{ src: "{{businessImageName}}" }
-          .info
-            .business_name_wrapper
-              .business_name
-                {{businessName}}
-              .start_hour== {{startHour}}
-              .am_pm== {{startAmPm}}
-            .title
-              {{attributes/title}}
-          .images
-            .fave
-              {{{userFavoriteImage}}}
-            .vote.up
-              %img{ src: 'assets/thumbs-up.gif', rel: 'vote', 'data-id'=>"{{attributes/id}}", 'data-vote'=> "up"}
-              .number
-            .vote.down
-              %img{ src: 'assets/thumbs-down.gif', rel: 'vote', 'data-id'=>"{{attributes/id}}", 'data-vote'=> "down" }
-              .number
-        .description
-          {{attributes/description}}
+    .event_type_bar{ :class=> "{{attributes/service_type}}" }
+      &nbsp;
+    .wrapper
+      .info_bar
+        .business_img
+          %img{ src: "{{businessImageName}}" }
+        .info
+          .business_name_wrapper
+            .business_name
+              {{businessName}}
+            .start_hour== {{startHour}}
+            .am_pm== {{startAmPm}}
+          .title
+            {{attributes/title}}
+        .images
+          .fave
+            %img{ src: 'assets/fav_{{userFavoritePrefix}}selected.gif', rel:'favorite',  width:'20px', 'data-business_id'=> '{{attributes/business_id}}' }
+          .vote.up
+            %img{ src: 'assets/thumbs-up.gif', rel: 'vote', 'data-id'=>"{{attributes/id}}", 'data-vote'=> "up"}
+            .number
+          .vote.down
+            %img{ src: 'assets/thumbs-down.gif', rel: 'vote', 'data-id'=>"{{attributes/id}}", 'data-vote'=> "down" }
+            .number
+      .description
+        {{attributes/description}}
 
 - else
   %script{:id=>"event_template", :type=>"text/x-handlebars-template"}
-    %li.event{ 'data-id'=>"{{attributes/id}}" }
-      .event_type_bar{ :class=> "{{attributes/service_type}}" }
-        &nbsp;
-      .wrapper
-        .info_bar
-          .business_img
-            %img{ src: "{{businessImageName}}" }
-          .info.full
-            .business_name_wrapper
-              .business_name
-                {{businessName}}
-              .start_hour== {{startHour}}
-              .am_pm== {{startAmPm}}
-            .title
-              {{attributes/title}}
-        .description
-          {{attributes/description}}
+    .event_type_bar{ :class=> "{{attributes/service_type}}" }
+      &nbsp;
+    .wrapper
+      .info_bar
+        .business_img
+          %img{ src: "{{businessImageName}}" }
+        .info.full
+          .business_name_wrapper
+            .business_name
+              {{businessName}}
+            .start_hour== {{startHour}}
+            .am_pm== {{startAmPm}}
+          .title
+            {{attributes/title}}
+      .description
+        {{attributes/description}}
 
 
 %script{:id=>"day_header_template", :type=>"text/x-handlebars-template"}
-  %li.day_header{:'data-role'=>"list-divider"}
+  %li.day_header{ 'data-role'=>'list-divider', 'data-date'=>'{{format_ymd_date date}}' }
     {{header date}}
 
 %script{:id=>"business_info_template", :type=>"text/x-handlebars-template"}
-  .business{:style=>'display:none'}
-    .info
-      {{attributes/name}}
-      {{attributes/description}}
-      %p
-        {{attributes/address}}
-        %br
-        {{attributes/city}}, {{attributes/state}} {{attributes/zip_code}}
-      %p
-        {{phone_format attributes/phone}}
-    .hours
-      {{#each_hour attributes/hours}}
-      .line
-        .day_name
-          {{day_name}}
-        .from_to
-          {{hour_value}}
-      {{/each_hour}}
+  .info
+    {{attributes/name}}
+    {{attributes/description}}
+    %p
+      {{attributes/address}}
+      %br
+      {{attributes/city}}, {{attributes/state}} {{attributes/zip_code}}
+    %p
+      {{phone_format attributes/phone}}
+  .hours
+    {{#each_hour attributes/hours}}
+    .line{ 'data-day_num'=> '{{day_num}}' }
+      .day_name
+        {{day_name}}
+      .from_to
+        {{hour_value}}
+    {{/each_hour}}
 
 
