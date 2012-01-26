@@ -46,10 +46,6 @@
         {{attributes/description}}
 
 
-%script{:id=>"day_header_template", :type=>"text/x-handlebars-template"}
-  %li.day_header{ 'data-role'=>'list-divider', 'data-date'=>'{{format_ymd_date date}}' }
-    {{header date}}
-
 %script{:id=>"business_info_template", :type=>"text/x-handlebars-template"}
   .info
     {{attributes/name}}
