@@ -48,6 +48,7 @@ group :test do
   gem 'spork', '0.9.0.rc9'
   gem 'jasmine'
   gem 'capybara'
+  gem 'capybara-webkit'
   gem 'launchy'
   gem 'rspec'
   gem 'rr'

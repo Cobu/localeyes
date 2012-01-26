@@ -52,6 +52,9 @@ GEM
       rack-test (>= 0.5.4)
       selenium-webdriver (~> 2.0)
       xpath (~> 0.1.4)
+    capybara-webkit (0.8.0)
+      capybara (>= 1.0.0, < 1.2)
+      json
     carmen (0.2.12)
     childprocess (0.2.9)
       ffi (~> 1.0.6)
@@ -281,6 +284,7 @@ DEPENDENCIES
   capistrano
   capistrano-ext
   capybara
+  capybara-webkit
   carmen
   client_side_validations
   coffee-script

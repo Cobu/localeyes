@@ -1,4 +1,3 @@
-
 Spork.prefork do
   require File.expand_path("../../config/environment", __FILE__)
 
@@ -31,6 +30,7 @@ Spork.prefork do
       end
   end
 
+  #Capybara.javascript_driver = :webkit
   Capybara.register_driver :chrome do |app|
     Capybara::Selenium::Driver.new(app, :browser => :chrome)
   end
