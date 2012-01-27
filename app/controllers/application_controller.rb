@@ -28,7 +28,7 @@ class ApplicationController < ActionController::Base
 
   private
   def mobile_device?
-    request.user_agent =~ /Mobile|webOS|BlackBerry/ and !request.user_agent =~ /iPad/
+    request.user_agent =~ /Mobile|webOS|BlackBerry/ and !(request.user_agent =~ /iPad/)
   end
   helper_method :mobile_device?
 
