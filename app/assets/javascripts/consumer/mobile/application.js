@@ -1,12 +1,13 @@
 // For the consumer side of the application
-//= require support/jquery
-//= require jquery.mobile
+//= require jquery
+//= require support/jquery.mobile
 //= require support/handlebars
 //= require support/underscore
-//= require support/backbone
 //= require support/date
+//= require support/backbone
+//= require support/has_class_plugin
 //= require map
-//= require consumer/handlers
-//= require mobile/mobile_view
 //= require consumer/models
-//= require event_list
+//= require consumer/views
+//= require consumer/handlers
+//= require consumer/mobile/mobile_view

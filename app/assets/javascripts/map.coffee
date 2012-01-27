@@ -1,7 +1,6 @@
 #############  Map view #############
 class window.MapView
   icon: null
-  el: $('#map_canvas')
   center_point: null
   center_marker: null
   view: null
@@ -12,8 +11,10 @@ class window.MapView
   }
 
   constructor: (@collection, @center_point)->
-    this.render()
-    @collection.bind('reset', => this.render() )
+    el: $('#map_canvas')
+    @need_rendering = true
+    @render()
+    @collection.bind('reset', => this.render(); @need_rendering = true )
 
   prepareMap: ->
     return unless document.getElementById("map_canvas")
@@ -43,6 +44,13 @@ class window.MapView
       @center_marker.setMap(null)
       @center_marker = null
     @markerBounds = new google.maps.LatLngBounds()
+
+  reRender: ->
+    console.log('rerendering need=', @need_rendering)
+    if @need_rendering == true
+      @view = null
+      @render()
+      @need_rendering = false
 
   render: ->
     this.clear()

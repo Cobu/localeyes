@@ -6,6 +6,7 @@ window.Event = Backbone.Model.extend(
   business: -> business_list.get( this.get('business_id') )
   businessName: -> this.business().get('name')
   businessImageName: -> this.business().imageName()
+  businessIconName: -> this.business().iconName()
   userFavoritePrefix: -> 'un' unless _.include( Filter.userFavorites, this.get('business_id') )
 )
 
@@ -28,6 +29,7 @@ window.Business = Backbone.Model.extend(
     @service_type_names[this.get('service_type')].toLowerCase()
 
   imageName: -> "/assets/#{this.serviceName()}.png"
+  iconName: -> "/assets/#{this.serviceName()}_icon.png"
 
   clearMarker: ->
     if @marker
@@ -53,7 +55,7 @@ window.Business = Backbone.Model.extend(
     scaleFactor = 1 if (scaleFactor == undefined)
     new google.maps.MarkerImage(
       this.imageName(), null, null, null,
-      new google.maps.Size(20 * scaleFactor, 30 * scaleFactor)
+      new google.maps.Size(30 * scaleFactor, 40 * scaleFactor)
     )
 )
 

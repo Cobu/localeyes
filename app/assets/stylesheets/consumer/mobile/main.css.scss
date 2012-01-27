@@ -11,46 +11,106 @@ a.ui-corner-all {
   font-family:Arial;
 }
 
+.event_type_bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 3%;
+  border-right: 1px solid #666666;
+}
 
 .event {
-  width:100%;
-  padding: 5px 0px 5px 5px;
+  position: relative;
+  border-bottom: 1px solid white;
+  border-top: 1px solid white;
 
-  .info {
-    width:67%;
-    display:inline-block;
+  .wrapper {
+
+    .info_bar {
+      margin: 4px 0px 4px 18px;
+
+      .business_img {
+        text-align: center;
+        width: 5%;
+        display: inline-block;
+        img { width:27px; height:37px; }
+      }
+
+      .info {
+        margin-top: 3px;
+        margin-bottom: 3px;
+        width: 69%;
+        display:inline-block;
+        .business_name_wrapper {
+          .business_name {
+            display: inline-block;
+            width: 78%;
+          }
+          .start_hour {
+            display: inline;
+            width: 23%;
+          }
+          .am_pm { display: inline; font-size: 80% }
+        }
+        .title {
+          font-weight: bold;
+        }
+      }
+
+      .images {
+        width:22%;
+        display: inline-block;
+        font-size: 9px;
+        text-align: center;
+        vertical-align: top;
+        margin-top: 4px;
+
+        .vote, .fave {
+          display: inline-block;
+          width: 23px;
+          vertical-align: top;
+        }
+        .fave { margin-right: 8%; }
+
+        img {
+          cursor: pointer;
+          margin-right: 10px;
+          width: 21px;
+        }
+      }
+    }
+
+    .description {
+      width: 100%;
+      display: none;
+      margin: 6px 0px 7px 23px;
+    }
+
   }
 
-  .full {
-    width:100%;
-  }
-
-  .description {
-    display:none;
-    margin:6px 0;
-    width:90% !important;
-  }
-
-  .images {
-    cursor:pointer;
-    display:inline-block;
-  }
 }
 
 
+.full { width:90% !important; }
+#map_page {
+  width: 100%;
+  height: 100%;
+  .ui-content { padding: 0; }
+}
 
 #map_canvas {
-  width: 500px;
-  height: 500px;
+  width: 100%;
+  height: 100%;
   border: 1px solid #666666;
 }
 
 
 .business {
-  width:360px;
-  padding:10px;
+  padding: 10px 0px 0px 5%;
   border-right: 1px solid #666666;
   border-left: 1px solid #666666;
+  width: 94%;
 
   .info {
     width:48%;
@@ -63,6 +123,7 @@ a.ui-corner-all {
     padding-left:25px;
     display:inline-block;
 
+    .bold { font-weight: bold }
     .line {
       .day_name {
         display:inline-block;
@@ -83,3 +144,26 @@ a.ui-corner-all {
 }
 
 
+.filter {
+
+  div { display:inline-block; }
+
+  .group {
+    width: 100%;
+    font-size: 20px;
+    margin-top: 5px;
+
+    .img {
+      vertical-align:middle;
+      img { width:50px; height:65px; }
+    }
+
+    .item {
+      text-align: left;
+      line-height: 20px;
+      margin: 2px 0px;
+      padding-left: 10px;
+      width: 51%;
+    }
+  }
+}

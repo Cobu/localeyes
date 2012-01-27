@@ -261,15 +261,12 @@ ul, li {
   @extend .event_bar;
   width:99%;
 
-
-
   .wrapper {
     position:relative;
     display: inline-block;
-    width: 95%;
+    width: 97%;
 
     .info_bar {
-
       width: 100%;
       margin: 4px 0px 4px 18px;
 
@@ -277,7 +274,7 @@ ul, li {
         text-align: center;
         width: 5%;
         display: inline-block;
-        img { width:17px; height:24px; }
+        img { width:27px; height:30px }
       }
 
       .info {
@@ -312,16 +309,12 @@ ul, li {
 
         .vote, .fave {
           display: inline-block;
-          width: 23px;
+          width: 22px;
           vertical-align: top;
+          margin-right: 2%;
+          img { width: 26px; height: 26px; cursor: pointer; margin-right: 10px; }
         }
-        .fave { margin-right: 8%; }
-
-        img {
-          cursor: pointer;
-          margin-right: 10px;
-          width: 21px;
-        }
+        .fave { margin-right: 6%; }
       }
     }
 
@@ -347,31 +340,31 @@ ul, li {
     position: absolute;
     top: 0px;
     left: 0px;
-    width:140px;
+    width:150px;
     z-index: 1000;
     border: 1px solid gray;
     background-color: #ccc;
-    padding: 5px 0px 9px 9px;
+    padding: 5px 12px 9px 5px;
     display: none;
 
     div { display:inline-block; }
 
     .group {
-      width:100%;
-      font-size:12px;
-      margin-top:5px;
+      width: 100%;
+      font-size: 115%;
+      margin: 3px;
 
       .img {
-        vertical-align:middle;
-        img { width:24px; height:25px; }
+        vertical-align: top;
+        img { width:30px; height:30px; }
       }
 
       .item {
-        text-align:left;
-        line-height:20px;
-        margin:2px 0px;
-        padding-left:10px;
-        width:51%;
+        text-align: left;
+        line-height: 30px;
+        margin: 2px 0px;
+        padding-left: 6px;
+        width: 51%;
       }
     }
   }

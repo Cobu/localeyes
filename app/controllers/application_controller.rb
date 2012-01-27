@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   rescue_from ActiveRecord::RecordNotFound, :with => :render_404
 
-  #before_filter :set_mobile_format
+  before_filter :set_mobile_format
 
   def set_mobile_format
     request.format = :mobile if mobile_device?
@@ -28,7 +28,7 @@ class ApplicationController < ActionController::Base
 
   private
   def mobile_device?
-    request.env["HTTP_USER_AGENT"] =~ /Mobil|webOS|BlackBerry/
+    request.user_agent =~ /Mobile|webOS|BlackBerry/ and !request.user_agent =~ /iPad/
   end
   helper_method :mobile_device?
 

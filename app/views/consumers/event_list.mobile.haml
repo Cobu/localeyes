@@ -1,0 +1,65 @@
+%html
+  %head
+  %meta{ :name=> "viewport", :content=> "width=device-width, initial-scale=1" }
+
+  %title LocalEyes
+  %script{ :type=> "text/javascript", :src=>"http://maps.google.com/maps/api/js?sensor=false" }
+  = stylesheet_link_tag 'consumer/mobile/application'
+  = javascript_include_tag 'consumer/mobile/application'
+  = csrf_meta_tags
+
+  %body
+    = render :partial => 'event_templates'
+
+    %div{ 'data-role'=> "page", :id => "event_list_page" }
+
+      %div{ 'data-role'=> "header" }
+        %a{:href=>"#map_page", id: 'view_map', 'data-role'=>"button", 'data-inline'=>"true"} Map
+        %a{:href=>"#filter_page", 'data-role'=>"button", 'data-inline'=>"true"} Filter
+        %h2 Event List
+
+      #content.consumer_events{'data-role'=> "content", 'data-events'=> @data.to_json}
+        %ul.event_list{ 'data-role'=>"listview", 'data-theme'=>"g"}
+
+      %div{ 'data-role'=> "footer"}
+
+
+
+    %div{ 'data-role'=> "page", id: "map_page" }
+
+      %div{ 'data-role'=> "header" }
+        %a{:href=>"#event_list_page", 'data-role'=>"button", 'data-inline'=>"true"} Events
+        %a{:href=>"#filter_page", 'data-role'=>"button", 'data-inline'=>"true"} Filter
+        %h2 Map View
+
+      %div{'data-role'=> "content"}
+        #map_canvas{ }
+
+      %div{ 'data-role'=> "footer"}
+
+
+    %div{ 'data-role'=> "page", id: "filter_page" }
+
+      %div{ 'data-role'=> "header" }
+        %a{:href=>"#map_page", 'data-role'=>"button", 'data-inline'=>"true"} Map
+        %a{:href=>"#event_list_page", 'data-role'=>"button", 'data-inline'=>"true"} Events
+        %h2 Filter View
+
+      %div{'data-role'=> "content"}
+
+        %div{ 'data-role'=>"fieldcontain" }
+          %fieldset{ 'data-role'=> "controlgroup" }
+            %input{ type:"checkbox", name:"checkbox-1", id:"checkbox-1", class:"custom", value: 0 }
+            %label{ for: "checkbox-1", 'data-service_type'=> "service_type_cafe" } Cafe
+          %fieldset{ 'data-role'=> "controlgroup" }
+            %input{ type:"checkbox", name:"checkbox-2", id:"checkbox-2", class:"custom" }
+            %label{ for: "checkbox-2", 'data-service_type'=> "service_type_cafe" } Restaurant
+          %fieldset{ 'data-role'=> "controlgroup" }
+            %input{ type:"checkbox", name:"checkbox-3", id:"checkbox-3", class:"custom" }
+            %label{ for: "checkbox-3" } Bar
+          %fieldset{ 'data-role'=> "controlgroup" }
+            %input{ type:"checkbox", name:"checkbox-4", id:"checkbox-4", class:"custom" }
+            %label{ for: "checkbox-4" } Retail
+
+      %div{ 'data-role'=> "footer"}
+

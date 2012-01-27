@@ -41,38 +41,38 @@
             .link{ 'data-type'=> 'popular' }
               popular
     #event_list_inner
-      #event_list
+      .event_list
 
   #map_canvas_container
     .filter
       .group
         .img
-          %img{ src: asset_path("/assets/cafe.png") }
+          %img{ src: asset_path("/assets/cafe_icon.png") }
         .item
           Cafe
         =check_box_tag :service_type_cafe, 0
       .group
         .img
-          %img{ src: asset_path("/assets/restaurant.png") }
+          %img{ src: asset_path("/assets/restaurant_icon.png") }
         .item
           Restaurant
         =check_box_tag :service_type_restaurant, 1
       .group
         .img
-          %img{ src: asset_path("/assets/bar.png") }
+          %img{ src: asset_path("/assets/bar_icon.png") }
         .item
           Bar
         =check_box_tag :service_type_bar, 2
       .group
         .img
-          %img{ src: asset_path("/assets/retail.png") }
+          %img{ src: asset_path("/assets/retail_icon.png") }
         .item
           Retail
         =check_box_tag :service_type_retail, 3
       - if current_user
         .group
           .img
-            %img{ src: asset_path("/assets/empty.gif") }
+            %img{ src: asset_path("/assets/fav_selected.png") }
           .item
             Favorites
           =check_box_tag :filtering_favorites, false

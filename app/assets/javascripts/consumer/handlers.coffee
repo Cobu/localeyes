@@ -1,6 +1,7 @@
 
 window.Events = {}
 window.Events.refresh = (data)->
+  console.log 'data', data
   window.map_view.center_point = data.center
   window.Filter.userFavorites = data.favorites
   window.filter.setValues()
@@ -8,6 +9,7 @@ window.Events.refresh = (data)->
   window.votes.setVotes( data.votes )
   window.event_list.reset( data.events )
   $( "#location_search" ).val( data.center.title.replace("\n",' ') )
+
 
 $(document).ready( ->
 
