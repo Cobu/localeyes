@@ -1,3 +1,4 @@
+
 #..hack..###########  Event model #############
 window.Event = Backbone.Model.extend(
   startDate: -> Date.parse( this.get('start') ).toString("yyyy-MM-dd")

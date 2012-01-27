@@ -25013,7 +25013,7 @@ return((r[1].length===0)?r[0]:null);};};Date.parseExact=function(s,fx){return Da
     initialize: function(event_list) {
       var _this = this;
       this.event_list = event_list;
-      this.el = $('.event_list');
+      this.el = $('#event_list');
       if (this.event_list) {
         this.render();
       } else {

@@ -385,21 +385,28 @@ iframe.fb_ltr {
 .event_list_header .wrapper_links {
   vertical-align: top;
   display: inline-block;
-  width: 60%;
-  margin: 0;
-  padding: 0;
+  width: 68%;
+  font-size: 115%;
 }
-/* line 194, /Users/danielsudol/projects/localeyes/app/assets/stylesheets/consumer/main.css.scss.erb */
+/* line 195, /Users/danielsudol/projects/localeyes/app/assets/stylesheets/consumer/main.css.scss.erb */
+.event_list_header .wrapper_links .link:hover {
+  text-decoration: underline;
+}
+/* line 198, /Users/danielsudol/projects/localeyes/app/assets/stylesheets/consumer/main.css.scss.erb */
 .event_list_header .wrapper_links .link_div {
+  padding-right: 7px;
   text-align: right;
 }
-/* line 197, /Users/danielsudol/projects/localeyes/app/assets/stylesheets/consumer/main.css.scss.erb */
+/* line 202, /Users/danielsudol/projects/localeyes/app/assets/stylesheets/consumer/main.css.scss.erb */
 .event_list_header .wrapper_links .sort_div {
-  text-align: right;
-  width: 80%;
+  line-height: 9px;
+}
+/* line 203, /Users/danielsudol/projects/localeyes/app/assets/stylesheets/consumer/main.css.scss.erb */
+.event_list_header .wrapper_links .sort_div span {
+  font-size: 70%;
 }
 
-/* line 205, /Users/danielsudol/projects/localeyes/app/assets/stylesheets/consumer/main.css.scss.erb */
+/* line 210, /Users/danielsudol/projects/localeyes/app/assets/stylesheets/consumer/main.css.scss.erb */
 #event_list_container {
   margin: 0 5% 0 0;
   width: 46%;
@@ -409,11 +416,11 @@ iframe.fb_ltr {
   display: inline-block;
 }
 
-/* line 214, /Users/danielsudol/projects/localeyes/app/assets/stylesheets/consumer/main.css.scss.erb */
+/* line 219, /Users/danielsudol/projects/localeyes/app/assets/stylesheets/consumer/main.css.scss.erb */
 #event_list_inner {
   width: 100%;
 }
-/* line 217, /Users/danielsudol/projects/localeyes/app/assets/stylesheets/consumer/main.css.scss.erb */
+/* line 222, /Users/danielsudol/projects/localeyes/app/assets/stylesheets/consumer/main.css.scss.erb */
 #event_list_inner #event_list {
   width: 100%;
   height: 470px;
@@ -421,29 +428,32 @@ iframe.fb_ltr {
   position: relative;
 }
 
-/* line 225, /Users/danielsudol/projects/localeyes/app/assets/stylesheets/consumer/main.css.scss.erb */
+/* line 230, /Users/danielsudol/projects/localeyes/app/assets/stylesheets/consumer/main.css.scss.erb */
 .event_bar, .day_header, .event {
   border: 1px solid #666666;
   display: inline-block;
 }
 
-/* line 230, /Users/danielsudol/projects/localeyes/app/assets/stylesheets/consumer/main.css.scss.erb */
+/* line 235, /Users/danielsudol/projects/localeyes/app/assets/stylesheets/consumer/main.css.scss.erb */
 .day_header {
   width: 99%;
   height: 22px;
   font-size: 120%;
+  color: transparent;
+  text-shadow: rgba(255, 255, 255, 0.5) 0 0 7px, rgba(75, 75, 75, 0.4) 0 0 0, rgba(50, 50, 50, 0.3) 0 0 0;
+  color: rgba(18, 5, 9, 0.85);
   background-color: #cccccc;
   text-align: center;
   vertical-align: middle;
   padding: 6px 0px 3px 0px;
 }
 
-/* line 241, /Users/danielsudol/projects/localeyes/app/assets/stylesheets/consumer/main.css.scss.erb */
+/* line 248, /Users/danielsudol/projects/localeyes/app/assets/stylesheets/consumer/main.css.scss.erb */
 ul, li {
   list-style-type: none;
 }
 
-/* line 245, /Users/danielsudol/projects/localeyes/app/assets/stylesheets/consumer/main.css.scss.erb */
+/* line 252, /Users/danielsudol/projects/localeyes/app/assets/stylesheets/consumer/main.css.scss.erb */
 .event_type_bar {
   position: absolute;
   top: 0;
@@ -453,66 +463,66 @@ ul, li {
   border-right: 1px solid #666666;
 }
 
-/* line 254, /Users/danielsudol/projects/localeyes/app/assets/stylesheets/consumer/main.css.scss.erb */
+/* line 261, /Users/danielsudol/projects/localeyes/app/assets/stylesheets/consumer/main.css.scss.erb */
 .hover {
   background-color: rgba(255, 245, 225, 0.43);
   cursor: hand;
 }
 
-/* line 259, /Users/danielsudol/projects/localeyes/app/assets/stylesheets/consumer/main.css.scss.erb */
+/* line 266, /Users/danielsudol/projects/localeyes/app/assets/stylesheets/consumer/main.css.scss.erb */
 .event {
   position: relative;
   width: 99%;
 }
-/* line 264, /Users/danielsudol/projects/localeyes/app/assets/stylesheets/consumer/main.css.scss.erb */
+/* line 271, /Users/danielsudol/projects/localeyes/app/assets/stylesheets/consumer/main.css.scss.erb */
 .event .wrapper {
   position: relative;
   display: inline-block;
-  width: 97%;
+  width: 96%;
 }
-/* line 269, /Users/danielsudol/projects/localeyes/app/assets/stylesheets/consumer/main.css.scss.erb */
+/* line 276, /Users/danielsudol/projects/localeyes/app/assets/stylesheets/consumer/main.css.scss.erb */
 .event .wrapper .info_bar {
   width: 100%;
-  margin: 4px 0px 4px 18px;
+  margin: 4px 0px 4px 16px;
 }
-/* line 273, /Users/danielsudol/projects/localeyes/app/assets/stylesheets/consumer/main.css.scss.erb */
+/* line 280, /Users/danielsudol/projects/localeyes/app/assets/stylesheets/consumer/main.css.scss.erb */
 .event .wrapper .info_bar .business_img {
   text-align: center;
   width: 5%;
   display: inline-block;
 }
-/* line 277, /Users/danielsudol/projects/localeyes/app/assets/stylesheets/consumer/main.css.scss.erb */
+/* line 284, /Users/danielsudol/projects/localeyes/app/assets/stylesheets/consumer/main.css.scss.erb */
 .event .wrapper .info_bar .business_img img {
   width: 27px;
   height: 30px;
 }
-/* line 280, /Users/danielsudol/projects/localeyes/app/assets/stylesheets/consumer/main.css.scss.erb */
+/* line 287, /Users/danielsudol/projects/localeyes/app/assets/stylesheets/consumer/main.css.scss.erb */
 .event .wrapper .info_bar .info {
   margin-top: 3px;
   margin-bottom: 3px;
   width: 69%;
   display: inline-block;
 }
-/* line 287, /Users/danielsudol/projects/localeyes/app/assets/stylesheets/consumer/main.css.scss.erb */
+/* line 293, /Users/danielsudol/projects/localeyes/app/assets/stylesheets/consumer/main.css.scss.erb */
 .event .wrapper .info_bar .info .business_name_wrapper .business_name {
   display: inline-block;
   width: 78%;
 }
-/* line 291, /Users/danielsudol/projects/localeyes/app/assets/stylesheets/consumer/main.css.scss.erb */
+/* line 297, /Users/danielsudol/projects/localeyes/app/assets/stylesheets/consumer/main.css.scss.erb */
 .event .wrapper .info_bar .info .business_name_wrapper .start_hour {
   display: inline;
   width: 23%;
 }
-/* line 295, /Users/danielsudol/projects/localeyes/app/assets/stylesheets/consumer/main.css.scss.erb */
+/* line 301, /Users/danielsudol/projects/localeyes/app/assets/stylesheets/consumer/main.css.scss.erb */
 .event .wrapper .info_bar .info .business_name_wrapper .am_pm {
   display: inline;
   font-size: 80%;
 }
-/* line 297, /Users/danielsudol/projects/localeyes/app/assets/stylesheets/consumer/main.css.scss.erb */
+/* line 303, /Users/danielsudol/projects/localeyes/app/assets/stylesheets/consumer/main.css.scss.erb */
 .event .wrapper .info_bar .info .title {
   font-weight: bold;
 }
-/* line 302, /Users/danielsudol/projects/localeyes/app/assets/stylesheets/consumer/main.css.scss.erb */
+/* line 308, /Users/danielsudol/projects/localeyes/app/assets/stylesheets/consumer/main.css.scss.erb */
 .event .wrapper .info_bar .images {
   width: 22%;
   display: inline-block;
@@ -521,43 +531,43 @@ ul, li {
   vertical-align: top;
   margin-top: 4px;
 }
-/* line 310, /Users/danielsudol/projects/localeyes/app/assets/stylesheets/consumer/main.css.scss.erb */
+/* line 316, /Users/danielsudol/projects/localeyes/app/assets/stylesheets/consumer/main.css.scss.erb */
 .event .wrapper .info_bar .images .vote, .event .wrapper .info_bar .images .fave {
   display: inline-block;
   width: 22px;
   vertical-align: top;
   margin-right: 2%;
 }
-/* line 315, /Users/danielsudol/projects/localeyes/app/assets/stylesheets/consumer/main.css.scss.erb */
+/* line 321, /Users/danielsudol/projects/localeyes/app/assets/stylesheets/consumer/main.css.scss.erb */
 .event .wrapper .info_bar .images .vote img, .event .wrapper .info_bar .images .fave img {
   width: 26px;
   height: 26px;
   cursor: pointer;
   margin-right: 10px;
 }
-/* line 317, /Users/danielsudol/projects/localeyes/app/assets/stylesheets/consumer/main.css.scss.erb */
+/* line 328, /Users/danielsudol/projects/localeyes/app/assets/stylesheets/consumer/main.css.scss.erb */
 .event .wrapper .info_bar .images .fave {
   margin-right: 6%;
 }
-/* line 321, /Users/danielsudol/projects/localeyes/app/assets/stylesheets/consumer/main.css.scss.erb */
+/* line 332, /Users/danielsudol/projects/localeyes/app/assets/stylesheets/consumer/main.css.scss.erb */
 .event .wrapper .description {
-  width: 100%;
+  width: 99%;
   display: none;
   margin: 6px 0px 7px 23px;
 }
 
-/* line 332, /Users/danielsudol/projects/localeyes/app/assets/stylesheets/consumer/main.css.scss.erb */
+/* line 342, /Users/danielsudol/projects/localeyes/app/assets/stylesheets/consumer/main.css.scss.erb */
 .full {
   width: 90% !important;
 }
 
-/* line 334, /Users/danielsudol/projects/localeyes/app/assets/stylesheets/consumer/main.css.scss.erb */
+/* line 345, /Users/danielsudol/projects/localeyes/app/assets/stylesheets/consumer/main.css.scss.erb */
 #map_canvas_container {
   width: 48%;
   display: inline-block;
   position: relative;
 }
-/* line 339, /Users/danielsudol/projects/localeyes/app/assets/stylesheets/consumer/main.css.scss.erb */
+/* line 350, /Users/danielsudol/projects/localeyes/app/assets/stylesheets/consumer/main.css.scss.erb */
 #map_canvas_container .filter {
   position: absolute;
   top: 0px;
@@ -565,30 +575,30 @@ ul, li {
   width: 150px;
   z-index: 1000;
   border: 1px solid gray;
-  background-color: #ccc;
+  background-color: white;
   padding: 5px 12px 9px 5px;
   display: none;
 }
-/* line 350, /Users/danielsudol/projects/localeyes/app/assets/stylesheets/consumer/main.css.scss.erb */
+/* line 361, /Users/danielsudol/projects/localeyes/app/assets/stylesheets/consumer/main.css.scss.erb */
 #map_canvas_container .filter div {
   display: inline-block;
 }
-/* line 352, /Users/danielsudol/projects/localeyes/app/assets/stylesheets/consumer/main.css.scss.erb */
+/* line 363, /Users/danielsudol/projects/localeyes/app/assets/stylesheets/consumer/main.css.scss.erb */
 #map_canvas_container .filter .group {
   width: 100%;
   font-size: 115%;
   margin: 3px;
 }
-/* line 357, /Users/danielsudol/projects/localeyes/app/assets/stylesheets/consumer/main.css.scss.erb */
+/* line 368, /Users/danielsudol/projects/localeyes/app/assets/stylesheets/consumer/main.css.scss.erb */
 #map_canvas_container .filter .group .img {
   vertical-align: top;
 }
-/* line 359, /Users/danielsudol/projects/localeyes/app/assets/stylesheets/consumer/main.css.scss.erb */
+/* line 370, /Users/danielsudol/projects/localeyes/app/assets/stylesheets/consumer/main.css.scss.erb */
 #map_canvas_container .filter .group .img img {
   width: 30px;
   height: 30px;
 }
-/* line 362, /Users/danielsudol/projects/localeyes/app/assets/stylesheets/consumer/main.css.scss.erb */
+/* line 373, /Users/danielsudol/projects/localeyes/app/assets/stylesheets/consumer/main.css.scss.erb */
 #map_canvas_container .filter .group .item {
   text-align: left;
   line-height: 30px;
@@ -596,7 +606,7 @@ ul, li {
   padding-left: 6px;
   width: 51%;
 }
-/* line 372, /Users/danielsudol/projects/localeyes/app/assets/stylesheets/consumer/main.css.scss.erb */
+/* line 383, /Users/danielsudol/projects/localeyes/app/assets/stylesheets/consumer/main.css.scss.erb */
 #map_canvas_container .search {
   position: absolute;
   top: -30px;
@@ -605,52 +615,52 @@ ul, li {
   width: 420px;
   display: none;
 }
-/* line 380, /Users/danielsudol/projects/localeyes/app/assets/stylesheets/consumer/main.css.scss.erb */
+/* line 391, /Users/danielsudol/projects/localeyes/app/assets/stylesheets/consumer/main.css.scss.erb */
 #map_canvas_container .search input {
   background-color: white;
   height: 24px;
   width: 340px;
 }
-/* line 387, /Users/danielsudol/projects/localeyes/app/assets/stylesheets/consumer/main.css.scss.erb */
+/* line 398, /Users/danielsudol/projects/localeyes/app/assets/stylesheets/consumer/main.css.scss.erb */
 #map_canvas_container #map_canvas {
   width: 100%;
   height: 500px;
   border: 1px solid #666666;
 }
 
-/* line 394, /Users/danielsudol/projects/localeyes/app/assets/stylesheets/consumer/main.css.scss.erb */
+/* line 405, /Users/danielsudol/projects/localeyes/app/assets/stylesheets/consumer/main.css.scss.erb */
 .business {
   padding: 10px 0px 0px 5%;
   border-right: 1px solid #666666;
   border-left: 1px solid #666666;
   width: 94%;
 }
-/* line 400, /Users/danielsudol/projects/localeyes/app/assets/stylesheets/consumer/main.css.scss.erb */
+/* line 411, /Users/danielsudol/projects/localeyes/app/assets/stylesheets/consumer/main.css.scss.erb */
 .business .info {
   width: 48%;
   vertical-align: top;
   display: inline-block;
 }
-/* line 406, /Users/danielsudol/projects/localeyes/app/assets/stylesheets/consumer/main.css.scss.erb */
+/* line 417, /Users/danielsudol/projects/localeyes/app/assets/stylesheets/consumer/main.css.scss.erb */
 .business .hours {
   width: 44%;
   padding-left: 25px;
   display: inline-block;
 }
-/* line 411, /Users/danielsudol/projects/localeyes/app/assets/stylesheets/consumer/main.css.scss.erb */
+/* line 422, /Users/danielsudol/projects/localeyes/app/assets/stylesheets/consumer/main.css.scss.erb */
 .business .hours .bold {
   font-weight: bold;
 }
-/* line 413, /Users/danielsudol/projects/localeyes/app/assets/stylesheets/consumer/main.css.scss.erb */
+/* line 424, /Users/danielsudol/projects/localeyes/app/assets/stylesheets/consumer/main.css.scss.erb */
 .business .hours .line .day_name {
   display: inline-block;
   width: 20px;
 }
-/* line 417, /Users/danielsudol/projects/localeyes/app/assets/stylesheets/consumer/main.css.scss.erb */
+/* line 428, /Users/danielsudol/projects/localeyes/app/assets/stylesheets/consumer/main.css.scss.erb */
 .business .hours .line .from_to {
   display: inline-block;
 }
-/* line 423, /Users/danielsudol/projects/localeyes/app/assets/stylesheets/consumer/main.css.scss.erb */
+/* line 434, /Users/danielsudol/projects/localeyes/app/assets/stylesheets/consumer/main.css.scss.erb */
 .business .close {
   position: absolute;
   top: 2px;

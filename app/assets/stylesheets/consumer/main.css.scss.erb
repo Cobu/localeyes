@@ -145,7 +145,7 @@ iframe.fb_ltr {
       }
     }
 
-    .business_users { 
+    .business_users {
       font-size:125%;
       margin-top: 45%;
     }
@@ -188,15 +188,20 @@ iframe.fb_ltr {
   .wrapper_links {
     vertical-align: top;
     display: inline-block;
-    width: 60%;
-    margin: 0;
-    padding: 0;
+    width: 68%;
+    font-size: 115%;
+
+    .link {
+      &:hover { text-decoration: underline }
+    }
+
     .link_div {
+      padding-right: 7px;
       text-align: right;
     }
     .sort_div {
-      text-align: right;
-      width: 80%;
+      span { font-size: 70%; }
+      line-height: 9px;
     }
   }
 
@@ -232,6 +237,8 @@ iframe.fb_ltr {
   height: 22px;
   font-size: 120%;
   @extend .event_bar;
+  @include text_inset;
+  color: rgba(18, 5, 9, 0.85);
   background-color: #cccccc;
   text-align: center;
   vertical-align: middle;
@@ -264,11 +271,11 @@ ul, li {
   .wrapper {
     position:relative;
     display: inline-block;
-    width: 97%;
+    width: 96%;
 
     .info_bar {
       width: 100%;
-      margin: 4px 0px 4px 18px;
+      margin: 4px 0px 4px 16px;
 
       .business_img {
         text-align: center;
@@ -278,7 +285,6 @@ ul, li {
       }
 
       .info {
-
         margin-top: 3px;
         margin-bottom: 3px;
         width: 69%;
@@ -312,14 +318,19 @@ ul, li {
           width: 22px;
           vertical-align: top;
           margin-right: 2%;
-          img { width: 26px; height: 26px; cursor: pointer; margin-right: 10px; }
+          img {
+            width: 26px;
+            height: 26px;
+            cursor: pointer;
+            margin-right: 10px;
+          }
         }
         .fave { margin-right: 6%; }
       }
     }
 
     .description {
-      width: 100%;
+      width: 99%;
       display: none;
       margin: 6px 0px 7px 23px;
     }
@@ -328,8 +339,8 @@ ul, li {
 
 }
 
-
 .full { width:90% !important; }
+
 
 #map_canvas_container {
   width: 48%;
@@ -343,7 +354,7 @@ ul, li {
     width:150px;
     z-index: 1000;
     border: 1px solid gray;
-    background-color: #ccc;
+    background-color: white;
     padding: 5px 12px 9px 5px;
     display: none;
 

@@ -96,7 +96,7 @@ window.EventDayHeaderView = Backbone.View.extend
 window.EventListView = Backbone.View.extend({
 
   initialize: (@event_list)->
-    @el = $('.event_list')
+    @el = $('#event_list')
     if @event_list
       this.render()
     else

@@ -33,6 +33,8 @@
               filters
 
         .sort_div
+          %span
+            sort by:
           .link.selected_link{ 'data-type'=> 'recent' }
             time
           .link{ 'data-type'=> 'business' }
@@ -41,7 +43,7 @@
             .link{ 'data-type'=> 'popular' }
               popular
     #event_list_inner
-      .event_list
+      #event_list
 
   #map_canvas_container
     .filter

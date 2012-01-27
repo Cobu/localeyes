@@ -2,5 +2,4 @@
 log/*
 tmp/*
 *.log
-public/assets/*
 .DS_Store
