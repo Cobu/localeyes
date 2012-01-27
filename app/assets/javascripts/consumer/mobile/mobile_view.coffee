@@ -21,7 +21,6 @@ $('[data-role=page]').live('pageshow', (event) ->
 
 ##################  filter handlers #####################
 $('label[for^=checkbox]').live('click', (event)->
-
   elem = $(event.currentTarget)
   debugger
   console.log elem.data('service_type'), elem.prev('input').prop('checked')
