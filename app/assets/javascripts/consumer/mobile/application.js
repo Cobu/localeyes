@@ -1,4 +1,4 @@
-// For the consumer side of the application
+//For the consumer side of the application
 // require jquery
 // require support/jquery.mobile
 // require support/handlebars
