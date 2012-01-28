@@ -174,7 +174,7 @@ class window.Filter
     for name of service_type_constants
       if Filter[name] then Filter.serviceTypes.push service_type_constants[name]
     window.event_list_view.render()
-    window.map_view.need_rendering = true
+    window.map_view.render()
 
   setFilteringByFavorites: (bool)->
     Filter.filtering_favorites = bool

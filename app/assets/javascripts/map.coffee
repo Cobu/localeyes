@@ -14,7 +14,7 @@ class window.MapView
     el: $('#map_canvas')
     @need_rendering = true
     @render()
-    @collection.bind('reset', => this.render(); @need_rendering = true )
+    @collection.bind('reset', => @render(); @need_rendering = true )
 
   prepareMap: ->
     return unless document.getElementById("map_canvas")
@@ -46,7 +46,6 @@ class window.MapView
     @markerBounds = new google.maps.LatLngBounds()
 
   reRender: ->
-    console.log('rerendering need=', @need_rendering)
     if @need_rendering == true
       @view = null
       @render()
@@ -71,10 +70,10 @@ class window.SingleZoomMapView extends MapView
   }
 
   render: ->
-    this.model.clearMarker()
-    this.prepareMap()
-    @model.setMarker(@view)
-    @view.setCenter(@model.marker.position)
+    @model.clearMarker()
+    @prepareMap()
+    @model.setMarker( @view )
+    @view.setCenter( @model.marker.position )
 
 
 ############  ExtendBoundMap view #############

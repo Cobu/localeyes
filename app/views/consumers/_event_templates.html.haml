@@ -16,12 +16,12 @@
             {{attributes/title}}
         .images
           .fave
-            %img{ src: 'assets/fav_{{userFavoritePrefix}}selected.png', rel:'favorite', 'data-business_id'=> '{{attributes/business_id}}' }
+            %img{ src: 'assets/fav_{{userFavoritePrefix}}selected_small.png', rel:'favorite', 'data-business_id'=> '{{attributes/business_id}}' }
           .vote.up
-            %img{ src: 'assets/thumb_up.png', rel: 'vote', 'data-id'=>"{{attributes/id}}", 'data-vote'=> "up"}
+            %img{ src: 'assets/thumb_up_small.png', rel: 'vote', 'data-id'=>"{{attributes/id}}", 'data-vote'=> "up"}
             .number
           .vote.down
-            %img{ src: 'assets/thumb_down.png', rel: 'vote', 'data-id'=>"{{attributes/id}}", 'data-vote'=> "down" }
+            %img{ src: 'assets/thumb_down_small.png', rel: 'vote', 'data-id'=>"{{attributes/id}}", 'data-vote'=> "down" }
             .number
       .description
         {{attributes/description}}

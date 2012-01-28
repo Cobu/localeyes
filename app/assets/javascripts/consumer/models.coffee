@@ -29,7 +29,7 @@ window.Business = Backbone.Model.extend(
     return '' unless _.isNumber(parseInt(this.get('service_type')))
     @service_type_names[this.get('service_type')].toLowerCase()
 
-  imageName: -> "/assets/#{this.serviceName()}.png"
+  imageName: -> "/assets/#{this.serviceName()}_pin_small.png"
   iconName: -> "/assets/#{this.serviceName()}_icon.png"
 
   clearMarker: ->
@@ -45,19 +45,19 @@ window.Business = Backbone.Model.extend(
   setMarkerIcon: (scaleFactor)-> @marker.setIcon(this.makeIcon(scaleFactor))
 
   makeMarker: (map)->
-    new google.maps.Marker({
-    position: @point
-    map: map
-    title: this.map_tooltip_template(this.attributes)
-    icon: this.makeIcon()
-    })
+    new google.maps.Marker(
+      position: @point
+      map: map
+      title: this.map_tooltip_template(this.attributes)
+      icon: this.makeIcon()
+    )
 
   makeIcon: (scaleFactor)->
-    scaleFactor = 1 if (scaleFactor == undefined)
+    scaleFactor = 'small' unless scaleFactor
     new google.maps.MarkerImage(
-      this.imageName(), null, null, null,
-      new google.maps.Size(30 * scaleFactor, 40 * scaleFactor)
+      "/assets/#{this.serviceName()}_pin_#{scaleFactor}.png"
     )
+
 )
 
 ############  BusinessList Collection #############
@@ -78,10 +78,10 @@ window.BusinessList = Backbone.Collection.extend(
     @selected_view = null
 
   setSelected: (business_id, business_view)->
-    this.get(@selected_id).setMarkerIcon() if @selected_id
     # shrink icon
-    this.get(business_id).setMarkerIcon(1.3)
+    this.get(@selected_id).setMarkerIcon() if @selected_id
     # bigger icon
+    this.get(business_id).setMarkerIcon('large')
     @selected_id = business_id
     @selected_view = business_view
 )
