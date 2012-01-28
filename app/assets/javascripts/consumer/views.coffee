@@ -144,7 +144,6 @@ window.BusinessView = Backbone.View.extend(
       @$(".line[data-day_num=#{day_number}]").addClass('bold')
     )
 
-
   close: ->
     @elem.slideUp('slow', =>
       @event_view.elem.find('.description').hide()
@@ -159,11 +158,13 @@ class window.Filter
     service_type_cafe: 0
     service_type_restaurant: 1
     service_type_bar: 2
+    service_type_retail: 3
   }
   @service_type_cafe = true
   @service_type_restaurant = true
   @service_type_bar = true
-  @serviceTypes = [0, 1, 2]
+  @service_type_retail = true
+  @serviceTypes = [0, 1, 2, 3]
   @filtering_favorites = false
   @userFavorites = []
 

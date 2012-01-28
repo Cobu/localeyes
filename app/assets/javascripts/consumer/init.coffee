@@ -13,5 +13,6 @@ $(document).ready( ->
 
   $( '.legend' ).toggle('slide', {direction: 'down'})
   $( '.search' ).toggle('slide', {direction: 'down'})
+  $( '.filter' ).toggle('slide', {direction: 'left'})
 )
 
