@@ -28,6 +28,7 @@ class BusinessUsersController < ApplicationController
   end
 
   def create
+    reset_session
     @user = BusinessUser.create(params[:business_user])
     render(text: 'Invalid details', status: 400) and return unless @user.valid?
 

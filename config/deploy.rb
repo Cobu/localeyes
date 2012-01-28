@@ -4,13 +4,13 @@ require 'bundler/capistrano'
 
 $:.unshift(File.expand_path("./lib", ENV["rvm_path"]))
 require 'rvm/capistrano'
-load 'deploy/assets'
+
 
 set :rvm_ruby_string, 'ruby-1.9.3-p0@localeyes'
 set :rvm_type, :user
 
 set :application, "localeyes"
-set :repository,  "git@github.com:Cobu/localeyes.git"
+set :repository, "git@github.com:Cobu/localeyes.git"
 
 set :scm, :git
 set :deploy_to, "/var/www/#{application}"
@@ -40,6 +40,5 @@ end
 
 #after "deploy:update_code", "deploy:migrate"
 #before :"deploy:symlink", :"deploy:assets"
-
 
 
