@@ -29,7 +29,7 @@ gem 'rvm'
 
 # cant find scss imports when I use asset group
 #group :assets do
-  gem 'sprockets'
+#  gem 'sprockets'
   gem 'coffee-rails'
   gem 'sass-rails'
   gem 'uglifier'
@@ -63,5 +63,5 @@ group :test do
 end
 
 group :production do
-  gem 'therubyracer', :require => false
+  #gem 'therubyracer', :require => false
 end
