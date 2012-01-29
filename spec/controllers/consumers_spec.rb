@@ -61,7 +61,7 @@ describe ConsumersController do
         remove_time = Time.utc(2011, 8, 5, 7, 30)
         event.add_exception_date(remove_time)
         get :events, d: college.id, format: :json
-        p response.body
+        #p response.body
       end
 
     end
