@@ -5,19 +5,23 @@ FactoryGirl.define do
     email { FactoryGirl.generate(:email) }
     password { "moogoo" }
     birthday { Date.parse("1980-10-29") }
-
-    factory :dude do
-      email { "geucyd@gmail.com" }
-      first_name { "Dude" }
-      last_name { "Smiley" }
-      phone { "5105551212" }
-      password { "moogoo" }
-    end
+    first_name { "User" }
+    last_name { "Guy" }
+    type 'User'
   end
 
   sequence(:business_user_email) { |n| "b#{n}@dude.com" }
-  factory :business_user, parent: :dude, class: :business_user do
+  factory :business_user do
     email { FactoryGirl.generate(:business_user_email) }
+    first_name { "Business" }
+    last_name { "User" }
+    password { "moogoo" }
+
+    factory :biz_guy do
+      email { "buiz_guy@isell.com" }
+      first_name { "Biz" }
+      last_name { "Guy" }
+    end
   end
 
   now = Time.now.utc
@@ -28,6 +32,7 @@ FactoryGirl.define do
   factory :business do
     name { 'Dans Diner' }
     association :user, :factory => :business_user
+    #user { Factory.build(:business_user) }
     phone { "6505551212" }
     address { '1 Dude street' }
     city { 'Oswego' }

@@ -4,6 +4,7 @@
 //= require support/handlebars
 //= require support/underscore
 //= require support/date
+//= require support/core
 //= require support/backbone
 //= require support/has_class_plugin
 //= require map

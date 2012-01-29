@@ -1,9 +1,12 @@
 require 'spec_helper'
 
 describe "Business User" do
-  let(:user) { build(:business_user) }
+
+  before { Capybara.current_driver = :webkit }
+  after { Capybara.use_default_driver }
 
   describe "creating profile" do
+    let(:user) { build(:business_user) }
     before { visit businesses_path }
 
     it "with complete info takes you to create new business page", js: true do
@@ -28,12 +31,14 @@ describe "Business User" do
         click_on "Register"
       end
 
-      page.has_content?("Invalid details").should == true
+      page.should have_content("email can't be blank")
       page.current_path.should == businesses_path
     end
   end
 
   describe "logging in" do
+
+    let(:user) { create(:business_user) }
 
     def sign_in( email, password )
       visit businesses_path
@@ -45,39 +50,44 @@ describe "Business User" do
     end
 
     context "when user has business" do
-      it "with correct password logs in existing user", js: true do
-        user.save
+
+      it "works with correct password", js: true do
+        #### big problem with factory girl on this business user assoc ####
+        #### something to do with reloading classes                   #####
+        user = BusinessUser.create(
+          email: 'buiz_guy@isell.com',
+          first_name: 'Biz',
+          password: 'dudedude',
+          last_name: 'Guy')
         b = create(:oswego_restaurant, user: user)
 
         sign_in user.email, user.password
 
-        page.has_content?("Create New Business").should == true
+        page.should have_content('Create New Business')
         page.current_path.should == business_path(b)
       end
 
-      it "with incorrect password keeps existing user on login page", js: true do
-        user.save
+      it "fails with incorrect password and keeps you on login page", js: true do
         sign_in user.email, "wrong password"
 
         page.current_path.should == businesses_path
-        page.has_content?("Invalid username/password").should == true
+        page.should have_content("Invalid username/password")
       end
 
       it "with email / password for non existing user keeps user on login page", js: true do
         sign_in "email@for.non.existent.user", "password"
 
         page.current_path.should == businesses_path
-        page.has_content?("Invalid username/password").should == true
+        page.should have_content("Invalid username/password")
       end
     end
 
     context "when user has no businesses" do
 
       it "with correct login renders the create new business page", js: true do
-        user.save
         sign_in user.email, user.password
 
-        page.has_content?("Create New Business").should == false
+        page.should have_content("Current connections")
         page.current_path.should == new_business_path
       end
 

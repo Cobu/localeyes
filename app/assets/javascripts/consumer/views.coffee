@@ -45,7 +45,7 @@ Handlebars.registerHelper("header", (date)->
       "Tommorrow"
     else
       date.toString('dddd')
-    str += " #{date.toString('MMMM d')}"
+    str += " #{date.toString('MMMM dS')}"
 )
 
 

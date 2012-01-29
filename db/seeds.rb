@@ -15,7 +15,7 @@ unless Rails.env.production?
   resto.set_default_hours
   resto.save
 
-  FactoryGirl.create(:dude)
+  FactoryGirl.create(:user)
 
   now = Time.now.utc
   FactoryGirl.create(:once_event, :business=>cafe, :start_time => Time.utc(2011, now.month, 3, 21, 10), :end_time => Time.utc(2011, now.month, 4, 2, 30), :title=>"one times")

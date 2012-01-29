@@ -46,7 +46,11 @@ $(document).ready(->
     )
     .bind('ajax:error', (xhr, status, error)->
       form = $(this)
-      form.find('.message').html(status.responseText)
+      errors = JSON.parse(status.responseText)
+      messages = []
+      for key, values of errors
+        messages.push (key + ' ' + values.shift())
+      form.find('.message').html(messages.join(', '))
     )
 
 )

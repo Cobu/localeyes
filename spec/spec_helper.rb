@@ -1,10 +1,11 @@
-Spork.prefork do
-  require File.expand_path("../../config/environment", __FILE__)
+require 'spork'
 
+Spork.prefork do
+  ENV["RAILS_ENV"] ||= 'test'
+  require File.expand_path("../../config/environment", __FILE__)
   require 'rspec/rails'
   require 'capybara/rspec'
   require 'capybara/rails'
-  require 'factory_girl_rails'
   require 'database_cleaner'
 
   Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
@@ -30,11 +31,13 @@ Spork.prefork do
       end
   end
 
-  #Capybara.javascript_driver = :webkit
   Capybara.register_driver :chrome do |app|
     Capybara::Selenium::Driver.new(app, :browser => :chrome)
   end
 
+  Capybara.register_driver :webkit do |app|
+    Capybara::Driver::Webkit.new(app)
+  end
 end
 
 Spork.each_run do
