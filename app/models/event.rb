@@ -23,7 +23,7 @@ class Event < ActiveRecord::Base
 
   attr_writer :start_date, :start_time_hour, :start_time_minute, :start_time_am_pm,
               :end_date, :end_time_hour, :end_time_minute, :end_time_am_pm,
-              :recur_value, :recur_until_date, :edit_affects
+              :recur_value, :edit_affects
 
   def recurring?
     schedule.present?
@@ -36,6 +36,16 @@ class Event < ActiveRecord::Base
 
   def one_time_event?
     recur_value == ONCE
+  end
+
+  def recur_until_date=(date)
+    @recur_until_date =
+      case date
+        when String then DateTime.strptime(date,"%m/%d/%Y").to_time rescue nil
+        when Date then date.to_time
+        when Time then date
+          else nil
+      end
   end
 
   def recur_until_date
@@ -126,8 +136,8 @@ class Event < ActiveRecord::Base
         when 'month'
           IceCube::Rule.monthly
       end
-      until_date = Time.strptime(@recur_until_date,"%m/%d/%Y") rescue nil
-      rule.until(until_date) if until_date
+
+      rule.until(@recur_until_date) if @recur_until_date
       schedule.add_recurrence_rule(rule)
 
       self.schedule = schedule
@@ -138,8 +148,7 @@ class Event < ActiveRecord::Base
   def edit_schedule
     if schedule and schedule.rrules.any? and @recur_until_date
       rule = schedule.rrules.first
-      until_date = Time.strptime(@recur_until_date,"%m/%d/%Y") rescue nil
-      rule.until(until_date)
+      rule.until(@recur_until_date)
     end
     true
   end

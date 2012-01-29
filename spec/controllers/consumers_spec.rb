@@ -33,12 +33,12 @@ describe ConsumersController do
     let(:user) { create(:user) }
     let(:cafe) { create(:oswego_cafe) }
     let(:now) { Time.now.utc }
+    let(:college) { create(:suny_oswego) }
     render_views
 
     it "generates fixture" do
-      college = create(:suny_oswego)
       create(:once_event,
-             :business=>cafe,
+             :business => cafe,
              :start_time => now.change(:min => 0, :sec => 0).advance(:hours => utc_offset_hours + 1),
              :end_time => now.change(:min => 0, :sec => 0).advance(:hours => utc_offset_hours + 2),
              :title=>"one times")
@@ -46,6 +46,24 @@ describe ConsumersController do
       get :event_list, college: college.id
       response.should be_success
       save_fixture(response.body, 'event_list_page')
+    end
+
+    describe "returns correct event list" do
+
+      it "when dates are removed from series" do
+        event = create(:daily_event,
+                             :business=>cafe,
+                             :start_time => Time.utc(2011, 8, 5, 7, 30),
+                             :end_time => Time.utc(2011, 8, 5, 9, 30),
+                             :title=>"daily times"
+              )
+
+        remove_time = Time.utc(2011, 8, 5, 7, 30)
+        event.add_exception_date(remove_time)
+        get :events, d: college.id, format: :json
+        p response.body
+      end
+
     end
   end
 end

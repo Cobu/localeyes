@@ -1,11 +1,14 @@
 require 'spec_helper'
 
 describe ConsumersController do
-  let(:user) { create(:dude) }
+  let(:user) { create(:user) }
   let(:business_user) { create(:business_user) }
   let(:cafe) { build(:oswego_cafe, :user=> business_user) }
   let(:resto) { build(:oswego_restaurant, :user=> business_user) }
   let(:now) { Time.now.utc }
+
+  #before { Capybara.current_driver = :webkit }
+  #after { Capybara.use_default_driver }
 
   #context "#home" do
   #  it "works" do
@@ -18,8 +21,9 @@ describe ConsumersController do
   #end
 
   describe "#event_list" do
-    let(:college) { create(:suny_oswego) }
     let(:town) { create(:oswego) }
+    let(:college) { create(:suny_oswego) }
+    let(:cafe) { create(:oswego_cafe) }
 
     before do
       college
@@ -29,6 +33,38 @@ describe ConsumersController do
     it "creates fixture" do
       visit event_list_consumers_path(college: college.id)
       save_fixture(page.body, 'event_list_page')
+    end
+
+    describe "returns correct event list" do
+
+      # NOTE: very important, the way i set now time is the way controller sets it
+      let(:now) { Time.zone.at(Time.now.to_i) }
+
+      describe "when dates are removed from series" do
+        before {
+          event = create(:daily_event,
+                         start_time: now.advance(seconds: 1),
+                         # TODO .. fix this .. pass in date .. not string
+                         recur_until_date: (now + 3.days).strftime("%m/%d/%Y"),
+                         business: cafe,
+                         title: "daily times"
+          )
+          event.add_exception_date(event.start_time + 1.day)
+          event.save
+        }
+
+        it "and NO time is specified " do
+          visit events_consumers_path(d: college.id)
+          events = JSON.parse(page.text)['events']
+          events.size.should == 2
+        end
+
+        it "and a time is specified " do
+          visit events_consumers_path(d: college.id, time: now)
+          events = JSON.parse(page.text)['events']
+          events.size.should == 2
+        end
+      end
     end
 
     describe "logged in" do
@@ -58,6 +94,7 @@ describe ConsumersController do
 
         page.has_content?("Public Library Cafe").should be_true
       end
+
     end
   end
 end
