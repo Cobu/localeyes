@@ -63,5 +63,5 @@ group :test do
 end
 
 group :production do
-  #gem 'therubyracer', :require => false
+  gem 'therubyracer', :require => false
 end
