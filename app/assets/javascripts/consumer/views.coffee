@@ -173,26 +173,17 @@ class App.View.BusinessView extends Backbone.View
 
 
 class window.Filter
-  service_type_constants = {
-  service_type_cafe: 0
-  service_type_restaurant: 1
-  service_type_bar: 2
-  service_type_retail: 3
-  }
-  @service_type_cafe = true
-  @service_type_restaurant = true
-  @service_type_bar = true
-  @service_type_retail = true
   @serviceTypes = [0, 1, 2, 3]
   @filtering_favorites = false
   @userFavorites = []
 
-  setServiceType: (type, value)->
-    console.log type, value
-    Filter[type] = value
-    Filter.serviceTypes = []
-    for name of service_type_constants
-      if Filter[name] then Filter.serviceTypes.push service_type_constants[name]
+  setServiceType: (selected, value)->
+    value = parseInt(value)
+    index = _.indexOf(Filter.serviceTypes, value)
+    if selected
+      Filter.serviceTypes.push( value ) unless index >= 0
+    else
+      Filter.serviceTypes.splice( index ,1)
     window.event_list_view.render()
     window.map_view.render()
 
@@ -217,9 +208,9 @@ class window.Filter
     _.include(Filter.serviceTypes, business.get('service_type'))
 
   setValues: ->
-    $('.filter input[type=checkbox]').each((index, elem)->
-        id = $(elem).attr('id')
-        $(elem).prop('checked', Filter[id])
+    $('.filter input[name^=service_type]').each((index, elem)->
+        selected = _.indexOf(Filter.serviceTypes, $(elem).val())
+        $(elem).prop('checked', selected )
     )
 
 window.filter = new window.Filter()

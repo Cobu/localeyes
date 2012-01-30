@@ -76,7 +76,7 @@ $(document).ready( ->
   ##################  filter handlers #####################
   $('.filter input[name^=service_type]').live('click', (event)->
     elem = $(event.currentTarget)
-    filter.setServiceType( elem.attr('id'), elem.prop('checked') )
+    filter.setServiceType( elem.prop('checked') , elem.val() )
   )
 
   $('input[name=filtering_favorites]').live('click', (event)->
