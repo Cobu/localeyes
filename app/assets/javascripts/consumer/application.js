@@ -9,8 +9,13 @@
 //= require handlebars.runtime
 //= require_tree ../../templates
 //= require support/handlebars
-//= require map
+
+//= require consumer/setup
 //= require consumer/models
 //= require consumer/views
+//= require consumer/collections
+//= require consumer/controller
 //= require consumer/handlers
+//= require map
 //= require consumer/init
+

@@ -1,5 +1,5 @@
 #############  Map view #############
-class window.MapView
+class App.View.MapView
   icon: null
   center_point: null
   center_marker: null
@@ -59,7 +59,7 @@ class window.MapView
 
 
 ############  SingleZoomMap view #############
-class window.SingleZoomMapView extends MapView
+class App.View.SingleZoomMapView extends App.View.MapView
   constructor: (@model, @center_point)->
     throw "you need a model to make a MapView" unless @model
 
@@ -77,7 +77,7 @@ class window.SingleZoomMapView extends MapView
 
 
 ############  ExtendBoundMap view #############
-class window.ExtendBoundMapView extends MapView
+class App.View.ExtendBoundMapView extends App.View.MapView
 
   markerBounds: new google.maps.LatLngBounds()
   markerBoundsZoomOut: 0.1

@@ -1,6 +1,4 @@
-
-#..hack..###########  Event model #############
-window.Event = Backbone.Model.extend(
+class App.Model.Event extends Backbone.Model
   startDate: -> Date.parse( this.get('start') ).toString("yyyy-MM-dd")
   startHour: -> Date.parse( this.get('start') ).toString("h:mm")
   startAmPm: -> Date.parse( this.get('start') ).toString("tt")
@@ -9,23 +7,10 @@ window.Event = Backbone.Model.extend(
   businessImageName: -> this.business().imageName()
   businessIconName: -> this.business().iconName()
   userFavoritePrefix: -> 'un' unless _.include( Filter.userFavorites, this.get('business_id') )
-)
-
-############  EventList Collection #############
-window.EventList = Backbone.Collection.extend(
-  url: '/consumers/events'
-  model: Event
-
-  comparator: (event)-> event.get('start')
-
-  reset: ( collection, logged_in ) ->
-    @logged_in = logged_in
-    Backbone.Collection.prototype.reset.call(this, collection)
-)
 
 
-############  Business model #############
-window.Business = Backbone.Model.extend(
+
+class App.Model.Business extends Backbone.Model
   service_type_names: ['Cafe', 'Restaurant', 'Bar', 'Retail']
   marker: null
   map_tooltip_template: Handlebars.compile("{{name}}\n{{address}}\n{{city}},{{state}}")
@@ -63,33 +48,6 @@ window.Business = Backbone.Model.extend(
       "/assets/#{this.serviceName()}_pin_#{scaleFactor}.png"
     )
 
-)
-
-############  BusinessList Collection #############
-window.BusinessList = Backbone.Collection.extend(
-  model: Business
-  selected_id: null
-  selected_view: null
-  # override rest to clear the business markers in old collection before
-  # the new collection takes its place
-  reset: (collection)->
-    @each((business)-> business.clearMarker())
-    Backbone.Collection.prototype.reset.call(this, collection)
-
-  clearSelected: ->
-    this.get(@selected_id).setMarkerIcon() if @selected_id
-    @selected_id = null
-    @selected_view.close() if @selected_view
-    @selected_view = null
-
-  setSelected: (business_id, business_view)->
-    # shrink icon
-    this.get(@selected_id).setMarkerIcon() if @selected_id
-    # bigger icon
-    this.get(business_id).setMarkerIcon('large')
-    @selected_id = business_id
-    @selected_view = business_view
-)
 
 
 

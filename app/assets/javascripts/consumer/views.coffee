@@ -51,7 +51,7 @@ Handlebars.registerHelper("header", (date)->
 
 
 ############  Event view #############
-window.EventView = Backbone.View.extend(
+class App.View.EventView extends Backbone.View
   tagName: 'li'
   className: 'event'
 
@@ -78,10 +78,9 @@ window.EventView = Backbone.View.extend(
       @elem = $(@el).html( @template(@model) )
       @elem.attr('data-id', @model.get('id') )
     this
-)
 
 ############ day header view #############
-window.EventDayHeaderView = Backbone.View.extend
+class App.View.EventDayHeaderView extends Backbone.View
   tagName: 'li'
   className: 'day_header'
   template: Handlebars.compile "{{header date}}"
@@ -95,8 +94,7 @@ window.EventDayHeaderView = Backbone.View.extend
     @elem = $(@el).html( html ).attr('data-role','list-divider')
 
 ############  EventList view #############
-window.EventListView = Backbone.View.extend({
-
+class App.View.EventListView extends Backbone.View
   initialize: (@event_list)->
     @el = $('#event_list')
     if @event_list
@@ -118,16 +116,15 @@ window.EventListView = Backbone.View.extend({
 
 
   buildEventsForDay: (date, events)->
-    @el.append( new EventDayHeaderView( 'date': date).elem )
+    @el.append( new App.View.EventDayHeaderView( 'date': date).elem )
     _.each(events, (event)=>
-        event_view = new EventView( model: event, date : date, logged_in: @event_list.logged_in )
+        event_view = new App.View.EventView( model: event, date : date, logged_in: @event_list.logged_in )
         @el.append( event_view.elem )
     )
-})
 
 
 ############  Business view #############
-window.BusinessView = Backbone.View.extend(
+class App.View.BusinessView extends Backbone.View
   event_view: null
   tagName: 'li'
   className: 'business'
@@ -153,7 +150,6 @@ window.BusinessView = Backbone.View.extend(
       @event_view.elem.removeClass('open')
       @elem.remove()
     )
-)
 
 
 class window.Filter
