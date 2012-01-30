@@ -35,8 +35,8 @@ $(document).ready(->
   ################ map the business ############
   if $("#map_canvas")[0]
     business_json = $('#business_data').data('info')
-    business = new window.Business(business_json)
-    window.map_view = new SingleZoomMapView(business)
+    business = new App.Model.Business(business_json)
+    window.map_view = new App.View.SingleZoomMapView(business)
     if business.get('id')
       window.map_view.render()
       $('#geo_lookup_button').hide()
