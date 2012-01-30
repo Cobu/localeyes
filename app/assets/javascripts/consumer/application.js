@@ -10,12 +10,12 @@
 //= require_tree ../../templates
 //= require support/handlebars
 
-//= require consumer/setup
-//= require consumer/models
-//= require consumer/views
-//= require consumer/collections
-//= require consumer/controller
-//= require consumer/handlers
-//= require map
-//= require consumer/init
+//= require shared/init_namespace
+//= require shared/handlebars_helpers
+//= require_tree ../models
+//= require_tree ../collections
+//= require_tree ./views
+//= require ./controller
+//= require ./handlers
+//= require ./init
 
