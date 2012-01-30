@@ -49,7 +49,6 @@ Handlebars.registerHelper("header", (date)->
 )
 
 
-
 ############  Event view #############
 class App.View.EventView extends Backbone.View
   tagName: 'li'
@@ -57,6 +56,9 @@ class App.View.EventView extends Backbone.View
 
   events:
     'click .wrapper .info_bar .info, .description': 'showBusiness'
+    'hover .info, .description': 'hoverHandler'
+    'click .images img[rel=favorite]': 'selectFavoriteHandler'
+    'click .images img[rel=vote]': 'voteHandler'
 
   initialize: (options)->
     @date = options.date
@@ -66,17 +68,35 @@ class App.View.EventView extends Backbone.View
     @render()
 
   showBusiness: ->
-    if ( @cid ==  (business_list.selected_view.event_view.cid if business_list.selected_view) )
+    if ( @cid == (business_list.selected_view.event_view.cid if business_list.selected_view) )
       business_list.clearSelected()
     else
       business_list.clearSelected()
-      bview = new App.View.BusinessView( event_view: this )
-      business_list.setSelected( @model.business().get('id'), bview )
+      bview = new App.View.BusinessView(event_view: this)
+      business_list.setSelected(@model.business().get('id'), bview)
+
+  hoverHandler: => @elem.toggleClass('hover')
+  selectFavoriteHandler: =>
+    business_id = @elem.data('business_id')
+    selected = filter.setFavorite( business_id )
+    prefix = if selected then '' else 'un'
+    $("img[data-business_id='#{business_id}']").attr({src: "assets/fav_#{prefix}selected.png"})
+
+  voteHandler: (event)=>
+    img = $(event.currentTarget)
+    vote = img.data('vote')
+    event_id = @elem.data('id')
+    $.post('/users/event_vote', { event: event_id, vote: vote }, (data)->
+      # returns null if already voted .. TODO  might want to show a message for this case
+        window.votes.resetVotes(data) if data
+    )
+
 
   render: ->
     if @model
-      @elem = $(@el).html( @template(@model) )
-      @elem.attr('data-id', @model.get('id') )
+      @elem = $(@el).html(@template(@model))
+      @elem.attr('data-id', @model.get('id'))
+      @elem.attr('data-business_id', @model.get('business_id'))
     this
 
 ############ day header view #############
@@ -90,8 +110,8 @@ class App.View.EventDayHeaderView extends Backbone.View
     @render()
 
   render: ->
-    html = @template( date:@date )
-    @elem = $(@el).html( html ).attr('data-role','list-divider')
+    html = @template(date: @date)
+    @elem = $(@el).html(html).attr('data-role', 'list-divider')
 
 ############  EventList view #############
 class App.View.EventListView extends Backbone.View
@@ -116,10 +136,10 @@ class App.View.EventListView extends Backbone.View
 
 
   buildEventsForDay: (date, events)->
-    @el.append( new App.View.EventDayHeaderView( 'date': date).elem )
+    @el.append(new App.View.EventDayHeaderView('date': date).elem)
     _.each(events, (event)=>
-        event_view = new App.View.EventView( model: event, date : date, logged_in: @event_list.logged_in )
-        @el.append( event_view.elem )
+        event_view = new App.View.EventView(model: event, date: date, logged_in: @event_list.logged_in)
+        @el.append(event_view.elem)
     )
 
 
@@ -135,29 +155,29 @@ class App.View.BusinessView extends Backbone.View
     @render()
 
   render: ->
-    @elem = $(@el).html( @template(@event_view.model.business()) ).hide()
-    @event_view.elem.after( @elem )
+    @elem = $(@el).html(@template(@event_view.model.business())).hide()
+    @event_view.elem.after(@elem)
     @event_view.elem.find('.description').addClass('open').show()
     @elem.slideDown('slow', =>
       # bold the day of the week on the hours list
-      day_number =  @event_view.date.getDay()
-      @$(".line[data-day_num=#{day_number}]").addClass('bold')
+        day_number = @event_view.date.getDay()
+        @$(".line[data-day_num=#{day_number}]").addClass('bold')
     )
 
   close: ->
     @elem.slideUp('slow', =>
-      @event_view.elem.find('.description').hide()
-      @event_view.elem.removeClass('open')
-      @elem.remove()
+        @event_view.elem.find('.description').hide()
+        @event_view.elem.removeClass('open')
+        @elem.remove()
     )
 
 
 class window.Filter
   service_type_constants = {
-    service_type_cafe: 0
-    service_type_restaurant: 1
-    service_type_bar: 2
-    service_type_retail: 3
+  service_type_cafe: 0
+  service_type_restaurant: 1
+  service_type_bar: 2
+  service_type_retail: 3
   }
   @service_type_cafe = true
   @service_type_restaurant = true
@@ -182,17 +202,15 @@ class window.Filter
     window.map_view.render()
 
   setFavorite: (business_id)->
-    prefix = ''
+    selected = true
     if _.include(Filter.userFavorites, business_id)
       $.post('/users/unset_favorite', { b: business_id})
       Filter.userFavorites = _.without(Filter.userFavorites, business_id)
-      prefix = 'un'
+      selected = false
     else
       Filter.userFavorites.push(business_id)
       $.post('/users/set_favorite', { b: business_id})
-    img = $("img[data-business_id='#{business_id}']")
-    img.attr({src:"assets/fav_#{prefix}selected.png"})
-
+    selected
 
   match: (business)->
     if Filter.filtering_favorites then return false unless _.include(Filter.userFavorites, business.get('id'))
@@ -212,9 +230,9 @@ class window.Votes
 
   setVotes: (votes)->
     @votes = votes
-    _.each(votes, (vote)=> @votes_hash[vote._id] = vote )
+    _.each(votes, (vote)=> @votes_hash[vote._id] = vote)
 
-  show: ()-> _.each( @votes, (info)=> this.showNumbers(info) )
+  show: ()-> _.each(@votes, (info)=> this.showNumbers(info))
 
   resetVotes: (data)->
     @votes_hash[data._id] = data
@@ -235,11 +253,12 @@ window.votes = new window.Votes()
 
 class window.Sort
   sort_type: 'recent'
-  sorts: {
+  sorts:
+    {
     recent: (event)-> event.get('start')
-    popular: (event)-> -window.votes.votes_hash[event.id].votes['point']
+    popular: (event)-> - window.votes.votes_hash[event.id].votes['point']
     business: (event)-> event.businessName()
-  }
+    }
 
   setSortType: (type)->
     @sort_type = type

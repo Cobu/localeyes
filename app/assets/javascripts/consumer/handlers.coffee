@@ -84,34 +84,13 @@ $(document).ready( ->
     filter.setFilteringByFavorites( elem.prop('checked') )
   )
 
-  $('.images img[rel=favorite]').live('click', (event)->
-    elem = $(event.currentTarget)
-    filter.setFavorite( elem.data('business_id') )
-  )
 
-
-  ################ voting handlers #############
-  $('.images img[rel=vote]').live('click', (event)->
-    elem = $(event.currentTarget)
-    event_id = elem.data('id')
-    vote = elem.data('vote')
-    $.post('/users/event_vote',{ event:event_id, vote:vote }, (data)->
-      # returns null if already voted .. TODO  might want to show a message for this case
-      window.votes.resetVotes(data) if data
-    )
-  )
-
-  ##################  sorting  handlers #####################
   $( '.sort_div .link' ).live( 'click', (event)->
     elem = $(event.currentTarget)
     type = elem.data('type')
     $('.sort_div .link').removeClass('selected_link')
     elem.addClass('selected_link')
     window.sorter.setSortType(type)
-  )
-
-  $('.event .info, .description').live('hover', ->
-    $(this).closest('.event').toggleClass('hover')
   )
 
 )

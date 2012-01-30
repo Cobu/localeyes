@@ -13,5 +13,6 @@
 //= require business/edit
 //= require business/home
 //= require map
+//= require consumer/setup
 //= require consumer/models
 //= require common
