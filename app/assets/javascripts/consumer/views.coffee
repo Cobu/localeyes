@@ -60,7 +60,9 @@ window.EventView = Backbone.View.extend(
 
   initialize: (options)->
     @date = options.date
-    @template = Handlebars.compile( $('#event_template').html() )
+    @logged_in = options.logged_in
+    suffix = if @logged_in then 'logged_in' else 'guest'
+    @template = JST["consumer/event_#{suffix}"]
     @render()
 
   showBusiness: ->
@@ -117,11 +119,12 @@ window.EventListView = Backbone.View.extend({
 
   buildEventsForDay: (date, events)->
     @el.append( new EventDayHeaderView( 'date': date).elem )
-    _.each(events, (event)->
-        event_view = new EventView( model: event, date : date )
-        event_list_view.el.append( event_view.elem )
+    _.each(events, (event)=>
+        event_view = new EventView( model: event, date : date, logged_in: @event_list.logged_in )
+        @el.append( event_view.elem )
     )
 })
+
 
 ############  Business view #############
 window.BusinessView = Backbone.View.extend(
@@ -131,7 +134,7 @@ window.BusinessView = Backbone.View.extend(
 
   initialize: (options)->
     @event_view = options.event_view
-    @template = Handlebars.compile( $('#business_info_template').html() )
+    @template = JST['consumer/business_info']
     @render()
 
   render: ->

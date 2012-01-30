@@ -9,11 +9,11 @@ class BusinessesController < ApplicationController
   end
 
   def events
-    start_date = Time.at(params[:start].to_i).to_date
-    end_date = Time.at(params[:end].to_i).to_date
+    start_date = Time.zone.at(params[:start].to_i)
+    end_date = Time.zone.at(params[:end].to_i)
     events = current_business.events.all
-    details = events.collect { |e| e.business_events(start_date, end_date) }.flatten
-    render :json=> details
+    events = events.collect { |e| e.business_events(start_date, end_date) }.flatten
+    render :json=> events
   end
 
   def show

@@ -1,3 +1,10 @@
+GIT
+  remote: git://github.com/infbio/haml.git
+  revision: 1dc2d4e0849a1ad4a23144145fb7ce9a937671d6
+  branch: form_for_fix
+  specs:
+    haml (3.2.0.alpha.0)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -71,6 +78,7 @@ GEM
     draper (0.10.0)
       activesupport (>= 2.3.10)
     dynamic_form (1.1.4)
+    ejs (1.0.0)
     em-websocket (0.3.6)
       addressable (>= 2.1.1)
       eventmachine (>= 0.12.9)
@@ -102,12 +110,18 @@ GEM
     guard-spork (0.5.1)
       guard (>= 0.10.0)
       spork (>= 0.8.4)
-    haml (3.1.4)
     haml-rails (0.3.4)
       actionpack (~> 3.0)
       activesupport (~> 3.0)
       haml (~> 3.0)
       railties (~> 3.0)
+    haml_assets (0.0.5)
+      haml
+      tilt
+    handlebars_assets (0.4.0)
+      execjs (>= 1.2.9)
+      sprockets (>= 2.0.3)
+      tilt
     hashie (1.2.0)
     highline (1.6.11)
     hike (1.2.1)
@@ -282,12 +296,16 @@ DEPENDENCIES
   database_cleaner
   draper
   dynamic_form
+  ejs
   factory_girl_rails
   geocoder
   guard-bundler
   guard-livereload
   guard-spork
+  haml!
   haml-rails
+  haml_assets
+  handlebars_assets
   hirb
   ice_cube
   jasmine

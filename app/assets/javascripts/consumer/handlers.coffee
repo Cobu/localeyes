@@ -6,7 +6,7 @@ window.Events.refresh = (data)->
   window.filter.setValues()
   window.business_list.reset( data.businesses )
   window.votes.setVotes( data.votes )
-  window.event_list.reset( data.events )
+  window.event_list.reset( data.events, data.in )
   $( "#location_search" ).val( data.center.title.replace("\n",' ') )
 
 

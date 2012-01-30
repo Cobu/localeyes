@@ -12,11 +12,16 @@ window.Event = Backbone.Model.extend(
 )
 
 ############  EventList Collection #############
-window.EventList = Backbone.Collection.extend({
+window.EventList = Backbone.Collection.extend(
   url: '/consumers/events'
   model: Event
+
   comparator: (event)-> event.get('start')
-})
+
+  reset: ( collection, logged_in ) ->
+    @logged_in = logged_in
+    Backbone.Collection.prototype.reset.call(this, collection)
+)
 
 
 ############  Business model #############

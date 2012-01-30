@@ -56,7 +56,8 @@ class ConsumersController < ApplicationController
       events: events,
       favorites: favorites,
       center: center.center_json,
-      votes: votes
+      votes: votes,
+      in: current_user.present?
     }
   end
 end

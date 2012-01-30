@@ -33,7 +33,10 @@ gem 'rvm'
   gem 'coffee-rails'
   gem 'sass-rails'
   gem 'uglifier'
-  #gem 'handlebars_assets'
+  gem 'handlebars_assets'
+  gem 'haml_assets'
+  gem 'ejs'
+  gem 'haml', git: "git://github.com/infbio/haml.git", branch: 'form_for_fix'
 #end
 
 group :development, :test do

@@ -1,0 +1,20 @@
+.event_type_bar{ :class=> "{{attributes/service_type}}" }
+  &nbsp;
+.wrapper
+  .info_bar
+    .business_img
+      %img{ src: "{{businessImageName}}" }
+    .info.full
+      .business_name_wrapper
+        .business_name
+          {{businessName}}
+        .start_hour== {{startHour}}
+        .am_pm== {{startAmPm}}
+      .title
+        {{attributes/title}}
+  .description
+    {{attributes/description}}
+
+
+
+
