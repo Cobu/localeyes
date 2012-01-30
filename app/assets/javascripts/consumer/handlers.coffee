@@ -18,7 +18,7 @@ $(document).ready( ->
               time: Date.now().toString('yyyy-MM-dd HH:mm'),
               zip_code: ui.item.zip_code,
               t: ui.item.type,
-              d: ui.item.id }, (data)-> Events.refresh(data)
+              d: ui.item.id }, (data)-> App.Controller.Events.refresh(data)
         )
         return false
     )

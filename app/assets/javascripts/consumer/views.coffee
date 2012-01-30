@@ -70,7 +70,7 @@ class App.View.EventView extends Backbone.View
       business_list.clearSelected()
     else
       business_list.clearSelected()
-      bview = new BusinessView( event_view: this )
+      bview = new App.View.BusinessView( event_view: this )
       business_list.setSelected( @model.business().get('id'), bview )
 
   render: ->
