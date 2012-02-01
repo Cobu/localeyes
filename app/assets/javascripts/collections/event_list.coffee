@@ -4,8 +4,3 @@ class App.Collection.EventList extends Backbone.Collection
 
   comparator: (event)-> event.get('start')
 
-  reset: ( collection, logged_in ) ->
-    @logged_in = logged_in
-    Backbone.Collection.prototype.reset.call(this, collection)
-
-

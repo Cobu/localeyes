@@ -10,11 +10,14 @@ class App.View.MapView
     mapTypeControl: false
   }
 
-  constructor: (@collection, @center_point)->
+  constructor: (options)->
+    @collection = options.collection
+    @container_view = options.event_container_view
     el: $('#map_canvas')
     @need_rendering = true
     @render()
     @collection.bind('reset', => @render(); @need_rendering = true )
+    @container_view.filter.bind('change', => @render(); @need_rendering = true )
 
   prepareMap: ->
     return unless document.getElementById("map_canvas")
@@ -33,9 +36,9 @@ class App.View.MapView
     @markerBounds.extend(@center_marker.position) if @markerBounds and @center_marker
 
   setMarkers: (map, markerBounds) ->
-    _.each( @collection.models, (business) ->
+    _.each( @collection.models, (business) =>
       business.clearMarker()
-      if window.filter.match(business)
+      if @container_view.filter.match(business)
         business.setMarker(map, markerBounds)
     )
 
@@ -60,7 +63,9 @@ class App.View.MapView
 
 ############  SingleZoomMap view #############
 class App.View.SingleZoomMapView extends App.View.MapView
-  constructor: (@model, @center_point)->
+  constructor: (options)->
+    @model = options.modeol
+    @center_point = options.center_point
     throw "you need a model to make a MapView" unless @model
 
   options: {

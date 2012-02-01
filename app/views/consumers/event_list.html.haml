@@ -1,83 +1,10 @@
 = render :partial => 'layouts/header'
 #content.consumer_events{ 'data-events'=> @data.to_json }
   #event_list_container
-    .event_list_header
-      .title
-        The Feed
-      .wrapper_links
-        .link_div
-          .event_types
-            .link.invisible{ 'data-type'=> 'legend', 'data-direction'=> 'down' }
-              legend
-            .legend
-              .type
-                .event_type
-                  &nbsp;
-                Events
-              .type
-                .announcement_type
-                  &nbsp;
-                Announcements
-              .type
-                .special_type
-                  &nbsp;
-                Specials
-
-          .location
-            .link.invisible{ 'data-type'=> 'search', 'data-direction'=> 'down' }
-              location
-
-          .settings
-            .link{ 'data-type'=> 'filter', 'data-direction'=> 'left' }
-              filters
-
-        .sort_div
-          %span
-            sort by:
-          .link.selected_link{ 'data-type'=> 'recent' }
-            time
-          .link{ 'data-type'=> 'business' }
-            business
-          - if current_user
-            .link{ 'data-type'=> 'popular' }
-              popular
     #event_list_inner
       #event_list
 
   #map_canvas_container
-    .filter
-      .group
-        .img
-          %img{ src: asset_path("/assets/cafe_icon.png") }
-        .item
-          Cafe
-        =check_box_tag :service_type_cafe, 0
-      .group
-        .img
-          %img{ src: asset_path("/assets/restaurant_icon.png") }
-        .item
-          Restaurant
-        =check_box_tag :service_type_restaurant, 1
-      .group
-        .img
-          %img{ src: asset_path("/assets/bar_icon.png") }
-        .item
-          Bar
-        =check_box_tag :service_type_bar, 2
-      .group
-        .img
-          %img{ src: asset_path("/assets/retail_icon.png") }
-        .item
-          Retail
-        =check_box_tag :service_type_retail, 3
-      - if current_user
-        .group
-          .img
-            %img{ src: asset_path("/assets/fav_selected.png") }
-          .item
-            Favorites
-          =check_box_tag :filtering_favorites, false
-
     .search
       =text_field_tag :location_search, '', :placeholder=>'City, State, Zip or College'
 

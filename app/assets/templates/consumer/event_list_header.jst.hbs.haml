@@ -1,0 +1,35 @@
+.title
+  The Feed
+.wrapper_links
+  .link_div
+    .event_types
+      .link.invisible{ 'data-type'=> 'legend', 'data-direction'=> 'down' }
+        legend
+      .legend
+        .type
+          .event_type
+            &nbsp;
+          Events
+        .type
+          .announcement_type
+            &nbsp;
+          Announcements
+        .type
+          .special_type
+            &nbsp;
+          Specials
+
+    .location
+      .link.invisible{ 'data-type'=> 'search', 'data-direction'=> 'down' }==location
+
+    .settings
+      .link{ 'data-type'=> 'filter', 'data-direction'=> 'left' }==filters
+
+  .sort_div
+    %span
+      sort by:
+    .link.selected_link{ 'data-type'=> 'recent' }==time
+    .link{ 'data-type'=> 'business' }==business
+    {{#if logged_in}}
+    .link{ 'data-type'=> 'popular' }==popular
+    {{/if}}

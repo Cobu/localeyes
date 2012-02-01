@@ -1,42 +1,32 @@
-class window.Filter
-  @serviceTypes = [0, 1, 2, 3]
-  @filtering_favorites = false
-  @userFavorites = []
+class App.View.FilterView extends Backbone.View
+  className: 'filter'
 
-  setServiceType: (selected, value)->
-    value = parseInt(value)
-    index = _.indexOf(Filter.serviceTypes, value)
-    if selected
-      Filter.serviceTypes.push( value ) unless index >= 0
-    else
-      Filter.serviceTypes.splice( index ,1)
-    window.event_list_view.render()
-    window.map_view.render()
+  events:
+    'click input[name^=service_type]': 'filterServiceTypeHandler'
+    'click input[name=filtering_favorites]': 'filterFavoritesHandler'
 
-  setFilteringByFavorites: (bool)->
-    Filter.filtering_favorites = bool
-    window.event_list_view.render()
-    window.map_view.render()
+  initialize: ->
+    @filter = @model
+    @template = JST['consumer/filter']
+    @render()
+    @setValues()
 
-  setFavorite: (business_id)->
-    selected = true
-    if _.include(Filter.userFavorites, business_id)
-      $.post('/users/unset_favorite', { b: business_id})
-      Filter.userFavorites = _.without(Filter.userFavorites, business_id)
-      selected = false
-    else
-      Filter.userFavorites.push(business_id)
-      $.post('/users/set_favorite', { b: business_id})
-    selected
+  filterServiceTypeHandler: (event) =>
+    elem = $(event.currentTarget)
+    @filter.setServiceType(elem.prop('checked'), elem.val())
 
-  match: (business)->
-    if Filter.filtering_favorites then return false unless _.include(Filter.userFavorites, business.get('id'))
-    _.include(Filter.serviceTypes, business.get('service_type'))
+  filterFavoritesHandler: (event) =>
+    elem = $(event.currentTarget)
+    @filter.setFilteringByFavorites(elem.prop('checked'))
+
+  render: ->
+    @elem = $(@el).html( @template() )
+    $('#map_canvas_container').append @elem
 
   setValues: ->
-    $('.filter input[name^=service_type]').each((index, elem)->
-        selected = _.indexOf(Filter.serviceTypes, $(elem).val())
-        $(elem).prop('checked', selected )
+    @$('input[name^=service_type]').each((index, elem) =>
+      selected = _.indexOf(@filter.get('service_types'), $(elem).val())
+      $(elem).prop('checked', selected)
     )
 
-window.filter = new window.Filter()
+

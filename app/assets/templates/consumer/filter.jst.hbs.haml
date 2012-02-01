@@ -1,0 +1,24 @@
+.group
+  .img
+    %img{ src: asset_path("/assets/cafe_icon.png") }
+  .item
+    Cafe
+  =check_box_tag :service_type_cafe, 0
+.group
+  .img
+    %img{ src: asset_path("/assets/restaurant_icon.png") }
+  .item
+    Restaurant
+  =check_box_tag :service_type_restaurant, 1
+.group
+  .img
+    %img{ src: asset_path("/assets/bar_icon.png") }
+  .item
+    Bar
+  =check_box_tag :service_type_bar, 2
+.group
+  .img
+    %img{ src: asset_path("/assets/retail_icon.png") }
+  .item
+    Retail
+  =check_box_tag :service_type_retail, 3

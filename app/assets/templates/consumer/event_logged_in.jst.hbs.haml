@@ -5,13 +5,7 @@
     .business_img
       %img{ src: "{{businessImageName}}" }
     .info
-      .business_name_wrapper
-        .business_name
-          {{businessName}}
-        .start_hour== {{startHour}}
-        .am_pm== {{startAmPm}}
-      .title
-        {{attributes/title}}
+      {{> event_info}}
     .images
       .fave
         %img{ src: 'assets/fav_{{userFavoritePrefix}}selected_small.png', rel:'favorite', 'data-business_id'=> '{{attributes/business_id}}' }

@@ -1,4 +1,3 @@
-
 $(document).ready( ->
 
   $.ajaxSetup({
@@ -61,36 +60,6 @@ $(document).ready( ->
     $.post('/consumers/notify', {email: email, college: college}, ->
       $( '.notice' ).html("Done. When the college '#{college}' is available we will notify you at '#{email}'")
     )
-  )
-
-  ##################  viewing settings handlers #####################
-  $( '.link_div .link' ).live( 'click', (event)->
-    elem = $(event.currentTarget)
-    type = elem.data('type')
-    direction = elem.data('direction')
-    elem.toggleClass('selected_link')
-    $( ".#{type}" ).toggle('slide', {direction: direction})
-  )
-
-
-  ##################  filter handlers #####################
-  $('.filter input[name^=service_type]').live('click', (event)->
-    elem = $(event.currentTarget)
-    filter.setServiceType( elem.prop('checked') , elem.val() )
-  )
-
-  $('input[name=filtering_favorites]').live('click', (event)->
-    elem = $(event.currentTarget)
-    filter.setFilteringByFavorites( elem.prop('checked') )
-  )
-
-
-  $( '.sort_div .link' ).live( 'click', (event)->
-    elem = $(event.currentTarget)
-    type = elem.data('type')
-    $('.sort_div .link').removeClass('selected_link')
-    elem.addClass('selected_link')
-    window.sorter.setSortType(type)
   )
 
 )

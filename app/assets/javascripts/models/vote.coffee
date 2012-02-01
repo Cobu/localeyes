@@ -1,6 +1,8 @@
-class window.Vote
+class App.Model.Vote
   votes: []
   votes_hash: {}
+
+  constructor: (@event_container)->
 
   setVotes: (votes)->
     @votes = votes
@@ -10,32 +12,18 @@ class window.Vote
 
   resetVotes: (data)->
     @votes_hash[data._id] = data
-    _.each(@votes, (info, index)=>
+    _.each(@votes, (info, index) =>
         if (info._id == data._id)
           @votes[index] = data
           this.showNumbers(data)
     )
-    window.event_list.sort() if window.sorter.sort_type == 'popular'
+    @event_container.event_list.sort() if @event_container.sorter.sort_type == 'popular'
 
   showNumbers: (info)->
     elem = $(".event[data-id='#{info._id}']")
     elem.find(".vote.up .number").html(info.votes["up_count"] || 0)
     elem.find(".vote.down .number").html(info.votes["down_count"] || 0)
 
-window.votes = new window.Vote()
 
 
-class window.Sort
-  sort_type: 'recent'
-  sorts:
-    recent: (event)-> event.get('start')
-    popular: (event)-> - window.votes.votes_hash[event.id].votes['point']
-    business: (event)-> event.businessName()
-
-  setSortType: (type)->
-    @sort_type = type
-    window.event_list.comparator = this.sorts[type]
-    window.event_list.sort()
-
-window.sorter = new window.Sort()
 
