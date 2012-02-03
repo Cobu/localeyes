@@ -3,9 +3,9 @@ class App.View.EventListView extends Backbone.View
   initialize: (options)->
     @container_view = options.event_container_view
     @el = $('#event_list')
-    @render() if @collection
     @collection.bind('reset', => @render())
-    @container_view.filter.bind('change', => console.log('beep');  @render())
+    @container_view.filter.bind('change:service_types', => @render())
+    @render() if @collection
 
   render: ->
     @el.empty()
@@ -14,7 +14,7 @@ class App.View.EventListView extends Backbone.View
     for num in [0..13]
       date = Date.today().addDays(num)
       days_events =
-        _.select( events[date.toString("yyyy-MM-dd")],
+        _.select(events[date.toString("yyyy-MM-dd")],
           (event)=>
             @container_view.filter.match(event.business())
         )
@@ -26,6 +26,7 @@ class App.View.EventListView extends Backbone.View
   buildEventsForDay: (date, events)->
     @el.append(new App.View.EventDayHeaderView('date': date).elem)
     _.each(events, (event)=>
-        event_view = new App.View.EventView(model: event, date: date, event_container_view: @container_view)
+        event_view =
+          new App.View.EventView(model: event, date: date, event_container_view: @container_view)
         @el.append(event_view.elem)
     )

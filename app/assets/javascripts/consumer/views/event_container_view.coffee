@@ -2,6 +2,7 @@ class App.View.EventContainerView extends Backbone.View
 
   initialize: (data)->
     @el = $('#event_list_container')
+
     @sorter = new App.Model.Sort(this)
     @votes = new App.Model.Vote(this)
     @filter = new App.Model.Filter()
@@ -11,11 +12,12 @@ class App.View.EventContainerView extends Backbone.View
     @map_view = new App.View.ExtendBoundMapView(collection: @business_list, event_container_view: this)
     @event_list_view = new App.View.EventListView(collection: @event_list, event_container_view: this)
     @filter_view = new App.View.FilterView(model: @filter)
-    @refresh(data) if data
 
     $('.legend').toggle('slide', {direction: 'down'})
     $('.search').toggle('slide', {direction: 'down'})
     $('.filter').toggle('slide', {direction: 'left'})
+
+    @refresh(data) if data
 
     @header = new App.View.EventListHeaderView(event_container_view: this)
     @el.prepend( @header.elem )
@@ -25,7 +27,6 @@ class App.View.EventContainerView extends Backbone.View
     @header.render()
     @map_view.center_point = data.center
     @filter.set(user_favorites:data.favorites)
-
     @business_list.reset(data.businesses)
     @votes.setVotes(data.votes)
     @event_list.reset(data.events)

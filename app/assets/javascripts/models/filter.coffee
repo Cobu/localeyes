@@ -8,20 +8,15 @@ class App.Model.Filter extends Backbone.Model
 
   setServiceType: (selected, value) ->
     value = parseInt(value)
-    service_types = @get('service_types')
+    service_types = _.clone(@get('service_types'))
     index = _.indexOf(service_types, value)
     if selected
-      service_types.push(value)
-      @set( service_types: service_types ) unless index >= 0
+      unless index >= 0
+        service_types.push(value)
+        @set( service_types: service_types )
     else
       service_types.splice(index, 1)
       @set( service_types: service_types )
-#      window.event_list_view.render()
-    #    window.map_view.render()
-
-  setFilteringByFavorites: (bool)-> @set( filtering_favorites: bool )
-    #    window.event_list_view.render()
-    #    window.map_view.render()
 
   setFavorite: (business_id)->
     selected = true
@@ -39,5 +34,4 @@ class App.Model.Filter extends Backbone.Model
     selected
 
   match: (business)->
-    if @get('filtering_favorites') then return false unless _.include(@get('user_favorites'), business.get('id'))
     _.include(@get('service_types'), business.get('service_type'))

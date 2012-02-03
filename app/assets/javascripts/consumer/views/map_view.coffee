@@ -14,10 +14,10 @@ class App.View.MapView
     @collection = options.collection
     @container_view = options.event_container_view
     el: $('#map_canvas')
+    @collection.bind('reset', => @render(); @need_rendering = true )
+    @container_view.filter.bind('change:service_types', => @render(); @need_rendering = true )
     @need_rendering = true
     @render()
-    @collection.bind('reset', => @render(); @need_rendering = true )
-    @container_view.filter.bind('change', => @render(); @need_rendering = true )
 
   prepareMap: ->
     return unless document.getElementById("map_canvas")
