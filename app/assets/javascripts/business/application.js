@@ -2,6 +2,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery-ui
+//= require handlebars.runtime
 //= require support/handlebars
 //= require support/underscore
 //= require support/backbone
@@ -12,7 +13,7 @@
 //= require shared/init_namespace
 //= require shared/common
 
-//= require ../models/business
+//= require ../shared/models/business
 //= require ../consumer/views/map_view
 
 //= require business/edit_event_setup

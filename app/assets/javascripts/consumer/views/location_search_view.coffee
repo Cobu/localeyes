@@ -4,6 +4,14 @@ class App.View.LocationSearchView extends Backbone.View
   initialize: (options)->
     @template = JST['consumer/location_search']
 
+  render: ->
+    $(@el).html( @template() )
+    @toggle()
+    @setUpAutocomplete()
+#    @$("#location_search").val(@$("#location_search").val().replace("\n", ' '))
+    this
+
+  setUpAutocomplete: ->
     @$("input#location_search").autocomplete(
       source: '/consumers/location_search'
       select: (event, ui) ->
@@ -14,17 +22,11 @@ class App.View.LocationSearchView extends Backbone.View
           t:        ui.item.type
           d:        ui.item.id
         }
-        $.get('/consumers/events', params , (data)->
-          window.event_list_container_view.refresh(data)
+        $.get('/consumers/events', params , (data)=>
+          window.consumer_events_view.refresh(data)
         )
         return false
     )
-
-  render: ->
-    $(@el).html( @template() )
-    @toggle()
-    @$("#location_search").val(@$("#location_search").val().replace("\n", ' '))
-    this
 
   toggle: ->
     $(@el).toggle('slide', {direction: 'down'})

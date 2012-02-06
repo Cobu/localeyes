@@ -4,19 +4,22 @@ class App.View.EventListView extends Backbone.View
   initialize: (options)->
     @container_view = options.consumer_events_view
     @collection.bind('reset', => @renderEvents() )
-    @container_view.filter.bind('change:service_types', 'render' )
+    @container_view.filter.bind('change:service_types',  => @render() )
     @header = new App.View.EventListHeaderView(consumer_events_view: @container_view)
     @outer_elem = $('<div class="event_list_inner"></div>')
     @inner_elem = $('<div class="event_list"></div>')
     @outer_elem.append( @inner_elem )
 
   render: ->
-    $(@el).append( @outer_elem )
-    @inner_elem.append( @header.render().el )
+    $(@el)
+      .append( @header.render().el )
+      .append( @outer_elem )
+    @header.toggleLegend()
     @renderEvents() if @collection
     this
 
   renderEvents: =>
+    $(@inner_elem).empty()
     events = @collection.groupBy((event)-> event.startDate())
     for num in [0..13]
       date = Date.today().addDays(num)

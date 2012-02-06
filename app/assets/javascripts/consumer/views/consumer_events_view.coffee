@@ -13,12 +13,11 @@ class App.View.ConsumerEventsView extends Backbone.View
     @event_list_view = new App.View.EventListView(collection: @event_list, consumer_events_view: this)
     @map_container_view = new App.View.MapContainerView(business_list: @business_list, consumer_events_view: this)
 
-    @render()
-
   render: ->
     $(@el).empty()
-      .append( @event_list_view.render().el )
+      .append( @event_list_view.el )
       .append( @map_container_view.el )
+    @event_list_view.render()
     @map_container_view.render()
     this
 

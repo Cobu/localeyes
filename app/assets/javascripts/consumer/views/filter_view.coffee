@@ -9,7 +9,6 @@ class App.View.FilterView extends Backbone.View
   initialize: ->
     @filter = @model
     @template = JST['consumer/filter']
-    @setValues()
 
   filterServiceTypeHandler: (event) =>
     elem = $(event.currentTarget)
@@ -30,5 +29,6 @@ class App.View.FilterView extends Backbone.View
 
   render: ->
     $(@el).html( @template() )
+    @setValues()
     this
 

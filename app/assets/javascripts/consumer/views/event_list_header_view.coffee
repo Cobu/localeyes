@@ -12,12 +12,9 @@ class App.View.EventListHeaderView extends Backbone.View
   render: ->
     $(@el).empty()
       .html( @template( {logged_in: @content_view.logged_in} ) )
-    console.log $(@el)
-    @$('.legend').toggle('slide', {direction: 'down'})
     this
 
   linkHandler: (event)->
-    console.log 'link'
     elem = $(event.currentTarget)
     type = elem.data('type')
     direction = elem.data('direction')
@@ -25,9 +22,11 @@ class App.View.EventListHeaderView extends Backbone.View
     $( ".#{type}" ).toggle('slide', {direction: direction})
 
   sortHandler: (event)->
-    console.log 'sort'
     elem = $(event.currentTarget)
     type = elem.data('type')
     $('.sort_div .link').removeClass('selected_link')
     elem.addClass('selected_link')
     @content_view.sorter.setSortType(type)
+
+  toggleLegend: ->
+    @$('.legend').toggle('slide', {direction: 'down'})
