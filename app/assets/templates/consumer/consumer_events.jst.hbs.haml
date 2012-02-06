@@ -7,4 +7,12 @@
     = javascript_include_tag "consumer/application"
     = csrf_meta_tags
   %body
-    = yield
+    {{> header}}
+    #content.consumer_events
+      #event_list_container
+        #event_list_inner
+          #event_list
+
+      #map_canvas_container
+
+

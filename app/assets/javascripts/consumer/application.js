@@ -12,8 +12,8 @@
 
 //= require shared/init_namespace
 //= require shared/handlebars_helpers
-//= require_tree ../models
-//= require_tree ../collections
+//= require_tree ../shared/models
+//= require_tree ../shared/collections
 //= require_tree ./views
 //= require ./handlers
 //= require ./init

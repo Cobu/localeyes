@@ -1,23 +1,23 @@
 #############  Map view #############
-class App.View.MapView
+class App.View.MapView extends Backbone.View
   icon: null
   center_point: null
   center_marker: null
   view: null
+  className: 'map_canvas'
 
   options: {
     mapTypeId: google.maps.MapTypeId.ROADMAP
     mapTypeControl: false
   }
 
-  constructor: (options)->
+  initialize: (options)->
+    $(@el).attr('id', 'map_canvas')
     @collection = options.collection
-    @container_view = options.event_container_view
-    el: $('#map_canvas')
+    @container_view = options.consumer_events_view
     @collection.bind('reset', => @render(); @need_rendering = true )
     @container_view.filter.bind('change:service_types', => @render(); @need_rendering = true )
     @need_rendering = true
-    @render()
 
   prepareMap: ->
     return unless document.getElementById("map_canvas")
@@ -59,6 +59,7 @@ class App.View.MapView
     this.prepareMap()
     this.createCenterMarker()
     this.setMarkers(@view, @markerBounds)
+
 
 
 ############  SingleZoomMap view #############

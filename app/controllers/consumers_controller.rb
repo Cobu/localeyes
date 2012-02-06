@@ -21,7 +21,7 @@ class ConsumersController < ApplicationController
     render json: colleges.collect{|c| {label: c.name, id: c.id} }
   end
 
-  def search_location
+  def location_search
     colleges = College.search(params[:term]).all
     zips = ZipCode.search(params[:term]).all
     render json: colleges + zips

@@ -51,6 +51,7 @@ end
 group :test do
   gem 'turn', :require => false
   gem 'spork', '0.9.0.rc9'
+  gem 'jasminerice'
   gem 'jasmine'
   gem 'capybara'
   gem 'capybara-webkit'

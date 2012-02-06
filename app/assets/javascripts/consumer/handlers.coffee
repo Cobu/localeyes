@@ -8,21 +8,6 @@ $(document).ready( ->
     $('.facebook_register').show()
   )
 
-  if $( "#location_search" )[0]
-    $( "#location_search" ).autocomplete(
-      source: '/consumers/search_location'
-      select: ( event, ui ) ->
-        $( "#location_search" ).val( ui.item.label )
-        $.get('/consumers/events', {
-              time: Date.now().toString('yyyy-MM-dd HH:mm'),
-              zip_code: ui.item.zip_code,
-              t: ui.item.type,
-              d: ui.item.id }, (data)-> App.Controller.Events.refresh(data)
-        )
-        return false
-    )
-
-
   if $( "#college_search" )[0]
     if $( '#content.home' ).data('logged_in')
       $( "#college_search" ).autocomplete(

@@ -9,7 +9,7 @@ LocalEyes::Application.routes.draw do
 
   resources :consumers, only: [:index] do
     collection do
-      get :search_location
+      get :location_search
       get :search_college
       get :home
       get :index

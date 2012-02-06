@@ -5,24 +5,27 @@ class App.View.EventListHeaderView extends Backbone.View
     'click .sort_div .link' : 'sortHandler'
     'click .link_div .link' : 'linkHandler'
 
+  initialize: (options)->
+    @content_view = options.consumer_events_view
+    @template = JST["consumer/event_list_header"]
+
+  render: ->
+    $(@el).empty()
+      .html( @template( {logged_in: @content_view.logged_in} ) )
+    console.log $(@el)
+    @$('.legend').toggle('slide', {direction: 'down'})
+    this
+
   linkHandler: (event)->
+    console.log 'link'
     elem = $(event.currentTarget)
     type = elem.data('type')
     direction = elem.data('direction')
     elem.toggleClass('selected_link')
     $( ".#{type}" ).toggle('slide', {direction: direction})
 
-  initialize: (options)->
-    @content_view = options.event_container_view
-    @template = JST["consumer/event_list_header"]
-    @render()
-
-  render: ->
-    $(@el).empty()
-    $(@el).html( @template( {logged_in: @content_view.logged_in} ) )
-    @elem = $(@el)
-
   sortHandler: (event)->
+    console.log 'sort'
     elem = $(event.currentTarget)
     type = elem.data('type')
     $('.sort_div .link').removeClass('selected_link')

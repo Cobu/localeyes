@@ -4,11 +4,11 @@ class App.View.FilterView extends Backbone.View
   events:
     'click input[name^=service_type]': 'filterServiceTypeHandler'
     'click input[name=filtering_favorites]': 'filterFavoritesHandler'
+    'click .close': 'toggle'
 
   initialize: ->
     @filter = @model
     @template = JST['consumer/filter']
-    @render()
     @setValues()
 
   filterServiceTypeHandler: (event) =>
@@ -19,14 +19,16 @@ class App.View.FilterView extends Backbone.View
     elem = $(event.currentTarget)
     @filter.setFilteringByFavorites(elem.prop('checked'))
 
-  render: ->
-    @elem = $(@el).html( @template() )
-    $('#map_canvas_container').append @elem
-
   setValues: ->
     @$('input[name^=service_type]').each((index, elem) =>
       selected = _.indexOf(@filter.get('service_types'), $(elem).val())
       $(elem).prop('checked', selected)
     )
 
+  toggle: ->
+    $(@el).toggle('slide', {direction: 'left'})
+
+  render: ->
+    $(@el).html( @template() )
+    this
 

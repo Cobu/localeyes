@@ -16,8 +16,8 @@ class App.Collection.BusinessList extends Backbone.Collection
 
   setSelected: (business_id, business_view)->
     # shrink icon
-    this.get(@selected_id).setMarkerIcon() if @selected_id
+    @get(@selected_id).setMarkerIcon() if @selected_id
     # bigger icon
-    this.get(business_id).setMarkerIcon('large')
+    @get(business_id).setMarkerIcon('large')
     @selected_id = business_id
     @selected_view = business_view
