@@ -2,16 +2,6 @@ require "spec_helper"
 
 describe EventsController do
 
-  #def base64_url_decode(str)
-  #  str += '=' * (4 - str.length.modulo(4))
-  #  Base64.decode64(str.tr('-_', '+/'))
-  #end
-
-
-  it "decrypts facebook " do
-    str = "PZuEXCEXARUlCSALDM0-IretIqLmb8EGNFfN4mXfyeI.eyJhbGdvcml0aG0iOiJITUFDLVNIQTI1NiIsImV4cGlyZXMiOjEzMjExNjQwMDAsImlzc3VlZF9hdCI6MTMyMTE1NjkyNCwib2F1dGhfdG9rZW4iOiJBQUFEVUsxM2NFWkJnQkFNZGVZWkJkQ0VUVGh5dTJvMDNSWkJCT205SmRSWkJka082ZEZ5TjVmejRLWkNiVEU5U1pBTDBYUnh2dFlrdUhWZUtob01sdFZnejNtUmlMdGx1NEI5aDRCT1FBbDhRWkRaRCIsInJlZ2lzdHJhdGlvbiI6eyJuYW1lIjoiRGFuaWVsIFNwYW5pZWwiLCJlbWFpbCI6ImRhbnN1ZG9sXHUwMDQweWFob28uY29tIn0sInJlZ2lzdHJhdGlvbl9tZXRhZGF0YSI6eyJmaWVsZHMiOiJuYW1lLGVtYWlsIn0sInVzZXIiOnsiY291bnRyeSI6InVzIiwibG9jYWxlIjoiZW5fR0IifSwidXNlcl9pZCI6IjU4NDU2NDI4OCJ9"
-    #p decode_data str
-  end
   #describe "#destroy" do
   #
   #  before(:each) do
