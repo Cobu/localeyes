@@ -21,7 +21,7 @@ class App.View.ConsumerEventsView extends Backbone.View
     @map_container_view.render()
     this
 
-  refresh: (data)->
+  reset: (data)->
     @logged_in = data.in
     @filter.set( user_favorites:data.favorites )
     @map_container_view.map_view.center_point = data.center
@@ -29,3 +29,6 @@ class App.View.ConsumerEventsView extends Backbone.View
     @votes.setVotes(data.votes)
     @event_list.reset(data.events)
 
+  reloadData: ->
+    params = {}
+    $.get('consumers/events', params, (data) => @reset(data))

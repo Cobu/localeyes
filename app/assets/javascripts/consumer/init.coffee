@@ -6,6 +6,6 @@ $(document).ready(->
 
     # if you are loading data while the page first shows
     data = $('#content.consumer_events').data('events')
-    window.consumer_events_view.refresh(data) if data and data.events
+    window.consumer_events_view.reset(data) if data and data.events
 )
 

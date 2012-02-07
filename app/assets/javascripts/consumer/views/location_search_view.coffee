@@ -23,7 +23,7 @@ class App.View.LocationSearchView extends Backbone.View
           d:        ui.item.id
         }
         $.get('/consumers/events', params , (data)=>
-          window.consumer_events_view.refresh(data)
+          window.consumer_events_view.reset(data)
         )
         return false
     )
