@@ -9,7 +9,7 @@
     .top_section
       .login
         = form_for(@new_user, :url=> login_submit_business_users_path, remote: true) do |f|
-          %h1== Sign In
+          %h1== Existing Users
           .message
             &nbsp;
           .field
@@ -23,7 +23,7 @@
               %img{ src: asset_path('ui-anim_basic_16x16.gif') }
       .register
         = form_for(@new_user, :url=> business_users_path, remote: true) do |f|
-          %h1== New Business User
+          %h1== New Business Users
           .message
             &nbsp;
           .row
@@ -41,3 +41,33 @@
               = f.submit "Register", :id=>"register_button", :class=>"button"
             .spinner_elem.invisible
               %img{ src: asset_path('ui-anim_basic_16x16.gif') }
+
+    .promo
+      %p
+        LocalEyes connects college businesses with the local students. It is extremely easy to use and as simple as setting up a calendar.
+      .left_panel
+        %p
+          Let students know what is happening in 3 easy steps:
+        %ol
+          %li==Sign up
+          %li==Fill in your business’s information
+          %li==Set up your calendar
+        %p
+          Beneﬁts:
+          %ul
+            %li==Raise awareness
+            %li==Connect with Students
+            %li==Increase Business
+            %li==Save on advertising costs
+            %li==Make announcements
+            %li==Display your daily/weekly/monthly specials
+            %li==Display your events
+            %li==See what students like/dislike about your business
+            %li==Automatically push calendar posts to Facebook or Twitter
+
+      .right_panel
+        How to setup your calendar
+        %iframe{ class:"youtube-player",
+         type:"text/html",
+         src:"http://www.youtube.com/embed/bVf4N6MpRuI",
+         frameborder:"0" }
