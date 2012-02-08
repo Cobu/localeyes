@@ -4,7 +4,6 @@ class App.View.FilterView extends Backbone.View
 
   events:
     'click input[name^=service_type]': 'filterServiceTypeHandler'
-    'click input[name=filtering_favorites]': 'filterFavoritesHandler'
     'click .close': 'toggle'
 
   initialize: ->

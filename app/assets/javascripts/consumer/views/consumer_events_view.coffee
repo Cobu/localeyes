@@ -3,13 +3,13 @@ class App.View.ConsumerEventsView extends Backbone.View
   initialize: ->
     @el = $('#content.consumer_events')
 
+    @business_list = new App.Collection.BusinessList([])
+    @event_list = new App.Collection.EventList([])
+
     @sorter = new App.Model.Sort(this)
     @votes = new App.Model.Vote(this)
     @filter = new App.Model.Filter()
-    @favorites = new App.Model.Favorites()
-
-    @business_list = new App.Collection.BusinessList([])
-    @event_list = new App.Collection.EventList([])
+    @favorites = new App.Model.Favorites(consumer_events_view: this)
 
     # Order is important here. FilterView in MapContainerView must be created before
     # the EventListHeaderView can detect if that FilterView is open or not
