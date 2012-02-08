@@ -17,7 +17,7 @@ class App.View.LocationSearchView extends Backbone.View
       select: (event, ui) ->
         $("input#location_search").val(ui.item.label)
         params = {
-          time:     Date.now().toString('yyyy-MM-dd HH:mm')
+          time:     Date.parse('now').toString('yyyy-MM-dd HH:mm')
           zip_code: ui.item.zip_code
           t:        ui.item.type
           d:        ui.item.id
@@ -29,4 +29,5 @@ class App.View.LocationSearchView extends Backbone.View
     )
 
   toggle: ->
-    $(@el).toggle('slide', {direction: 'down'})
+    $('.link[data-type=search]').trigger('click')
+

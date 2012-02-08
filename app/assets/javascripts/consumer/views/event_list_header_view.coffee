@@ -29,4 +29,4 @@ class App.View.EventListHeaderView extends Backbone.View
     @content_view.sorter.setSortType(type)
 
   toggleLegend: ->
-    @$('.legend').toggle('slide', {direction: 'down'})
+    $('.link[data-type=legend]').trigger('click')

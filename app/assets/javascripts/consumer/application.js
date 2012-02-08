@@ -3,7 +3,6 @@
 //= require jquery-ui
 //= require support/underscore
 //= require support/date
-//= require support/core
 //= require support/backbone
 //= require support/has_class_plugin
 //= require handlebars.runtime
@@ -17,4 +16,3 @@
 //= require_tree ./views
 //= require ./handlers
 //= require ./init
-

@@ -1,4 +1,3 @@
-#############  Map view #############
 class App.View.MapView extends Backbone.View
   icon: null
   center_point: null
@@ -97,4 +96,4 @@ class App.View.ExtendBoundMapView extends App.View.MapView
         this.markerBounds.getNorthEast().lng() + this.markerBoundsZoomOut
       )
       this.markerBounds.extend(extendPoint)
-    @view.fitBounds(this.markerBounds)
+    @view.fitBounds(this.markerBounds) if @view

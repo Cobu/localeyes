@@ -25,7 +25,7 @@ class App.View.FilterView extends Backbone.View
     )
 
   toggle: ->
-    $(@el).toggle('slide', {direction: 'left'})
+    $('.link[data-type=filter]').trigger('click')
 
   render: ->
     $(@el).html( @template() )

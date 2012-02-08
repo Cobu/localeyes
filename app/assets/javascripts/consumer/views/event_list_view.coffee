@@ -3,9 +3,13 @@ class App.View.EventListView extends Backbone.View
 
   initialize: (options)->
     @container_view = options.consumer_events_view
+
     @collection.bind('reset', => @renderEvents() )
-    @container_view.filter.bind('change:service_types',  => @render() )
+    @container_view.filter.bind('change:service_types',  => @renderEvents() )
+
     @header = new App.View.EventListHeaderView(consumer_events_view: @container_view)
+
+    # TODO: fix this hackery
     @outer_elem = $('<div class="event_list_inner"></div>')
     @inner_elem = $('<div class="event_list"></div>')
     @outer_elem.append( @inner_elem )
