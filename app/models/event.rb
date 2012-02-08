@@ -187,4 +187,8 @@ class Event < ActiveRecord::Base
   def init_event_vote
     EventVote.collection.save(_id:id)
   end
+
+  def publish
+    Rails.logger.info "Hi Rob, there are #{Event.count} events"
+  end
 end

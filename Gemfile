@@ -26,6 +26,7 @@ gem 'omniauth-twitter'
 gem 'koala'
 gem 'settingslogic'
 gem 'rvm'
+gem 'whenever', :require => false
 
 # cant find scss imports when I use asset group
 #group :assets do
