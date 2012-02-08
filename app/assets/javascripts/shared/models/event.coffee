@@ -7,7 +7,7 @@ class App.Model.Event extends Backbone.Model
   businessName: -> @business().get('name')
   businessImageName: -> @business().imageName()
   businessIconName: -> @business().iconName()
-  userFavoritePrefix: -> 'un' unless _.include( window.consumer_events_view.filter.get('user_favorites'), @get('business_id') )
+  userFavoritePrefix: -> 'un' unless _.include( window.consumer_events_view.favorites.get('user_favorites'), @get('business_id') )
 
 
 

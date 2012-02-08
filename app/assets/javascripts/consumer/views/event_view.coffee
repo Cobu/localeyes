@@ -25,7 +25,7 @@ class App.View.EventView extends Backbone.View
 
   selectFavoriteHandler: =>
     business_id = $(@el).data('business_id')
-    selected = @container_view.filter.setFavorite( business_id )
+    selected = @container_view.favorites.setFavorite( business_id )
     prefix = if selected then '' else 'un'
     $("img[data-business_id='#{business_id}']").attr({src: "assets/fav_#{prefix}selected.png"})
 

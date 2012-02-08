@@ -6,6 +6,7 @@ class App.View.ConsumerEventsView extends Backbone.View
     @sorter = new App.Model.Sort(this)
     @votes = new App.Model.Vote(this)
     @filter = new App.Model.Filter()
+    @favorites = new App.Model.Favorites()
 
     @business_list = new App.Collection.BusinessList([])
     @event_list = new App.Collection.EventList([])
@@ -28,7 +29,7 @@ class App.View.ConsumerEventsView extends Backbone.View
   reset: (data)->
     @logged_in = data.in
     @event_list_view.header.render()
-    @filter.set( user_favorites:data.favorites )
+    @favorites.set( user_favorites:data.favorites )
     @map_container_view.map_view.center_point = data.center
     @business_list.reset(data.businesses)
     @votes.setVotes(data.votes)
