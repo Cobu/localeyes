@@ -1,5 +1,6 @@
 class App.View.FilterView extends Backbone.View
   className: 'filter'
+  open: true
 
   events:
     'click input[name^=service_type]': 'filterServiceTypeHandler'
@@ -25,10 +26,11 @@ class App.View.FilterView extends Backbone.View
     )
 
   toggle: ->
+    @open = !@open
     $('.link[data-type=filter]').trigger('click')
 
   render: ->
-    $(@el).html( @template() )
+    $(@el).html( @template() ).toggle(@open)
     @setValues()
     this
 

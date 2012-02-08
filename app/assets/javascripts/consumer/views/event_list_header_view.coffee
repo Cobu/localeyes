@@ -7,11 +7,13 @@ class App.View.EventListHeaderView extends Backbone.View
 
   initialize: (options)->
     @content_view = options.consumer_events_view
+    @filter_view = @content_view.map_container_view.filter_view
     @template = JST["consumer/event_list_header"]
 
   render: ->
     $(@el).empty()
       .html( @template( {logged_in: @content_view.logged_in} ) )
+    $('.link[data-type=filter]').toggleClass('selected_link', @filter_view.open?)
     this
 
   linkHandler: (event)->

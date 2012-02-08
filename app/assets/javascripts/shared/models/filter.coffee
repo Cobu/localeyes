@@ -4,8 +4,6 @@ class App.Model.Filter extends Backbone.Model
     service_types: [0, 1, 2, 3]
     user_favorites: []
 
-  initialize: ->
-
   setServiceType: (selected, value) ->
     value = parseInt(value)
     service_types = _.clone(@get('service_types'))
