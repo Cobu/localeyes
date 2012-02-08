@@ -1,10 +1,12 @@
 #= require consumer/application
 
 describe 'ConsumerEventsView', ->
-  beforeEach( -> console.log(1) )
-
-  it 'should exist', ->
-    expect(new App.Models.Event).toBeDefined()
+  beforeEach( ->
+  )
 
   it 'creates container view', ->
-    console.log new App.Collection.EventList
+    loadFixtures 'event_list_page'
+    view = new App.View.ConsumerEventsView()
+    view.render()
+
+    console.log $('#jasmine-fixtures')
