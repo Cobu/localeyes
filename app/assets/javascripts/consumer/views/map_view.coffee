@@ -6,7 +6,7 @@ class App.View.MapView extends Backbone.View
   className: 'map_canvas'
 
   options: {
-    mapTypeId: google.maps.MapTypeId.ROADMAP
+    mapTypeId: null
     mapTypeControl: false
   }
 
@@ -16,6 +16,7 @@ class App.View.MapView extends Backbone.View
     @container_view = options.consumer_events_view
     @collection.bind('reset', => @render(); @need_rendering = true )
     @container_view.filter.bind('change:service_types', => @render(); @need_rendering = true )
+    @options.mapTypeId = google.maps.MapTypeId.ROADMAP
     @need_rendering = true
 
   prepareMap: ->
@@ -68,11 +69,9 @@ class App.View.SingleZoomMapView extends App.View.MapView
     @center_point = options.center_point
     throw "you need a model to make a MapView" unless @model
 
-  options: {
-    mapTypeId: google.maps.MapTypeId.ROADMAP
-    mapTypeControl: false
-    zoom: 17
-  }
+  initialize: (options)->
+    super()
+    @options.zoom = 17
 
   render: ->
     @model.clearMarker()
@@ -84,8 +83,11 @@ class App.View.SingleZoomMapView extends App.View.MapView
 ############  ExtendBoundMap view #############
 class App.View.ExtendBoundMapView extends App.View.MapView
 
-  markerBounds: new google.maps.LatLngBounds()
   markerBoundsZoomOut: 0.1
+
+  initialize: (options)->
+    super()
+    @markerBounds = new google.maps.LatLngBounds()
 
   render: ->
     super()
