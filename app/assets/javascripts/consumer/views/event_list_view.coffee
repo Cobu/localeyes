@@ -18,7 +18,6 @@ class App.View.EventListView extends Backbone.View
     $(@el)
       .append( @header.render().el )
       .append( @outer_elem )
-    @header.toggleLegend()
     @renderEvents() if @collection
     this
 
@@ -31,14 +30,16 @@ class App.View.EventListView extends Backbone.View
         _.select(events[date.toString("yyyy-MM-dd")],
           (event)=> @container_view.filter.match( event.business() )
         )
-      continue unless _.any(days_events)
-      @buildEventsForDay(date, days_events)
+      @buildEventsForDay(date, days_events) if _.any(days_events)
     @container_view.votes.show()
 
   buildEventsForDay: (date, events)->
     $(@inner_elem).append( new App.View.EventDayHeaderView('date': date).render().el )
     _.each(events, (event)=>
-        event_view =
-          new App.View.EventView(model: event, date: date, consumer_events_view: @container_view)
+        event_view = new App.View.EventView(
+          model: event,
+          date: date,
+          consumer_events_view: @container_view
+        )
         $(@inner_elem).append( event_view.render().el )
     )

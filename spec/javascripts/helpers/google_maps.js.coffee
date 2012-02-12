@@ -7,7 +7,6 @@ window.google.maps.MapTypeId.ROADMAP= 0
 class window.google.maps.LatLng
   equals: (other)-> true
 
-
 class DummyLatLng
   lat: -> 1
   lng: -> 1
