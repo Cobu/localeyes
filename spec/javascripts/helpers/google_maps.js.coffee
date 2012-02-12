@@ -21,3 +21,8 @@ class window.google.maps.LatLngBounds
 
 class window.google.maps.Map
   fitBounds: ->
+
+class window.google.maps.MarkerImage
+  constructor: ->
+
+class window.google.maps.Marker
