@@ -5,3 +5,4 @@ tmp/*
 public/assets/*
 .DS_Store
 .sass-cache/*
+.jhw-cache/*
