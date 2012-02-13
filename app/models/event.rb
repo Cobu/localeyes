@@ -188,7 +188,8 @@ class Event < ActiveRecord::Base
     EventVote.collection.save(_id:id)
   end
 
-  def publish
-    Rails.logger.info "Hi Rob, there are #{Event.count} events"
+  def self.publish
+    Rails.logger.info "2 Hi Rob, there are #{Event.count} events"
+    p "2 Hi Rob, there are #{Event.count} events"
   end
 end
