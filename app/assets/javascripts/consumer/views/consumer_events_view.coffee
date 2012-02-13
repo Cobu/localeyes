@@ -13,7 +13,7 @@ class App.View.ConsumerEventsView extends Backbone.View
 
     # Order is important here. FilterView in MapContainerView must be created before
     # the EventListHeaderView can detect if that FilterView is open or not
-    @map_container_view = new App.View.MapContainerView(business_list: @business_list, consumer_events_view: this)
+    @map_container_view = new App.View.MapContainerView(consumer_events_view: this)
     @event_list_view = new App.View.EventListView(collection: @event_list, consumer_events_view: this)
 
   render: ->

@@ -86,7 +86,7 @@ class App.View.ExtendBoundMapView extends App.View.MapView
   markerBoundsZoomOut: 0.1
 
   initialize: (options)->
-    super()
+    super(options)
     @markerBounds = new google.maps.LatLngBounds()
 
   render: ->
