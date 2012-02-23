@@ -3,8 +3,7 @@
 .wrapper_links
   .link_div
     .event_types
-      .link.invisible{ 'data-type'=> 'legend', 'data-direction'=> 'down' }
-        legend
+      .link.invisible{ data: {type: 'legend', direction: 'down' } }==legend
       .legend
         .type
           .event_type
@@ -20,17 +19,17 @@
           Specials
 
     .location
-      .link.invisible{ 'data-type'=> 'search', 'data-direction'=> 'down' }==location
+      .link.invisible{ data: {type: 'search', direction: 'down' } }==location
 
     .settings
-      .link{ 'data-type'=> 'filter', 'data-direction'=> 'left' }==filters
+      .link{ data: {type: 'filter', direction: 'left' } }==filters
 
   .sort_div
     %span
       sort by:
-    .link.selected_link{ 'data-type'=> 'recent' }==time
-    .link{ 'data-type'=> 'business' }==business
+    .link.selected_link{ data: { type: 'recent'} }==time
+    .link{ data: { type: 'business'} }==business
     {{#if logged_in}}
-    .link{ 'data-type'=> 'popular' }==popular
+    .link{ data: { type: 'popular'} }==popular
+    .link{ data: { type: 'favorite'} }==favorites
     {{/if}}
-    .link{ 'data-type'=> 'favorite' }==favorites
