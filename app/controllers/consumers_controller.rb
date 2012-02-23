@@ -1,5 +1,5 @@
 class ConsumersController < ApplicationController
-  layout  'consumer_application'
+  layout 'consumer_application'
   #layout -> controller { mobile_device? ? false : 'consumer_application' }
   before_filter :user_from_cookie, only: [:home, :events]
 
@@ -8,7 +8,7 @@ class ConsumersController < ApplicationController
 
   def event_list
     if college = College.find_by_id(params[:college]) || current_user.try(:college)
-      @data = consumer_events(college)
+      setup_consumer_events(CollegeDecorator.decorate(college))
     end
   end
 
@@ -17,19 +17,19 @@ class ConsumersController < ApplicationController
   end
 
   def search_college
-    colleges = College.search(params[:term]).all
-    render json: colleges.collect{|c| {label: c.name, id: c.id} }
+    @colleges = College.search(params[:term]).all
   end
 
   def location_search
-    colleges = College.search(params[:term]).all
-    zips = ZipCode.search(params[:term]).all
-    render json: colleges + zips
+    colleges = CollegeDecorator.decorate(College.search(params[:term])).to_ary
+    zips = ZipCodeDecorator.decorate(ZipCode.search(params[:term])).to_ary
+    @locations = (colleges + zips)
   end
 
   def events
-    center = (params[:t] == 'z') ? ZipCode.find_by_id(params[:d]) : College.find_by_id(params[:d])
-    render json: consumer_events(center)
+    center = (params[:t] == 'z') ? ZipCodeDecorator.find(params[:d]) : CollegeDecorator.find(params[:d]) rescue nil
+    head :ok and return unless center
+    setup_consumer_events(center)
   end
 
   def notify
@@ -41,23 +41,12 @@ class ConsumersController < ApplicationController
 
   private
 
-  def consumer_events(center)
-    # NOTE: very important, the way start_date is set to now time
-    # NEED =>  [Time.zone.at(Time.now.to_i)]   is super critical for this to work
-    start_date = Time.zone.parse(params[:time]) rescue Time.zone.at(Time.now.to_i)
-    end_date = start_date + 7.days
-    businesses = Business.near(center)
-    events = businesses.collect(&:events).flatten
-    events = events.collect { |e| e.consumer_events(start_date, end_date) }.flatten
-    favorites = current_user.try(:favorites) || []
-    votes = current_user ? EventVote.votes_for_events(events.collect{ |h| h[:id].to_i }.uniq) : []
-    {
-      businesses: businesses,
-      events: events,
-      favorites: favorites,
-      center: center.center_json,
-      votes: votes,
-      in: current_user.present?
-    }
+  def setup_consumer_events(center)
+    @center = center
+    # NOTE: very important, the way start_date is set to now time wih => [Time.zone.at(Time.now.to_i)]
+    @start_date = Time.zone.parse(params[:time]) rescue Time.zone.at(Time.now.to_i)
+    @end_date = @start_date + 7.days
+    @businesses = Business.near(@center)
+    @events = @businesses.collect { |b| b.events.occurring_between?(@start_date, @end_date) }.flatten
   end
 end

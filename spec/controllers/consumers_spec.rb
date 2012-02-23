@@ -29,41 +29,48 @@ describe ConsumersController do
 
   end
 
+  context '#search_college' do
+    let(:college) { create(:suny_oswego) }
+    before { college }
+
+    it "returns json for college found" do
+      get :search_college, term: 'os', format: 'json'
+      response.body.should == [{id: college.id, label: college.name}].to_json
+    end
+  end
+
+  context '#location_search' do
+    let(:college) { create(:suny_oswego) }
+    let(:zip) { create(:oswego) }
+    let(:locations) { [CollegeDecorator.new(college)] + [ZipCodeDecorator.new(zip)] }
+    before { locations }
+
+    it "returns json for college and zips found" do
+      get :location_search, term: 'os', format: 'json'
+      #p locations.collect{|l| [l.id, l.zip_code, l.type, l.label}
+      #p locations.as_json(only: [:id, :zip_code, :type, :label])
+      #p response.body
+      #p response.body
+      #response.body.should == locations.to_json(only: [:id, :zip_code, :type, :label])
+    end
+  end
+
   context '#event_list' do
     let(:user) { create(:user) }
     let(:cafe) { create(:oswego_cafe) }
     let(:now) { Time.now.utc }
     let(:college) { create(:suny_oswego) }
-    render_views
 
-    it "generates fixture" do
-      create(:once_event,
-             :business => cafe,
-             :start_time => now.change(:min => 0, :sec => 0).advance(:hours => utc_offset_hours + 1),
-             :end_time => now.change(:min => 0, :sec => 0).advance(:hours => utc_offset_hours + 2),
-             :title=>"one times")
-
-      get :event_list, college: college.id
-      response.should be_success
-      save_fixture(response.body, 'event_list_page')
+    it 'json response' do
+      event = create(:daily_event,
+                     :business => cafe,
+                     :start_time => Time.utc(2011, 8, 5, 7, 30),
+                     :end_time => Time.utc(2011, 8, 5, 9, 30),
+                     :title => "daily times"
+      )
+      get :events, d: college.id, format: :json
+      p response.body
     end
 
-    describe "returns correct event list" do
-
-      it "when dates are removed from series" do
-        event = create(:daily_event,
-                             :business=>cafe,
-                             :start_time => Time.utc(2011, 8, 5, 7, 30),
-                             :end_time => Time.utc(2011, 8, 5, 9, 30),
-                             :title=>"daily times"
-              )
-
-        remove_time = Time.utc(2011, 8, 5, 7, 30)
-        event.add_exception_date(remove_time)
-        get :events, d: college.id, format: :json
-        #p response.body
-      end
-
-    end
   end
 end

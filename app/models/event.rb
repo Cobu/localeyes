@@ -1,23 +1,23 @@
 class Event < ActiveRecord::Base
   belongs_to :business
 
-  before_save    :limit_title
-  before_update  :edit_schedule
-  before_update  :set_time_attributes, :if => :one_time_event?
-  before_create  :set_time_attributes, :create_schedule
-  after_create   :init_event_vote
+  before_save :limit_title
+  before_update :edit_schedule
+  before_update :set_time_attributes, :if => :one_time_event?
+  before_create :set_time_attributes, :create_schedule
+  after_create :init_event_vote
 
   EVENT = 0
   SPECIAL = 1
   ANNOUNCEMENT = 2
   EVENT_TYPES = [EVENT, SPECIAL, ANNOUNCEMENT]
-  EVENT_NAMES = {EVENT=>'event', SPECIAL=> 'special', ANNOUNCEMENT=> 'announcement'}
+  EVENT_NAMES = {EVENT => 'event', SPECIAL => 'special', ANNOUNCEMENT => 'announcement'}
 
   ONCE = 'once'
   DAILY = 'day'
   WEEKLY = 'week'
   MONTHLY = 'month'
-  RECUR_TYPES = [ONCE,DAILY,WEEKLY,MONTHLY]
+  RECUR_TYPES = [ONCE, DAILY, WEEKLY, MONTHLY]
 
   serialize :schedule, IceCube::Schedule
 
@@ -41,10 +41,14 @@ class Event < ActiveRecord::Base
   def recur_until_date=(date)
     @recur_until_date =
       case date
-        when String then DateTime.strptime(date,"%m/%d/%Y").to_time rescue nil
-        when Date then date.to_time
-        when Time then date
-          else nil
+        when String then
+          DateTime.strptime(date, "%m/%d/%Y").to_time rescue nil
+        when Date then
+          date.to_time
+        when Time then
+          date
+        else
+          nil
       end
   end
 
@@ -52,12 +56,14 @@ class Event < ActiveRecord::Base
     schedule_attributes.until_date
   end
 
-  def business_events(start_date, end_date)
-    occurrences_between(start_date, end_date).collect { |date| business_event_details(date) }
-  end
-
-  def consumer_events(start_date, end_date)
-    occurrences_between(start_date, end_date).collect { |date| consumer_event_details(date) }
+  def occurs_between?(start_date, end_date)
+    start_date = start_date.to_time if start_date.is_a?(Date)
+    end_date = end_date.to_time if end_date.is_a?(Date)
+    if schedule and schedule.rrules.any?
+      schedule.occurs_between?(start_date, end_date)
+    else
+      (start_date - self.end_time) * (self.start_time - end_date) >= 0
+    end
   end
 
   def occurrences_between(start_date, end_date)
@@ -74,52 +80,22 @@ class Event < ActiveRecord::Base
     end
   end
 
-  def consumer_event_details(date=start_time)
-    starttime, endtime = adjusted_times(date)
-    {
-      :id=> to_param,
-      :title=> title,
-      :description=> description,
-      :start => starttime.strftime('%Y-%m-%d %H:%M:%S'),
-      :end => endtime,
-      :business_id => business_id,
-      :service_type => "#{EVENT_NAMES[event_type]}_type",
-    }
+  def occurs_on?(date)
+    return schedule.occurs_on?(date) if schedule
+    date == start_time.to_date
   end
-
-  def adjusted_times(date)
-    starttime = date.to_time.utc.change(:hour => start_time.hour, :min => start_time.min, :sec => 0)
-    endtime = date.to_time.utc.advance(:days=>start_end_date_diff).change(:hour => end_time.hour, :min => end_time.min, :sec => 0)
-    return starttime, endtime
-  end
-
-  def business_event_details(date=start_time)
-    starttime, endtime = adjusted_times(date)
-    {
-      :id=> to_param,
-      :title=> title,
-      :start => starttime,
-      :end => endtime,
-      :allDay => false, # will make the time show
-      :url => Rails.application.routes.url_helpers.edit_event_path(id),
-      :className => "#{EVENT_NAMES[event_type]}_type",
-    }
-  end
-
-  def start_end_date_diff
-    (end_time.to_date - start_time.to_date).to_i
-  end
+  alias :occurs? :occurs_on?
 
   def set_time_attributes
     if @start_date && @start_time_hour && @start_time_minute && @start_time_am_pm
       write_attribute(:start_time,
-         DateTime.strptime("#{@start_date} #{@start_time_hour}:#{@start_time_minute} #{@start_time_am_pm}","%m/%d/%Y %I:%M %p")
+                      DateTime.strptime("#{@start_date} #{@start_time_hour}:#{@start_time_minute} #{@start_time_am_pm}", "%m/%d/%Y %I:%M %p")
       )
     end
 
     if @end_date && @end_time_hour && @end_time_minute && @end_time_am_pm
       write_attribute(:end_time,
-         DateTime.strptime("#{@end_date} #{@end_time_hour}:#{@end_time_minute} #{@end_time_am_pm}","%m/%d/%Y %I:%M %p")
+                      DateTime.strptime("#{@end_date} #{@end_time_hour}:#{@end_time_minute} #{@end_time_am_pm}", "%m/%d/%Y %I:%M %p")
       )
     end
     true
@@ -153,8 +129,8 @@ class Event < ActiveRecord::Base
     true
   end
 
-  def add_exception_date(start_time)
-    schedule.add_exception_date(start_time)
+  def add_exception_time(start_time)
+    schedule.add_exception_time(start_time)
   end
 
   def schedule_attributes
@@ -169,8 +145,8 @@ class Event < ActiveRecord::Base
         when IceCube::MonthlyRule
           atts[:interval_unit] = 'month'
       end
-      if rule.until_date
-        atts[:until_date] = rule.until_date.to_date.strftime("%m/%d/%Y")
+      if rule.until_time
+        atts[:until_time] = rule.until_time.to_date.strftime("%m/%d/%Y")
         atts[:ends] = 'eventually'
       else
         atts[:ends] = 'never'
@@ -181,15 +157,16 @@ class Event < ActiveRecord::Base
   end
 
   def limit_title
-    self.title = title.slice(0,34)
+    self.title = title.slice(0, 34)
   end
 
   def init_event_vote
-    EventVote.collection.save(_id:id)
+    EventVote.setup(id)
   end
 
   def self.publish
-    Rails.logger.info "2 Hi Rob, there are #{Event.count} events"
-    p "2 Hi Rob, there are #{Event.count} events"
+    p "Daily Publish going through #{Event.all.size} events"
+    today = Date.today
+    Event.all.each { |event| event.publish if event.occurs?(today) }
   end
 end

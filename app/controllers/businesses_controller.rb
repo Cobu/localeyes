@@ -11,9 +11,10 @@ class BusinessesController < ApplicationController
   def events
     start_date = Time.zone.at(params[:start].to_i)
     end_date = Time.zone.at(params[:end].to_i)
-    events = current_business.events.all
-    events = events.collect { |e| e.business_events(start_date, end_date) }.flatten
-    render :json=> events
+    events = EventDecorator.decorate(current_business.events).to_ary.
+        collect{|e| e.business_events(start_date, end_date)}.flatten
+    # very tricky to get this working with rabl, pass for now
+    render json: events
   end
 
   def show

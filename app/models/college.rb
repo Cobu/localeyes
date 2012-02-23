@@ -8,10 +8,6 @@ class College < ActiveRecord::Base
     [address, city, state_short, zip_code].compact.join(' ')
   end
 
-  def as_json(options={})
-    {label: "#{name} #{city}, #{state_short} #{zip_code}", zip_code: zip_code, type: :c, id: id}
-  end
-
   def center_json
     {title: "#{name}\n#{city}, #{state_short}, #{zip_code}", lat: lat, lng: lng}
   end

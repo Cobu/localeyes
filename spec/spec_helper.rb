@@ -7,6 +7,8 @@ Spork.prefork do
   require 'capybara/rspec'
   require 'capybara/rails'
   require 'database_cleaner'
+  require 'timecop'
+  require 'draper/rspec_integration'
 
   Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 

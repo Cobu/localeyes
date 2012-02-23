@@ -58,14 +58,14 @@ FactoryGirl.define do
   now = Time.now.utc
   # keep the month, year changing over time
   time = Time.utc(now.year, now.month, 5, 7, 30).to_i
-  $blueprint_start_time = Time.zone.at(time)
+  blueprint_start_time = Time.zone.at(time)
 
   factory :event do
     event_type { Event::EVENT }
     title { 'say hi to rob and then go home' }
     description { "Description for #{title} goes here. There might be spontaneous scrabble game or a guitar jam" }
-    start_time  $blueprint_start_time
-    end_time { $blueprint_start_time + 2.hours }
+    start_time  blueprint_start_time
+    end_time { blueprint_start_time + 2.hours }
 
     factory(:once_event) { title 'one times' }
     factory(:daily_event) { title 'daily times'; recur_value "day" }

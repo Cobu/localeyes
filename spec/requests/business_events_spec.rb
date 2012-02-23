@@ -98,7 +98,7 @@ describe "Business Events" do
 
       sleep 0.5
       event.reload
-      event.schedule.exdates.size.should == 1
+      event.schedule.extimes.size.should == 1
     end
 
   end

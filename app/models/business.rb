@@ -1,6 +1,10 @@
 class Business < ActiveRecord::Base
   belongs_to :user, :class_name => 'BusinessUser'
-  has_many :events, :dependent => :destroy
+  has_many :events, :dependent => :destroy do
+    def occurring_between?(start_time, end_time)
+      proxy_association.proxy.select{ |event| event.occurs_between?(start_time, end_time) }
+    end
+  end
   has_one :zip_location, :class_name => 'ZipCode', :foreign_key => :zip_code, :primary_key => :zip_code
 
   validates :name, :phone, :city, :state, :zip_code, :presence => true
@@ -12,7 +16,7 @@ class Business < ActiveRecord::Base
   before_create :set_default_hours
 
   # day order is  [sun, mon, tues, wed , thu, fri, sat]
-  # hours = [ [ :from=>time, :to=>time, :closed=>true], etc.. for each day starting with sunday ]
+  # hours = [ [ from: time, to: time, closed: true], etc.. for each day starting with sunday ]
   # each time uses date 1970-01-01.
   serialize :hours, Array
 

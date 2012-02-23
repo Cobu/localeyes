@@ -7,19 +7,6 @@ describe ConsumersController do
   let(:resto) { build(:oswego_restaurant, :user=> business_user) }
   let(:now) { Time.now.utc }
 
-  #before { Capybara.current_driver = :webkit }
-  #after { Capybara.use_default_driver }
-
-  #context "#home" do
-  #  it "works" do
-  #    p [1,cookies]
-  #    p methods.sort
-  #    #session[:dude]= 1
-  #    visit home_consumers_path
-  #    #p page.body
-  #  end
-  #end
-
   describe "#event_list" do
     let(:town) { create(:oswego) }
     let(:college) { create(:suny_oswego) }
@@ -28,11 +15,6 @@ describe ConsumersController do
     before do
       college
       town
-    end
-
-    it "creates fixture" do
-      visit event_list_consumers_path(college: college.id)
-      save_fixture(page.body, 'event_list_page')
     end
 
     describe "returns correct event list" do
@@ -49,18 +31,18 @@ describe ConsumersController do
                          business: cafe,
                          title: "daily times"
           )
-          event.add_exception_date(event.start_time + 1.day)
+          event.add_exception_time(event.start_time + 1.day)
           event.save
         }
 
         it "and NO time is specified " do
-          visit events_consumers_path(d: college.id)
+          visit events_consumers_path(d: college.id, format: :json)
           events = JSON.parse(page.text)['events']
           events.size.should == 2
         end
 
         it "and a time is specified " do
-          visit events_consumers_path(d: college.id, time: now)
+          visit events_consumers_path(d: college.id, time: now, format: :json)
           events = JSON.parse(page.text)['events']
           events.size.should == 2
         end

@@ -1,5 +1,5 @@
 = render :partial => 'layouts/header'
-#content.consumer_events{ 'data-events'=> @data.to_json }
+#content.consumer_events{ data: { events: (render(template: 'consumers/events.json.rabl') if @events) } }
 
 
 
