@@ -43,13 +43,13 @@ class EventsController < ApplicationController
 
   def destroy
     @event = current_business.events.find_by_id(params[:id])
-    case  params[:edit_affects_type]
+    case params[:edit_affects_type]
       when 'all_series', '' then
         @event.destroy
       when 'one' then
         start_time = Time.zone.parse(params[:edit_start_time])
         # add exception rule
-        @event.add_exception_date(start_time)
+        @event.add_exception_time(start_time)
         @event.save
     end
     head :ok

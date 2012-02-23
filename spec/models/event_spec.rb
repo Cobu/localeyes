@@ -185,14 +185,14 @@ describe Event do
     it "removes date from series" do
       remove_time = Time.utc(2011, 8, 5, 7, 30)
       event.schedule.occurrences(remove_time).size.should == 1
-      event.add_exception_date(remove_time)
+      event.add_exception_time(remove_time)
       event.schedule.occurrences(remove_time).size.should == 0
       event.occurrences_between(remove_time, remove_time).size.should == 0
     end
 
     it "removes two dates from series" do
-      event.add_exception_date(Time.utc(2011, 8, 6, 7, 30))
-      event.add_exception_date(Time.utc(2011, 8, 8, 7, 30))
+      event.add_exception_time(Time.utc(2011, 8, 6, 7, 30))
+      event.add_exception_time(Time.utc(2011, 8, 8, 7, 30))
       event.occurrences_between(Time.utc(2011, 8, 5, 4, 30),
                                 Time.utc(2011, 8, 9, 17, 30)).size.should == 3
     end
