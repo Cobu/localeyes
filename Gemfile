@@ -26,6 +26,7 @@ gem 'omniauth-twitter'
 gem 'koala'
 gem 'settingslogic'
 gem 'rvm'
+gem 'rabl'
 gem 'whenever', :require => false
 
 # cant find scss imports when I use asset group
@@ -47,11 +48,12 @@ group :development, :test do
   gem 'guard-livereload'
   gem 'guard-spork'
   gem 'guard-bundler'
+  gem 'jasmine-headless-webkit'
 end
 
 group :test do
   gem 'turn', :require => false
-  gem 'spork', '0.9.0.rc9'
+  gem 'spork'
   gem 'jasminerice'
   gem 'jasmine'
   gem 'capybara'
