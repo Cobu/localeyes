@@ -1,14 +1,14 @@
 .info
-  {{attributes/name}}
-  {{attributes/description}}
+  {{name}}
+  {{description}}
   %p
-    {{attributes/address}}
+    {{address}}
     %br
-    {{attributes/city}}, {{attributes/state}} {{attributes/zip_code}}
+    {{city}}, {{state}} {{zip_code}}
   %p
-    {{phone_format attributes/phone}}
+    {{phone_format phone}}
 .hours
-  {{#each_hour attributes/hours}}
+  {{#each_hour hours}}
   .line{ 'data-day_num'=> '{{day_num}}' }
     .day_name
       {{day_name}}

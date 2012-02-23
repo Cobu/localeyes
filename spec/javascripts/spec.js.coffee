@@ -1,4 +1,4 @@
 #= require ./helpers/google_maps
-#= require_tree ./
+#= require_tree ./views
 
 
