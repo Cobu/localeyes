@@ -40,18 +40,21 @@ $(document).ready( ->
     )
 
   window.eventClickHandler = (event) ->
-    if (event.url)
-      openDialog(
-        event.url,
-        "Edit Existing Event",
-        eventDataParams(event.start, event.end)
-      )
+    try
+      if (event.url)
+        openDialog(
+          event.url,
+          "Edit Existing Event",
+          eventDataParams(event.start, event.end)
+        )
+    catch ex
+      console.log ex
     return false
 
   window.calendarDayClickHandler = (date, allDay, jsEvent, view) ->
     time_now = new Date()
-    start_time = date.clearTime().add( hour: time_now.getHours(), minute: time_now.getMinutes() )
-    end_time = start_time.clone().add( hour: 1 )
+    start_time = date.clearTime().add( hours: time_now.getHours(), minutes: time_now.getMinutes() )
+    end_time = start_time.clone().add( hours: 1 )
     openDialog('/events/new', "Create New Event", eventDataParams(start_time, end_time))
     return false
 
