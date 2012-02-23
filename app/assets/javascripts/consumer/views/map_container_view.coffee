@@ -1,3 +1,5 @@
+#= require shared/views/map_view
+
 class App.View.MapContainerView extends Backbone.View
   className: 'map_canvas_container'
 

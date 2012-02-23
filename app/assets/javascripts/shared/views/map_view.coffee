@@ -14,8 +14,8 @@ class App.View.MapView extends Backbone.View
     $(@el).attr('id', 'map_canvas')
     @collection = options.collection
     @container_view = options.consumer_events_view
-    @collection.bind('reset', => @render(); @need_rendering = true )
-    @container_view.filter.bind('change:service_types', => @render(); @need_rendering = true )
+    @collection.bind('reset', => @render(); @need_rendering = true ) if @collection
+    @container_view.filter.bind('change:service_types', => @render(); @need_rendering = true ) if @container_view
     @options.mapTypeId = google.maps.MapTypeId.ROADMAP
     @need_rendering = true
 
@@ -64,13 +64,11 @@ class App.View.MapView extends Backbone.View
 
 ############  SingleZoomMap view #############
 class App.View.SingleZoomMapView extends App.View.MapView
-  constructor: (options)->
-    @model = options.modeol
-    @center_point = options.center_point
-    throw "you need a model to make a MapView" unless @model
 
   initialize: (options)->
-    super()
+    @model = options.model
+    throw "you need a model to make a MapView" unless @model
+    super(options)
     @options.zoom = 17
 
   render: ->

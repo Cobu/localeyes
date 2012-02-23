@@ -13,8 +13,8 @@
 //= require shared/init_namespace
 //= require shared/common
 
-//= require ../shared/models/business
-//= require ../consumer/views/map_view
+//= require shared/models/business
+//= require shared/views/map_view
 
 //= require business/edit_event_setup
 //= require business/event_calendar
