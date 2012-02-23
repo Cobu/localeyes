@@ -8,7 +8,7 @@ class App.View.BusinessView extends Backbone.View
     @render()
 
   render: ->
-    @elem = $(@el).html( @template(@event_view.model.business()) ).hide()
+    @elem = $(@el).html( @template(@event_view.model.business().toJSON() ) ).hide()
     @event_view.elem
       .after( @elem )
       .find('.description').addClass('open').show()
@@ -20,7 +20,7 @@ class App.View.BusinessView extends Backbone.View
 
   close: ->
     @elem.slideUp('slow', =>
-        @event_view.elem.find('.description').hide().removeClass('open')
+        @event_view.elem.find('.description').removeClass('open').hide()
         @elem.remove()
     )
 
