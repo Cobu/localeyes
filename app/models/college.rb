@@ -7,8 +7,4 @@ class College < ActiveRecord::Base
   def full_address
     [address, city, state_short, zip_code].compact.join(' ')
   end
-
-  def center_json
-    {title: "#{name}\n#{city}, #{state_short}, #{zip_code}", lat: lat, lng: lng}
-  end
 end
