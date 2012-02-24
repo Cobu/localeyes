@@ -1,4 +1,7 @@
 class ZipCodeDecorator < ApplicationDecorator
+  include ActiveModel::Serializers::JSON
+  self.include_root_in_json = false
+
   decorates :zip_code
 
   # override drapers handling of zip_code to return the attribute and not the model
@@ -19,14 +22,7 @@ class ZipCodeDecorator < ApplicationDecorator
     :z
   end
 
-  def as_json(options)
-    model.as_json(options)
-  end
-
   def center_json
     {title: title, lat: lat, lng: lng}
   end
-  #def center_json
-  #  {:title=> "#{city}, #{state_short}, #{zip_code}", :lat=>lat, lng: lng}
-  #end
 end

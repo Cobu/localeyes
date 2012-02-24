@@ -1,4 +1,7 @@
 class CollegeDecorator < ApplicationDecorator
+  include ActiveModel::Serializers::JSON
+  self.include_root_in_json = false
+
   decorates :college
 
   def label
@@ -11,10 +14,6 @@ class CollegeDecorator < ApplicationDecorator
 
   def type
     :c
-  end
-
-  def as_json(options)
-    model.as_json(options)
   end
 
   def center_json

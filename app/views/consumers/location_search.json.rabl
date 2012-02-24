@@ -1,2 +1,2 @@
 collection @locations
-attributes :id, :type, :label, :zip_code
+attributes :id, :zip_code, :type, :label

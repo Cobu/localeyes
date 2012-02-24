@@ -47,11 +47,7 @@ describe ConsumersController do
 
     it "returns json for college and zips found" do
       get :location_search, term: 'os', format: 'json'
-      #p locations.collect{|l| [l.id, l.zip_code, l.type, l.label}
-      #p locations.as_json(only: [:id, :zip_code, :type, :label])
-      #p response.body
-      #p response.body
-      #response.body.should == locations.to_json(only: [:id, :zip_code, :type, :label])
+      response.body.should == locations.to_json(only: [:id, :zip_code], methods: [:type, :label])
     end
   end
 
@@ -69,7 +65,9 @@ describe ConsumersController do
                      :title => "daily times"
       )
       get :events, d: college.id, format: :json
-      p response.body
+      json = JSON.parse(response.body)
+      json.keys.should include 'businesses', 'events', 'favorites', 'center', 'votes', 'in'
+      event = json['events'].first
     end
 
   end
