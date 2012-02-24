@@ -51,7 +51,7 @@ describe ConsumersController do
     end
   end
 
-  context '#event_list' do
+  context '#events' do
     let(:user) { create(:user) }
     let(:cafe) { create(:oswego_cafe) }
     let(:now) { Time.now.utc }
@@ -64,10 +64,13 @@ describe ConsumersController do
                      :end_time => Time.utc(2011, 8, 5, 9, 30),
                      :title => "daily times"
       )
+
       get :events, d: college.id, format: :json
+
       json = JSON.parse(response.body)
       json.keys.should include 'businesses', 'events', 'favorites', 'center', 'votes', 'in'
-      event = json['events'].first
+
+      json['events'].first
     end
 
   end
