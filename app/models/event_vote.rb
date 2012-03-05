@@ -12,7 +12,7 @@ class EventVote
   def self.setup(id)
     collection.update(
       {'_id' => id},
-      {'$set' => {'_id' => id, :votes => DEFAULT_VOTES}},
+      {'$set' => {:votes => DEFAULT_VOTES}},
       {:upsert => true}
     )
   end

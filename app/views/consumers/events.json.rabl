@@ -7,7 +7,7 @@ node(:events) do
     .flatten
 end
 node(:favorites) { current_user.try(:favorites) || [] }
-node(:center) { @center.center_json }
+node(:center) { @center.as_json(only: [:lat, :lng], methods: [:title]) }
 node(:votes) do
   if current_user
     EventVote.votes_for_events(@events.collect { |e| e.id.to_i }.uniq)

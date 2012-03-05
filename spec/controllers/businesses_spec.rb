@@ -5,7 +5,6 @@ describe BusinessesController do
   context '#events' do
     let(:user) { create(:business_user) }
     let(:business) { create(:oswego_restaurant, :user=>user) }
-    #let(:daily_event) {create(:daily_event, :start_time=>Time.now.utc.change(:min=>15), :end_time=>Time.now+1.hour, :business=> business)}
 
     before { login_business_user(user, business) }
 

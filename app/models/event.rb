@@ -7,17 +7,19 @@ class Event < ActiveRecord::Base
   before_create :set_time_attributes, :create_schedule
   after_create :init_event_vote
 
-  EVENT = 0
-  SPECIAL = 1
-  ANNOUNCEMENT = 2
-  EVENT_TYPES = [EVENT, SPECIAL, ANNOUNCEMENT]
-  EVENT_NAMES = {EVENT => 'event', SPECIAL => 'special', ANNOUNCEMENT => 'announcement'}
+  unless defined? EVENT
+    EVENT = 0
+    SPECIAL = 1
+    ANNOUNCEMENT = 2
+    EVENT_TYPES = [EVENT, SPECIAL, ANNOUNCEMENT]
+    EVENT_NAMES = {EVENT => 'event', SPECIAL => 'special', ANNOUNCEMENT => 'announcement'}
 
-  ONCE = 'once'
-  DAILY = 'day'
-  WEEKLY = 'week'
-  MONTHLY = 'month'
-  RECUR_TYPES = [ONCE, DAILY, WEEKLY, MONTHLY]
+    ONCE = 'once'
+    DAILY = 'day'
+    WEEKLY = 'week'
+    MONTHLY = 'month'
+    RECUR_TYPES = [ONCE, DAILY, WEEKLY, MONTHLY]
+  end
 
   serialize :schedule, IceCube::Schedule
 
