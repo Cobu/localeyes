@@ -15,8 +15,4 @@ class CollegeDecorator < ApplicationDecorator
   def type
     :c
   end
-
-  def center_json
-    {title: title, lat: lat, lng: lng}
-  end
 end

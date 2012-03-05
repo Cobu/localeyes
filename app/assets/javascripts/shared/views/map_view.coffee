@@ -1,6 +1,5 @@
 class App.View.MapView extends Backbone.View
   icon: null
-  center_point: null
   center_marker: null
   view: null
   className: 'map_canvas'
@@ -14,6 +13,7 @@ class App.View.MapView extends Backbone.View
     $(@el).attr('id', 'map_canvas')
     @collection = options.collection
     @container_view = options.consumer_events_view
+    @location = @container_view.location
     @collection.bind('reset', => @render(); @need_rendering = true ) if @collection
     @container_view.filter.bind('change:service_types', => @render(); @need_rendering = true ) if @container_view
     @options.mapTypeId = google.maps.MapTypeId.ROADMAP
@@ -25,12 +25,13 @@ class App.View.MapView extends Backbone.View
       @view = new google.maps.Map(document.getElementById("map_canvas"), @options)
 
   createCenterMarker: ->
-    if @center_point
-      point = new google.maps.LatLng(@center_point.lat, @center_point.lng)
+    if @location.get('center_point')
+      center_point = @location.get('center_point')
+      point = new google.maps.LatLng(center_point.lat, center_point.lng)
       @center_marker = new google.maps.Marker({
         position: point,
         map: @view,
-        title: @center_point.title
+        title: center_point.title
         icon: "/assets/arrow.png"
       })
     @markerBounds.extend(@center_marker.position) if @markerBounds and @center_marker

@@ -2,14 +2,20 @@ class App.View.LocationSearchView extends Backbone.View
   className: 'search'
 
   initialize: (options)->
+    @location = options.map_view.location
+    @location.bind('change', => @setLocation() )
     @template = JST['consumer/location_search']
 
   render: ->
     $(@el).html( @template() )
     @toggle()
     @setUpAutocomplete()
-#    @$("#location_search").val(@$("#location_search").val().replace("\n", ' '))
+    @setLocation()
     this
+
+  setLocation: ->
+    if @location.get('center_point')
+      @$("#location_search").val(@location.get('center_point').title.replace("\n",' '))
 
   setUpAutocomplete: ->
     @$("input#location_search").autocomplete(

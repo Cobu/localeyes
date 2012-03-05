@@ -5,8 +5,8 @@ class App.View.MapContainerView extends Backbone.View
 
   initialize: (options)->
     consumer_events_view = options.consumer_events_view
-    @location_search_view = new App.View.LocationSearchView(consumer_events_view: consumer_events_view)
     @map_view = new App.View.ExtendBoundMapView(collection: consumer_events_view.business_list, consumer_events_view: consumer_events_view)
+    @location_search_view = new App.View.LocationSearchView(map_view: @map_view)
     @filter_view = new App.View.FilterView(model: consumer_events_view.filter)
 
   render: ->

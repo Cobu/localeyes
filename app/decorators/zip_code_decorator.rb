@@ -21,8 +21,4 @@ class ZipCodeDecorator < ApplicationDecorator
   def type
     :z
   end
-
-  def center_json
-    {title: title, lat: lat, lng: lng}
-  end
 end

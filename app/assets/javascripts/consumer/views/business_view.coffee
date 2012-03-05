@@ -12,14 +12,14 @@ class App.View.BusinessView extends Backbone.View
     @event_view.elem
       .after( @elem )
       .find('.description').addClass('open').show()
-    @elem.slideDown('slow', =>
+    @elem.slideDown('fast', =>
       # bold the day of the week on the hours list
       day_number = @event_view.date.getDay()
       @$(".line[data-day_num=#{day_number}]").addClass('bold')
     )
 
   close: ->
-    @elem.slideUp('slow', =>
+    @elem.slideUp('fast', =>
         @event_view.elem.find('.description').removeClass('open').hide()
         @elem.remove()
     )

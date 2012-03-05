@@ -13,6 +13,7 @@
 //= require shared/handlebars_helpers
 //= require_tree ../shared/models
 //= require_tree ../shared/collections
+//= require_tree ../shared/routers
 //= require_tree ./views
 //= require ./handlers
 //= require ./init
