@@ -5,13 +5,12 @@ require 'bundler/capistrano'
 
 $:.unshift(File.expand_path("./lib", ENV["rvm_path"]))
 require 'rvm/capistrano'
-
-set :whenever_environment, defer { stage }
-set :whenever_command, "bundle exec whenever"
-require 'whenever/capistrano'
-
 set :rvm_ruby_string, 'ruby-1.9.3-p0@localeyes'
 set :rvm_type, :user
+
+require 'whenever/capistrano'
+set :whenever_environment, defer { stage }
+set :whenever_command, "bundle exec whenever"
 
 set :application, "localeyes"
 set :repository, "git@github.com:Cobu/localeyes.git"
