@@ -11,11 +11,6 @@ class App.View.MapView extends Backbone.View
 
   initialize: (options)->
     $(@el).attr('id', 'map_canvas')
-    @collection = options.collection
-    @container_view = options.consumer_events_view
-    @location = @container_view.location
-    @collection.bind('reset', => @render(); @need_rendering = true ) if @collection
-    @container_view.filter.bind('change:service_types', => @render(); @need_rendering = true ) if @container_view
     @options.mapTypeId = google.maps.MapTypeId.ROADMAP
     @need_rendering = true
 
@@ -85,6 +80,11 @@ class App.View.ExtendBoundMapView extends App.View.MapView
   markerBoundsZoomOut: 0.1
 
   initialize: (options)->
+    @collection = options.collection
+    @container_view = options.consumer_events_view
+    @location = @container_view.location
+    @collection.bind('reset', => @render(); @need_rendering = true ) if @collection
+    @container_view.filter.bind('change:service_types', => @render(); @need_rendering = true ) if @container_view
     super(options)
     @markerBounds = new google.maps.LatLngBounds()
 
