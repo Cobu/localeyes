@@ -34,7 +34,7 @@ class Business < ActiveRecord::Base
     (1..6).each do |num|
       self.hours[num] = {:from => nine_am, :to => five_pm, :open => true} # monday to saturday
     end
-    self.hours[0] = {:from => nil, :to => nil, :open => false} #HOURS_CLOSED.dup # sunday
+    self.hours[0] = HOURS_CLOSED.dup  # sunday
   end
 
   attr_writer :phone_first3, :phone_second3, :phone_last4
@@ -81,16 +81,6 @@ class Business < ActiveRecord::Base
     TIME_TYPES.each do |time_type|
       define_method "#{hour_method}_#{time_type}" do
         send(hour_method)[time_type.to_sym]
-      end
-
-      define_method "#{hour_method}_#{time_type}_hour" do
-        send(hour_method)[time_type.to_sym].try(:strftime, "%I")
-      end
-      define_method "#{hour_method}_#{time_type}_min" do
-        send(hour_method)[time_type.to_sym].try(:strftime, "%M")
-      end
-      define_method "#{hour_method}_#{time_type}_ampm" do
-        send(hour_method)[time_type.to_sym].try(:strftime, "%P")
       end
 
       define_method "#{hour_method}_#{time_type}=" do |hash|
