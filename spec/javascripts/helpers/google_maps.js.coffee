@@ -26,3 +26,4 @@ class window.google.maps.MarkerImage
   constructor: ->
 
 class window.google.maps.Marker
+  setIcon: (icon)->
