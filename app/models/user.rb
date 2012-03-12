@@ -21,7 +21,7 @@ class User < ActiveRecord::Base
   end
 
   def full_name
-    [first_name,last_name].join(' ')
+    [first_name, last_name].join(' ')
   end
 
   def split_name
@@ -33,11 +33,11 @@ class User < ActiveRecord::Base
   end
 
   def add_favorite(business_id)
-    EventVote.db.collection('favorites').update( {user_id: id}, {'$addToSet'=> {businesses: business_id}}, {upsert: true})
+    Favorite.collection.update({user_id: id}, {'$addToSet' => {businesses: business_id}}, {upsert: true})
   end
 
   def remove_favorite(business_id)
-    EventVote.db.collection('favorites').update( {user_id: id}, {'$pull'=> {businesses: business_id}}, {upsert: true})
+    Favorite.collection.update({user_id: id}, {'$pull' => {businesses: business_id}}, {upsert: true})
   end
 
   def vote_for_event(event_id, vote)
@@ -51,6 +51,6 @@ class User < ActiveRecord::Base
   end
 
   def favorites
-    EventVote.db.collection('favorites').find( {user_id: id} ).first.try(:[],'businesses')
+    Favorite.where(user_id: id).first.try(:[], 'businesses')
   end
 end
