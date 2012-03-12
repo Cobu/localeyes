@@ -51,6 +51,7 @@ describe Business do
     let(:business) { Business.new }
 
     it "can set hours on day" do
+      business.monday_hours_open = true
       business.monday_hours_from = {'hour'=>"05", 'min'=>'12', 'ampm'=> 'am'}
       business.monday_hours_from.should == time_hm(5, 12)
     end

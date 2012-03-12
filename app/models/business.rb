@@ -67,31 +67,16 @@ class Business < ActiveRecord::Base
     hour_method = "#{dayname.downcase}_hours"
 
     # handle open or closed
-    define_method "#{hour_method}_open" do
-      hours[Date::DAYNAMES.index(dayname)][:open]
-    end
+    define_method("#{hour_method}_open") { hours[day_index][:open] }
 
     define_method "#{hour_method}_open=" do |val|
-      bool = case val
-        when Fixnum, Integer then
-          val == 1
-        when String then
-          val == "true" or val == "1"
-        when TrueClass then
-          true
-        else
-          false
-      end
+      open = val.to_s.match(/(true|1)/) != nil
       set_blank_hours(day_index) unless days_hours_set?(day_index)
-      hours[Date::DAYNAMES.index(dayname)][:open] = bool
-      unless bool
-        self.hours[day_index] = HOURS_CLOSED.dup
-      end
+      self.hours[day_index][:open] = open
+      set_blank_hours(day_index) unless open
     end
 
-    define_method hour_method do
-      hours[Date::DAYNAMES.index(dayname)]
-    end
+    define_method(hour_method) { hours[day_index] }
 
     TIME_TYPES.each do |time_type|
       define_method "#{hour_method}_#{time_type}" do
@@ -111,7 +96,9 @@ class Business < ActiveRecord::Base
       define_method "#{hour_method}_#{time_type}=" do |hash|
         set_blank_hours(day_index) unless days_hours_set?(day_index)
         hour, min, ampm = hash['hour'], hash['min'], hash['ampm']
-        self.hours[day_index][time_type.to_sym] = Time.zone.parse("1970-01-01 #{hour}:#{min} #{ampm}}")
+        if hours[day_index][:open]
+          self.hours[day_index][time_type.to_sym] = Time.zone.parse("1970-01-01 #{hour}:#{min} #{ampm}}")
+        end
       end
     end
   end
