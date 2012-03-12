@@ -1,10 +1,8 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.1.3'
+gem 'rails', '3.2'
 gem 'bcrypt-ruby'
 gem 'mysql2'
-gem 'arel', "2.2.1"
-
 gem 'jquery-rails'
 gem 'haml-rails'
 gem 'coffee-script'
@@ -58,6 +56,7 @@ group :test do
   gem 'jasmine'
   gem 'capybara'
   gem 'capybara-webkit'
+  #gem 'poltergeist'
   gem 'launchy'
   gem 'rspec'
   gem 'rr'
