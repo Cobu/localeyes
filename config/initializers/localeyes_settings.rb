@@ -1,6 +1,4 @@
-class LocalEyesSettings < Settingslogic
-  source    Rails.root.join('config/localeyes_settings.yml')
-  namespace Rails.env
-  load!
-end
+yaml = YAML.load_file(Rails.root.join('config/localeyes_settings.yml'))[Rails.env]
+LocalEyesSettings = ActiveSupport::OrderedOptions.new.update yaml
+
 
