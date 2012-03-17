@@ -22,7 +22,6 @@ gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'omniauth-twitter'
 gem 'koala'
-#gem 'settingslogic'
 gem 'rvm'
 gem 'rabl'
 gem 'whenever', :require => false
