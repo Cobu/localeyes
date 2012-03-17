@@ -1,23 +1,23 @@
 test:
-  facebook_api_key:
-  facebook_secret:
-  twitter_api_key:
-  twitter_secret:
+  :facebook_api_key:
+  :facebook_secret:
+  :twitter_api_key:
+  :twitter_secret:
 
 development:
-  facebook_api_key: '240287519364580'
-  facebook_secret: '8e5a81c5108c6d5502fe8a1f740ec3a1'
-  twitter_api_key: 'gj9WQAw6GLOPh6E3f868w'
-  twitter_secret: 'ZSUBnXRu6qaPhNL2Y111S3DNYwFtB2AQywQQHcAc'
+  :facebook_api_key: '240287519364580'
+  :facebook_secret: '8e5a81c5108c6d5502fe8a1f740ec3a1'
+  :twitter_api_key: 'gj9WQAw6GLOPh6E3f868w'
+  :twitter_secret: 'ZSUBnXRu6qaPhNL2Y111S3DNYwFtB2AQywQQHcAc'
 
 staging:
-  facebook_api_key: '233282723386344'
-  facebook_secret: '9ae11cc1268aef75e9fe878c0d0b8fe3'
-  twitter_api_key: 'AVSYQOibEX9XnsyoNrmEBw'
-  twitter_secret: 'gu9IjUxfKSQ4eUr4i0CS20ok3IpVvw4yQcCv7wTews'
+  :facebook_api_key: '233282723386344'
+  :facebook_secret: '9ae11cc1268aef75e9fe878c0d0b8fe3'
+  :twitter_api_key: 'AVSYQOibEX9XnsyoNrmEBw'
+  :twitter_secret: 'gu9IjUxfKSQ4eUr4i0CS20ok3IpVvw4yQcCv7wTews'
 
 production:
-  facebook_api_key: '166674080101830'
-  facebook_secret: '22701ed4855723b10e5394c4c1aded5d'
-  twitter_api_key: 'iao1vqqkiC6u7fQgRkyYQ'
-  twitter_secret: 'TfWlANYCfdokD1rrzC4cFICWNqlKwdPGSVtAiaAuik'
+  :facebook_api_key: '166674080101830'
+  :facebook_secret: '22701ed4855723b10e5394c4c1aded5d'
+  :twitter_api_key: 'iao1vqqkiC6u7fQgRkyYQ'
+  :twitter_secret: 'TfWlANYCfdokD1rrzC4cFICWNqlKwdPGSVtAiaAuik'
