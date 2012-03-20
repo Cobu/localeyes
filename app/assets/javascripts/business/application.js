@@ -20,3 +20,5 @@
 //= require business/event_calendar
 //= require business/edit
 //= require business/home
+
+//= require shared/google_analytics

@@ -17,3 +17,5 @@
 //= require_tree ./views
 //= require ./handlers
 //= require ./init
+
+//= require shared/google_analytics
