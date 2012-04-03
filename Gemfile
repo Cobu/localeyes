@@ -33,6 +33,7 @@ gem 'handlebars_assets'
 gem 'haml_assets'
 group :assets do
   gem 'coffee-rails'
+  gem 'sprockets'
   gem 'sass-rails'
   gem 'uglifier'
 end
@@ -45,7 +46,6 @@ group :development, :test do
   gem 'rvm'
   gem 'capistrano'
   gem 'capistrano-ext'
-  gem 'rb-fsevent', :require => false
   gem 'jasmine-headless-webkit'
 end
 
