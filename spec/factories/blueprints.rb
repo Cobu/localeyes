@@ -28,7 +28,6 @@ FactoryGirl.define do
   factory :business do
     name { 'Dans Diner' }
     association :user, :factory => :business_user
-    #user { Factory.build(:business_user) }
     phone { "6505551212" }
     address { '1 Dude street' }
     city { 'Oswego' }

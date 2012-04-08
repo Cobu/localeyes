@@ -305,7 +305,6 @@ DEPENDENCIES
   sass-rails
   schedule_atts
   spork
-  sprockets
   therubyracer
   timecop
   turn

@@ -46,32 +46,6 @@ describe Event do
       end
     end
 
-    #it "#business_event_details" do
-    #  event.business_event_details.should == {
-    #    :id=> event.to_param,
-    #    :title=> "one times",
-    #    :start=> Time.utc(2011, 8, 5, 7, 30),
-    #    :end=> Time.utc(2011, 8, 5, 9, 30),
-    #    :allDay=> false,
-    #    :url=> "/events/#{event.id}/edit",
-    #    :className=> 'event_type'
-    #  }
-    #end
-    #
-    #it "#business_event_details for event spanning two days and at night" do
-    #  event.start_time = Time.utc(2011, 8, 3, 23, 00)
-    #  event.end_time = Time.utc(2011, 8, 4, 1, 30)
-    #
-    #  event.business_event_details.should == {
-    #    :id=>event.to_param,
-    #    :title=>"one times",
-    #    :start=>Time.utc(2011, 8, 3, 23, 00),
-    #    :end=>Time.utc(2011, 8, 4, 1, 30),
-    #    :allDay=>false,
-    #    :url=>"/events/#{event.id}/edit",
-    #    :className=> 'event_type'
-    #  }
-    #end
   end
 
   describe "daily" do
@@ -102,28 +76,6 @@ describe Event do
       event.occurrences_between(event.start_time, event.start_time+1.hour).size.should == 1
       event.occurrences_between(event.start_time, event.start_time+1.day).size.should == 2
     end
-
-    #it "#business_event_details" do
-    #  event.business_event_details.should == {
-    #    :id=>event.to_param,
-    #    :title=>"daily times",
-    #    :start=>Time.utc(2011, 8, 5, 7, 30),
-    #    :end=>Time.utc(2011, 8, 5, 9, 30),
-    #    :allDay=>false,
-    #    :url=>"/events/#{event.id}/edit",
-    #    :className=> 'event_type'
-    #  }
-    #
-    #  event.business_event_details(event.start_time+1.day).should == {
-    #    :id=>event.to_param,
-    #    :title=>"daily times",
-    #    :start=>Time.utc(2011, 8, 6, 7, 30),
-    #    :end=>Time.utc(2011, 8, 6, 9, 30),
-    #    :allDay=>false,
-    #    :url=>"/events/#{event.id}/edit",
-    #    :className=> 'event_type'
-    #  }
-    #end
 
     describe "set until date on new schedule" do
       let(:event) {

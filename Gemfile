@@ -31,12 +31,11 @@ gem 'whenever', :require => false
 # these two strongly resist being in asset group
 gem 'handlebars_assets'
 gem 'haml_assets'
-#group :assets do
+group :assets do
   gem 'coffee-rails'
-  gem 'sprockets'
   gem 'sass-rails'
   gem 'uglifier'
-#end
+end
 
 group :development, :test do
   gem 'wirble'
