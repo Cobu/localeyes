@@ -31,21 +31,20 @@ gem 'whenever', :require => false
 # these two strongly resist being in asset group
 gem 'handlebars_assets'
 gem 'haml_assets'
-group :assets do
+#group :assets do
   gem 'coffee-rails'
   gem 'sass-rails'
   gem 'uglifier'
-end
+#end
 
 group :development, :test do
   gem 'wirble'
-  gem 'jasminerice'
   gem 'pry'
   gem 'hirb'
   gem 'rvm'
   gem 'capistrano'
   gem 'capistrano-ext'
-  gem 'jasmine-headless-webkit'
+  gem 'guard-jasmine'
 end
 
 group :test do
@@ -59,6 +58,7 @@ group :test do
   gem 'rspec-rails'
   gem 'database_cleaner'
   gem 'timecop'
+  gem 'jasminerice'
 end
 
 group :production do
